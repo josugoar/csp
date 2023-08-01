@@ -1,8 +1,13 @@
 #ifndef CSP_SHARED_PTR_H
 #define CSP_SHARED_PTR_H
 
-#include <stdbool.h>
 #include <stddef.h>
+
+#if defined __has_attribute
+#if __has_attribute(cleanup)
+#define csp_shared_ptr_cleanup __attribute__((cleanup(csp_shared_ptr_destroy))) csp_shared_ptr
+#endif
+#endif
 
 typedef struct csp_weak_ptr csp_weak_ptr;
 
@@ -23,9 +28,6 @@ void csp_shared_ptr_init(csp_shared_ptr *_this);
 void csp_shared_ptr_init_p(csp_shared_ptr *_this, csp_shared_ptr_T *_p);
 
 void csp_shared_ptr_init_pd(csp_shared_ptr *_this, csp_shared_ptr_T *_p, csp_shared_ptr_D _d);
-
-// TODO
-// void csp_shared_ptr_init_pda(csp_shared_ptr *_this, csp_shared_ptr_T *_p, csp_shared_ptr_D _d, csp_shared_ptr_A _a);
 
 void csp_shared_ptr_init_s_copy(csp_shared_ptr *_this, const csp_shared_ptr *_r);
 
@@ -65,9 +67,6 @@ void csp_shared_ptr_reset_p(csp_shared_ptr *_this, csp_shared_ptr_T *_p);
 
 void csp_shared_ptr_reset_pd(csp_shared_ptr *_this, csp_shared_ptr_T *_p, csp_shared_ptr_D _d);
 
-// TODO
-// void csp_shared_ptr_reset_pda(csp_shared_ptr *_this, csp_shared_ptr_T *_p, csp_shared_ptr_D _d, csp_shared_ptr_A _a);
-
 void csp_shared_ptr_reset_s_p_copy(csp_shared_ptr *_this, const csp_shared_ptr *_r, csp_shared_ptr_T *_p);
 
 void csp_shared_ptr_reset_s_p_move(csp_shared_ptr *_this, csp_shared_ptr *_r, csp_shared_ptr_T *_p);
@@ -75,15 +74,6 @@ void csp_shared_ptr_reset_s_p_move(csp_shared_ptr *_this, csp_shared_ptr *_r, cs
 void csp_shared_ptr_swap(csp_shared_ptr *_this, csp_shared_ptr *_r);
 
 csp_shared_ptr csp_make_shared_for_overwrite(size_t _size);
-
-// TODO
-// csp_shared_ptr csp_allocate_shared_for_overwrite(const csp_allocator *_a, size_t _size);
-
-#if defined __has_attribute
-#if __has_attribute(cleanup)
-#define csp_shared_ptr_cleanup __attribute__((cleanup(csp_shared_ptr_destroy))) csp_shared_ptr
-#endif
-#endif
 
 typedef struct csp_cntrl_blk csp_cntrl_blk;
 
