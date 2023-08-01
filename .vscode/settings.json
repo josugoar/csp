@@ -1,0 +1,31 @@
+{
+    "C_Cpp.doxygen.sectionTags": [
+        "attention",
+        "author",
+        "authors",
+        "bug",
+        "copyright",
+        "date",
+        "deprecated",
+        "details",
+        "exception",
+        "invariant",
+        "note",
+        "param",
+        "post",
+        "pre",
+        "remark",
+        "remarks",
+        "result",
+        "returns",
+        "retval",
+        "since",
+        "test",
+        "todo",
+        "tparam",
+        "warning"
+    ],
+    "files.associations": {
+        "*.h": "c"
+    }
+}
