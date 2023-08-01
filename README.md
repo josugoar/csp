@@ -79,4 +79,8 @@ cmake --build .
 
 # Install the library
 cmake --install .
+
+# Or run CPack to generate the installers
+# for .tar.gz, .sh or .tar.z generators
+cpack -C CPackConfig.cmake
 ```
