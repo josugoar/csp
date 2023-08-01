@@ -7,7 +7,7 @@ void csp_scoped_ptr_init(csp_scoped_ptr *const _this)
 {
     assert(_this);
 
-    _this->_p = NULL;
+    _this->_p = nullptr;
 
     assert(!csp_scoped_ptr_get(_this));
 }
@@ -47,14 +47,14 @@ size_t csp_scoped_ptr_hash(const csp_scoped_ptr *const _this)
 
 void csp_scoped_ptr_reset(csp_scoped_ptr *const _this)
 {
-    csp_scoped_ptr_reset_p(_this, NULL);
+    csp_scoped_ptr_reset_p(_this, nullptr);
 }
 
 void csp_scoped_ptr_reset_p(csp_scoped_ptr *const _this, csp_scoped_ptr_T *const _p)
 {
     assert(_this);
 
-    csp_scoped_ptr_T *const _old_p = _this->_p;
+    const auto _old_p = _this->_p;
 
     _this->_p = _p;
 
@@ -71,7 +71,7 @@ void csp_scoped_ptr_swap(csp_scoped_ptr *const _this, csp_scoped_ptr *const _b)
     assert(_this);
     assert(_b);
 
-    csp_scoped_ptr_T *const _p = _this->_p;
+    const auto _p = _this->_p;
     _this->_p = _b->_p;
     _b->_p = _p;
 }
@@ -80,11 +80,11 @@ csp_scoped_ptr csp_make_scoped_for_overwrite(const size_t _size)
 {
     csp_scoped_ptr _u;
 
-    unsigned char *const _ptr = (unsigned char *)malloc(_size);
+    const auto _ptr = (unsigned char *)malloc(_size);
     if (!_ptr)
     {
         // TODO: error handling
-        _u._p = NULL;
+        _u._p = nullptr;
 
         return _u;
     }
@@ -95,7 +95,3 @@ csp_scoped_ptr csp_make_scoped_for_overwrite(const size_t _size)
 
     return _u;
 }
-
-// TODO
-// csp_scoped_ptr csp_allocate_for_overwrite(const csp_allocator *const _a, const size_t _size);
-
