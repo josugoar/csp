@@ -3,6 +3,12 @@
 
 #include <stddef.h>
 
+#if defined __has_attribute
+#if __has_attribute(cleanup)
+#define csp_unique_ptr_cleanup __attribute__((cleanup(csp_unique_ptr_destroy))) csp_unique_ptr
+#endif
+#endif
+
 typedef void csp_default_delete_T;
 
 void csp_default_delete(csp_default_delete_T *_ptr);
@@ -48,15 +54,6 @@ void csp_unique_ptr_reset_p(csp_unique_ptr *_this, csp_unique_ptr_T *_p);
 void csp_unique_ptr_swap(csp_unique_ptr *_this, csp_unique_ptr *_u);
 
 csp_unique_ptr csp_make_unique_for_overwrite(size_t _size);
-
-// TODO
-// csp_unique_ptr csp_allocate_unique_for_overwrite(const csp_allocator *_a, size_t _size);
-
-#if defined __has_attribute
-#if __has_attribute(cleanup)
-#define csp_unique_ptr_cleanup __attribute__((cleanup(csp_unique_ptr_destroy))) csp_unique_ptr
-#endif
-#endif
 
 struct csp_unique_ptr
 {
