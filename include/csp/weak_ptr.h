@@ -1,8 +1,13 @@
 #ifndef CSP_WEAK_PTR_H
 #define CSP_WEAK_PTR_H
 
-#include <stdbool.h>
 #include <stddef.h>
+
+#if defined __has_attribute
+#if __has_attribute(cleanup)
+#define csp_weak_ptr_cleanup __attribute__((cleanup(csp_weak_ptr_destroy))) csp_weak_ptr
+#endif
+#endif
 
 typedef struct csp_shared_ptr csp_shared_ptr;
 
@@ -47,12 +52,6 @@ size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr *_this);
 void csp_weak_ptr_reset(csp_weak_ptr *_this);
 
 void csp_weak_ptr_swap(csp_weak_ptr *_this, csp_weak_ptr *_r);
-
-#if defined __has_attribute
-#if __has_attribute(cleanup)
-#define csp_weak_ptr_cleanup __attribute__((cleanup(csp_weak_ptr_destroy))) csp_weak_ptr
-#endif
-#endif
 
 typedef struct csp_cntrl_blk csp_cntrl_blk;
 

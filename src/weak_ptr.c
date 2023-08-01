@@ -10,8 +10,8 @@ void csp_weak_ptr_init(csp_weak_ptr *const _this)
 {
     assert(_this);
 
-    _this->_p = NULL;
-    _this->_cntrl = NULL;
+    _this->_p = nullptr;
+    _this->_cntrl = nullptr;
 
     assert(csp_weak_ptr_use_count(_this) == 0);
 }
@@ -40,8 +40,8 @@ void csp_weak_ptr_init_w_move(csp_weak_ptr *const _this, csp_weak_ptr *const _r)
     _this->_p = _r->_p;
     _this->_cntrl = _r->_cntrl;
 
-    _r->_p = NULL;
-    _r->_cntrl = NULL;
+    _r->_p = nullptr;
+    _r->_cntrl = nullptr;
 
     assert(csp_weak_ptr_use_count(_r) == 0);
 }
@@ -70,8 +70,8 @@ void csp_weak_ptr_init_w_p_move(csp_weak_ptr *const _this, csp_weak_ptr *const _
     _this->_p = _p;
     _this->_cntrl = _r->_cntrl;
 
-    _r->_p = NULL;
-    _r->_cntrl = NULL;
+    _r->_p = nullptr;
+    _r->_cntrl = nullptr;
 
     assert(csp_weak_ptr_use_count(_r) == 0);
 }
@@ -138,7 +138,7 @@ csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr *const _this)
 
     csp_shared_ptr _r;
 
-    _r._p = NULL;
+    _r._p = nullptr;
     _r._cntrl = _this->_cntrl ? csp_cntrl_blk_lock(_this->_cntrl) : _this->_cntrl;
 
     if (_r._cntrl)
@@ -206,11 +206,11 @@ void csp_weak_ptr_swap(csp_weak_ptr *const _this, csp_weak_ptr *const _r)
     assert(_this);
     assert(_r);
 
-    csp_weak_ptr_T *const _p = _this->_p;
+    const auto _p = _this->_p;
     _this->_p = _r->_p;
     _r->_p = _p;
 
-    csp_cntrl_blk *const _cntrl = _this->_cntrl;
+    const auto _cntrl = _this->_cntrl;
     _this->_cntrl = _r->_cntrl;
     _r->_cntrl = _cntrl;
 }
