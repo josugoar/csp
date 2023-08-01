@@ -2,17 +2,22 @@
 #define CSP_ATOMIC_SHARED_PTR_H
 
 #include <stdatomic.h>
-#include <stdbool.h>
 
 #include "csp/shared_ptr.h"
 
-#define CSP_ATOMIC_SHARED_PTR_IS_ALWAYS_LOCK_FREE false;
+#if defined __has_attribute
+#if __has_attribute(cleanup)
+#define csp_atomic_shared_ptr_cleanup __attribute__((cleanup(csp_atomic_shared_ptr_destroy))) csp_atomic_shared_ptr
+#endif
+#endif
 
 typedef void csp_atomic_shared_ptr_T;
 
 typedef struct csp_atomic_shared_ptr csp_atomic_shared_ptr;
 
 typedef csp_shared_ptr value_type;
+
+constexpr auto csp_atomic_shared_ptr_is_always_lock_free = false;
 
 void csp_atomic_shared_ptr_init(csp_atomic_shared_ptr *_this);
 
@@ -49,12 +54,6 @@ void csp_atomic_shared_ptr_wait_explicit(const csp_atomic_shared_ptr *_this, csp
 void csp_atomic_shared_ptr_notify_one(csp_atomic_shared_ptr *_this);
 
 void csp_atomic_shared_ptr_notify_all(csp_atomic_shared_ptr *_this);
-
-#if defined __has_attribute
-#if __has_attribute(cleanup)
-#define csp_atomic_shared_ptr_cleanup __attribute__((cleanup(csp_atomic_shared_ptr_destroy))) csp_atomic_shared_ptr
-#endif
-#endif
 
 struct csp_atomic_shared_ptr
 {
