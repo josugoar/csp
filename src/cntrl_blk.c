@@ -76,7 +76,7 @@ csp_cntrl_blk *csp_cntrl_blk_lock(csp_cntrl_blk *const _this)
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void csp_cntrl_blk_add_shared(csp_cntrl_blk *const _this)
