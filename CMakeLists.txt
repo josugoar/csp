@@ -5,19 +5,22 @@ project(csp
         HOMEPAGE_URL "https://github.com/josugoar/csp"
         LANGUAGES C)
 
-# add_library(csp SHARED
-#             "${PROJECT_SOURCE_DIR}/src/atomic_shared_ptr.c"
-#             "${PROJECT_SOURCE_DIR}/src/atomic_weak_ptr.c"
-#             "${PROJECT_SOURCE_DIR}/src/cntrl_blk.c"
-#             "${PROJECT_SOURCE_DIR}/src/cntrl_blk.h"
-#             "${PROJECT_SOURCE_DIR}/src/local_shared_ptr.c"
-#             "${PROJECT_SOURCE_DIR}/src/scoped_ptr.c"
-#             "${PROJECT_SOURCE_DIR}/src/shared_ptr.c"
-#             "${PROJECT_SOURCE_DIR}/src/unique_ptr.c"
-#             "${PROJECT_SOURCE_DIR}/src/weak_ptr.c")
+set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD_REQUIRED True)
 
-# target_include_directories(csp PUBLIC
-#                            "${PROJECT_SOURCE_DIR}/include")
+add_library(csp SHARED
+            "${PROJECT_SOURCE_DIR}/src/atomic_shared_ptr.c"
+            "${PROJECT_SOURCE_DIR}/src/atomic_weak_ptr.c"
+            "${PROJECT_SOURCE_DIR}/src/cntrl_blk.c"
+            "${PROJECT_SOURCE_DIR}/src/cntrl_blk.h"
+            "${PROJECT_SOURCE_DIR}/src/local_shared_ptr.c"
+            "${PROJECT_SOURCE_DIR}/src/scoped_ptr.c"
+            "${PROJECT_SOURCE_DIR}/src/shared_ptr.c"
+            "${PROJECT_SOURCE_DIR}/src/unique_ptr.c"
+            "${PROJECT_SOURCE_DIR}/src/weak_ptr.c")
+
+target_include_directories(csp PUBLIC
+                           "${PROJECT_SOURCE_DIR}/include")
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
@@ -26,8 +29,3 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 set(CPACK_RESOURCE_FILE_README "${PROJECT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 include(CPack)
-
-add_executable(csp_test
-               "${PROJECT_SOURCE_DIR}/main.c")
-
-set_property(TARGET csp_test PROPERTY C_STANDARD 23)
