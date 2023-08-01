@@ -13,8 +13,8 @@ void csp_local_shared_ptr_init(csp_local_shared_ptr *const _this)
 {
     assert(_this);
 
-    _this->_p = NULL;
-    _this->_cntrl = NULL;
+    _this->_p = nullptr;
+    _this->_cntrl = nullptr;
 
     assert(!csp_local_shared_ptr_get(_this));
     assert(csp_local_shared_ptr_use_count(_this) == 0);
@@ -24,14 +24,14 @@ void csp_local_shared_ptr_init_p(csp_local_shared_ptr *const _this, csp_local_sh
 {
     assert(_this);
 
-    csp_cntrl_blk *const _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_this->_cntrl));
+    const auto _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_this->_cntrl));
     if (!_cntrl)
     {
         csp_default_delete(_p);
 
         // TODO: error handling
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
@@ -49,7 +49,7 @@ void csp_local_shared_ptr_init_pd(csp_local_shared_ptr *const _this, csp_local_s
 {
     assert(_this);
 
-    csp_cntrl_blk *const _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_this->_cntrl));
+    const auto _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_this->_cntrl));
     if (!_cntrl)
     {
         assert(_d);
@@ -57,8 +57,8 @@ void csp_local_shared_ptr_init_pd(csp_local_shared_ptr *const _this, csp_local_s
         _d(_p);
 
         // TODO: error handling
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
     }
 
     csp_cntrl_blk_init(_cntrl, _p, _d);
@@ -69,9 +69,6 @@ void csp_local_shared_ptr_init_pd(csp_local_shared_ptr *const _this, csp_local_s
     assert(csp_local_shared_ptr_get(_this) == _p);
     assert(csp_local_shared_ptr_use_count(_this) == 1);
 }
-
-// TODO
-// void csp_local_shared_ptr_init_pda(csp_local_shared_ptr *const _this, csp_local_shared_ptr_T *const _p, const csp_local_shared_ptr_D _d, const csp_local_shared_ptr_A _a);
 
 void csp_local_shared_ptr_init_ls_copy(csp_local_shared_ptr *const _this, const csp_local_shared_ptr *const _r)
 {
@@ -95,14 +92,14 @@ void csp_local_shared_ptr_init_ls_move(csp_local_shared_ptr *const _this, csp_lo
     assert(_this);
     assert(_r);
 
-    csp_local_shared_ptr_T *const _p = csp_local_shared_ptr_get(_r);
-    const long _shared_owners = csp_local_shared_ptr_use_count(_r);
+    [[maybe_unused]] const auto _p = csp_local_shared_ptr_get(_r);
+    [[maybe_unused]] const auto _shared_owners = csp_local_shared_ptr_use_count(_r);
 
     _this->_p = _r->_p;
     _this->_cntrl = _r->_cntrl;
 
-    _r->_p = NULL;
-    _r->_cntrl = NULL;
+    _r->_p = nullptr;
+    _r->_cntrl = nullptr;
 
     assert(csp_local_shared_ptr_get(_this) == _p);
     assert(!csp_local_shared_ptr_get(_r));
@@ -131,13 +128,13 @@ void csp_local_shared_ptr_init_ls_p_move(csp_local_shared_ptr *const _this, csp_
     assert(_this);
     assert(_r);
 
-    const long _shared_owners = csp_local_shared_ptr_use_count(_r);
+    [[maybe_unused]] const auto _shared_owners = csp_local_shared_ptr_use_count(_r);
 
     _this->_p = _p;
     _this->_cntrl = _r->_cntrl;
 
-    _r->_p = NULL;
-    _r->_cntrl = NULL;
+    _r->_p = nullptr;
+    _r->_cntrl = nullptr;
 
     assert(csp_local_shared_ptr_get(_this) == _p);
     assert(!csp_local_shared_ptr_get(_r));
@@ -160,14 +157,14 @@ void csp_local_shared_ptr_init_s_move(csp_local_shared_ptr *const _this, csp_sha
     assert(_this);
     assert(_r);
 
-    csp_local_shared_ptr_T *const _p = csp_shared_ptr_get(_r);
-    const long _shared_owners = csp_shared_ptr_use_count(_r);
+    [[maybe_unused]] const auto _p = csp_shared_ptr_get(_r);
+    [[maybe_unused]] const auto _shared_owners = csp_shared_ptr_use_count(_r);
 
     _this->_p = _r->_p;
     _this->_cntrl = _r->_cntrl;
 
-    _r->_p = NULL;
-    _r->_cntrl = NULL;
+    _r->_p = nullptr;
+    _r->_cntrl = nullptr;
 
     assert(csp_local_shared_ptr_get(_this) == _p);
     assert(!csp_shared_ptr_get(_r));
@@ -179,22 +176,22 @@ void csp_local_shared_ptr_init_u_move(csp_local_shared_ptr *const _this, csp_uni
     assert(_this);
     assert(_r);
 
-    csp_unique_ptr_T *const _p = csp_unique_ptr_get(_r);
+    [[maybe_unused]] const auto _p = csp_unique_ptr_get(_r);
 
     if (!_r->_p)
     {
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
 
-    csp_cntrl_blk *const _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_this->_cntrl));
+    const auto _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_this->_cntrl));
     if (!_cntrl)
     {
         // TODO: error handling
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
@@ -204,7 +201,7 @@ void csp_local_shared_ptr_init_u_move(csp_local_shared_ptr *const _this, csp_uni
     _this->_p = _r->_p;
     _this->_cntrl = _cntrl;
 
-    _r->_p = NULL;
+    _r->_p = nullptr;
 
     assert(csp_local_shared_ptr_get(_this) == _p);
     assert(csp_local_shared_ptr_use_count(_this) == 1);
@@ -231,7 +228,7 @@ csp_local_shared_ptr_D *csp_local_shared_ptr_get_deleter(const csp_local_shared_
 {
     assert(_this);
 
-    return _this->_cntrl ? csp_cntrl_blk_get_deleter(_this->_cntrl) : NULL;
+    return _this->_cntrl ? csp_cntrl_blk_get_deleter(_this->_cntrl) : nullptr;
 }
 
 long csp_local_shared_ptr_use_count(const csp_local_shared_ptr *const _this)
@@ -294,8 +291,8 @@ void csp_local_shared_ptr_reset_p(csp_local_shared_ptr *const _this, csp_local_s
     // TODO: error handling
     if (!csp_local_shared_ptr_get(&_tmp))
     {
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
@@ -315,8 +312,8 @@ void csp_local_shared_ptr_reset_pd(csp_local_shared_ptr *const _this, csp_local_
     // TODO: error handling
     if (!csp_local_shared_ptr_get(&_tmp))
     {
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
@@ -325,9 +322,6 @@ void csp_local_shared_ptr_reset_pd(csp_local_shared_ptr *const _this, csp_local_
 
     csp_local_shared_ptr_destroy(&_tmp);
 }
-
-// TODO
-// void csp_local_shared_ptr_reset_pda(csp_local_shared_ptr *const _this, csp_local_shared_ptr_T *const _p, const csp_local_shared_ptr_D _d, const csp_local_shared_ptr_A _a);
 
 void csp_local_shared_ptr_reset_ls_p_copy(csp_local_shared_ptr *const _this, const csp_local_shared_ptr *const _r, csp_local_shared_ptr_T *const _p)
 {
@@ -342,8 +336,8 @@ void csp_local_shared_ptr_reset_ls_p_copy(csp_local_shared_ptr *const _this, con
     // TODO: error handling
     if (!csp_local_shared_ptr_get(&_tmp))
     {
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
@@ -364,8 +358,8 @@ void csp_local_shared_ptr_reset_ls_p_move(csp_local_shared_ptr *const _this, csp
     // TODO: error handling
     if (!csp_local_shared_ptr_get(&_tmp))
     {
-        _this->_p = NULL;
-        _this->_cntrl = NULL;
+        _this->_p = nullptr;
+        _this->_cntrl = nullptr;
 
         return;
     }
@@ -380,11 +374,11 @@ void csp_local_shared_ptr_swap(csp_local_shared_ptr *const _this, csp_local_shar
     assert(_this);
     assert(_r);
 
-    csp_local_shared_ptr_T *const _p = _this->_p;
+    const auto _p = _this->_p;
     _this->_p = _r->_p;
     _r->_p = _p;
 
-    csp_cntrl_blk *const _cntrl = _this->_cntrl;
+    const auto _cntrl = _this->_cntrl;
     _this->_cntrl = _r->_cntrl;
     _r->_cntrl = _cntrl;
 }
@@ -393,18 +387,18 @@ csp_local_shared_ptr csp_make_local_shared_for_overwrite(const size_t _size)
 {
     csp_local_shared_ptr _r;
 
-    unsigned char *const _ptr = (unsigned char *)malloc(_size + sizeof(_r._cntrl));
+    const auto _ptr = (unsigned char *)malloc(_size + sizeof(*_r._cntrl));
     if (!_ptr)
     {
         // TODO: error handling
-        _r._p = NULL;
-        _r._cntrl = NULL;
+        _r._p = nullptr;
+        _r._cntrl = nullptr;
 
         return _r;
     }
 
-    csp_local_shared_ptr_T *const _p = (csp_local_shared_ptr_T *)_ptr;
-    csp_cntrl_blk *_cntrl = (csp_cntrl_blk *)(_ptr + _size);
+    const auto _p = (csp_local_shared_ptr_T *)_ptr;
+    const auto _cntrl = (csp_cntrl_blk *)(_ptr + _size);
 
     csp_cntrl_blk_init(_cntrl, _p, csp_default_delete);
 
@@ -413,6 +407,3 @@ csp_local_shared_ptr csp_make_local_shared_for_overwrite(const size_t _size)
 
     return _r;
 }
-
-// TODO
-// csp_local_shared_ptr csp_allocate_local_shared_for_overwrite(const csp_allocator *const _a, const size_t _size);

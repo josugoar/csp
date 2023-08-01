@@ -1,8 +1,13 @@
 #ifndef CSP_LOCAL_SHARED_PTR_H
 #define CSP_LOCAL_SHARED_PTR_H
 
-#include <stdbool.h>
 #include <stddef.h>
+
+#if defined __has_attribute
+#if __has_attribute(cleanup)
+#define csp_local_shared_ptr_cleanup __attribute__((cleanup(csp_local_shared_ptr_destroy))) csp_local_shared_ptr
+#endif
+#endif
 
 typedef struct csp_shared_ptr csp_shared_ptr;
 
@@ -21,9 +26,6 @@ void csp_local_shared_ptr_init(csp_local_shared_ptr *_this);
 void csp_local_shared_ptr_init_p(csp_local_shared_ptr *_this, csp_local_shared_ptr_T *_p);
 
 void csp_local_shared_ptr_init_pd(csp_local_shared_ptr *_this, csp_local_shared_ptr_T *_p, csp_local_shared_ptr_D _d);
-
-// TODO
-// void csp_local_shared_ptr_init_pda(csp_local_shared_ptr *_this, csp_local_shared_ptr_T *_p, csp_local_shared_ptr_D _d, csp_local_shared_ptr_A _a);
 
 void csp_local_shared_ptr_init_ls_copy(csp_local_shared_ptr *_this, const csp_local_shared_ptr *_r);
 
@@ -61,9 +63,6 @@ void csp_local_shared_ptr_reset_p(csp_local_shared_ptr *_this, csp_local_shared_
 
 void csp_local_shared_ptr_reset_pd(csp_local_shared_ptr *_this, csp_local_shared_ptr_T *_p, csp_local_shared_ptr_D _d);
 
-// TODO
-// void csp_local_shared_ptr_reset_pda(csp_local_shared_ptr *_this, csp_local_shared_ptr_T *_p, csp_local_shared_ptr_D _d, csp_local_shared_ptr_A _a);
-
 void csp_local_shared_ptr_reset_ls_p_copy(csp_local_shared_ptr *_this, const csp_local_shared_ptr *_r, csp_local_shared_ptr_T *_p);
 
 void csp_local_shared_ptr_reset_ls_p_move(csp_local_shared_ptr *_this, csp_local_shared_ptr *_r, csp_local_shared_ptr_T *_p);
@@ -71,15 +70,6 @@ void csp_local_shared_ptr_reset_ls_p_move(csp_local_shared_ptr *_this, csp_local
 void csp_local_shared_ptr_swap(csp_local_shared_ptr *_this, csp_local_shared_ptr *_r);
 
 csp_local_shared_ptr csp_make_local_shared_for_overwrite(size_t _size);
-
-// TODO
-// csp_local_shared_ptr csp_allocate_local_shared_for_overwrite(const csp_allocator *_a, size_t _size);
-
-#if defined __has_attribute
-#if __has_attribute(cleanup)
-#define csp_local_shared_ptr_cleanup __attribute__((cleanup(csp_local_shared_ptr_destroy))) csp_local_shared_ptr
-#endif
-#endif
 
 typedef struct csp_cntrl_blk csp_cntrl_blk;
 
