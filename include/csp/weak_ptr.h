@@ -15,43 +15,74 @@ typedef void csp_weak_ptr_T;
 
 typedef struct csp_weak_ptr csp_weak_ptr;
 
+/// @brief csp_weak_ptr_T.
 typedef csp_weak_ptr_T csp_weak_ptr_element_type;
 
-void csp_weak_ptr_init(csp_weak_ptr *_this);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init(void);
 
-void csp_weak_ptr_init_w_copy(csp_weak_ptr *_this, const csp_weak_ptr *_r);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init_copy_w(const csp_weak_ptr *_r);
 
-void csp_weak_ptr_init_w_move(csp_weak_ptr *_this, csp_weak_ptr *_r);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init_move_w(csp_weak_ptr *_r);
 
-void csp_weak_ptr_init_w_p_copy(csp_weak_ptr *_this, const csp_weak_ptr *_r, csp_weak_ptr_T *_p);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init_p_copy_w(const csp_weak_ptr *_r, csp_weak_ptr_T *_p);
 
-void csp_weak_ptr_init_w_p_move(csp_weak_ptr *_this, csp_weak_ptr *_r, csp_weak_ptr_T *_p);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init_p_move_w(csp_weak_ptr *_r, csp_weak_ptr_T *_p);
 
-void csp_weak_ptr_init_s_copy(csp_weak_ptr *_this, const csp_shared_ptr *_r);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init_copy_s(const csp_shared_ptr *_r);
 
-void csp_weak_ptr_init_s_p_copy(csp_weak_ptr *_this, const csp_shared_ptr *_r, csp_weak_ptr_T *_p);
+/// @brief Creates a new csp_weak_ptr.
+[[nodiscard]] csp_weak_ptr csp_weak_ptr_init_p_copy_s(const csp_shared_ptr *_r, csp_weak_ptr_T *_p);
 
+/// @brief Destroys a csp_weak_ptr.
 void csp_weak_ptr_destroy(csp_weak_ptr *_this);
 
-long csp_weak_ptr_use_count(const csp_weak_ptr *_this);
+/// @brief Assigns the csp_weak_ptr.
+csp_weak_ptr *csp_weak_ptr_copy_w(csp_weak_ptr *_this, const csp_weak_ptr *_r);
 
-bool csp_weak_ptr_expired(const csp_weak_ptr *_this);
+/// @brief Assigns the csp_weak_ptr.
+csp_weak_ptr *csp_weak_ptr_move_w(csp_weak_ptr *_this, csp_weak_ptr *_r);
 
-csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr *_this);
+/// @brief Assigns the csp_weak_ptr.
+csp_weak_ptr *csp_weak_ptr_copy_s(csp_weak_ptr *_this, const csp_shared_ptr *_r);
 
-bool csp_weak_ptr_owner_before_s(const csp_weak_ptr *_this, const csp_shared_ptr *_r);
+/// @brief Returns the number of csp_shared_ptr objects that manage the object.
+[[nodiscard]] long csp_weak_ptr_use_count(const csp_weak_ptr *_this);
 
-bool csp_weak_ptr_owner_before_w(const csp_weak_ptr *_this, const csp_weak_ptr *_r);
+/// @brief Checks whether the referenced object was already deleted.
+[[nodiscard]] bool csp_weak_ptr_expired(const csp_weak_ptr *_this);
 
-bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr *_this, const csp_shared_ptr *_r);
+/// @brief Creates a csp_shared_ptr that manages the referenced object.
+[[nodiscard]] csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr *_this);
 
-bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr *_this, const csp_weak_ptr *_r);
+/// @brief Provides owner-based ordering of weak pointers.
+[[nodiscard]] bool csp_weak_ptr_owner_before_s(const csp_weak_ptr *_this, const csp_shared_ptr *_r);
 
-size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr *_this);
+/// @brief Provides owner-based ordering of weak pointers.
+[[nodiscard]] bool csp_weak_ptr_owner_before_w(const csp_weak_ptr *_this, const csp_weak_ptr *_r);
 
+/// @brief Provides owner-based ordering of weak pointers.
+[[nodiscard]] bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr *_this, const csp_shared_ptr *_r);
+
+/// @brief Provides owner-based ordering of weak pointers.
+[[nodiscard]] bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr *_this, const csp_weak_ptr *_r);
+
+/// @brief Owner-based hash support for csp_weak_ptr.
+[[nodiscard]] size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr *_this);
+
+/// @brief Releases the ownership of the managed object.
 void csp_weak_ptr_reset(csp_weak_ptr *_this);
 
+/// @brief Swaps the managed objects.
 void csp_weak_ptr_swap(csp_weak_ptr *_this, csp_weak_ptr *_r);
+
+/// @brief Swaps the managed objects.
+void csp_swap_w(csp_weak_ptr *_x, csp_weak_ptr *_y);
 
 typedef struct csp_cntrl_blk csp_cntrl_blk;
 

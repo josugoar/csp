@@ -1,24 +1,23 @@
 #include "csp/scoped_ptr.h"
 
 #include <assert.h>
-#include <stdlib.h>
 
-void csp_scoped_ptr_init(csp_scoped_ptr *const _this)
+csp_scoped_ptr csp_scoped_ptr_init(void)
 {
-    assert(_this);
+    const csp_scoped_ptr _this = { ._p = nullptr };
 
-    _this->_p = nullptr;
+    assert(!csp_scoped_ptr_get(&_this));
 
-    assert(!csp_scoped_ptr_get(_this));
+    return _this;
 }
 
-void csp_scoped_ptr_init_p(csp_scoped_ptr *const _this, csp_scoped_ptr_T *const _p)
+csp_scoped_ptr csp_scoped_ptr_init_p(csp_scoped_ptr_T *const _p)
 {
-    assert(_this);
+    const csp_scoped_ptr _this = { ._p = _p };
 
-    _this->_p = _p;
+    assert(csp_scoped_ptr_get(&_this) == _p);
 
-    assert(csp_scoped_ptr_get(_this) == _p);
+    return _this;
 }
 
 void csp_scoped_ptr_destroy(csp_scoped_ptr *const _this)
@@ -38,11 +37,11 @@ csp_scoped_ptr_T *csp_scoped_ptr_get(const csp_scoped_ptr *const _this)
     return _this->_p;
 }
 
-size_t csp_scoped_ptr_hash(const csp_scoped_ptr *const _this)
+[[nodiscard]] const bool csp_scoped_ptr_bool(const csp_scoped_ptr *const _this)
 {
     assert(_this);
 
-    return _this->_p ? (size_t)_this->_p : 0;
+    return _this->_p != nullptr;
 }
 
 void csp_scoped_ptr_reset(csp_scoped_ptr *const _this)
@@ -76,22 +75,27 @@ void csp_scoped_ptr_swap(csp_scoped_ptr *const _this, csp_scoped_ptr *const _b)
     _b->_p = _p;
 }
 
-csp_scoped_ptr csp_make_scoped_for_overwrite(const size_t _size)
+void csp_swap_s(csp_scoped_ptr *const _x, csp_scoped_ptr *const _y)
 {
-    csp_scoped_ptr _u;
+    assert(_x);
+    assert(_y);
 
-    const auto _ptr = (unsigned char *)malloc(_size);
-    if (!_ptr)
-    {
-        // TODO: error handling
-        _u._p = nullptr;
-
-        return _u;
-    }
-
-    csp_scoped_ptr_T *const _p = (csp_scoped_ptr_T *)_ptr;
-
-    _u._p = _p;
-
-    return _u;
+    csp_scoped_ptr_swap(_x, _y);
 }
+
+[[nodiscard]] bool csp_scoped_ptr_equal_to(const csp_scoped_ptr *const _x, const csp_scoped_ptr *const _y)
+{
+    assert(_x);
+    assert(_y);
+
+    return _x->_p == _y->_p;
+}
+
+[[nodiscard]] bool csp_scoped_ptr_not_equal_to(const csp_scoped_ptr *const _x, const csp_scoped_ptr *const _y)
+{
+    assert(_x);
+    assert(_y);
+
+    return _x->_p != _y->_p;
+}
+
