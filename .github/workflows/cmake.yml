@@ -12,6 +12,7 @@ jobs:
         uses: threeal/cmake-action@v1.2.0
         with:
             c-compiler: gcc
+            c-flags: -std=c2x
             run-build: true
             run-test: true
 
