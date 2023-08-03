@@ -1,27 +1,44 @@
 #include "csp/atomic_weak_ptr.h"
 
 #include <assert.h>
+#include <stddef.h>
 #include <threads.h>
 
-void csp_atomic_weak_ptr_init(csp_atomic_weak_ptr *const _this)
-{
-    assert(_this);
+#include "mtx_pool.h"
 
-    csp_weak_ptr_init(&_this->_p);
+static once_flag csp_mtx_pool_flag = ONCE_FLAG_INIT;
+
+csp_atomic_weak_ptr csp_atomic_weak_ptr_init(void)
+{
+    call_once(&csp_mtx_pool_flag, csp_mtx_pool_init);
+
+    const csp_atomic_weak_ptr _this = { ._r = csp_weak_ptr_init() };
+
+    return _this;
 }
 
-void csp_atomic_weak_ptr_init_w_copy(csp_atomic_weak_ptr *const _this, const csp_weak_ptr _desired)
+csp_atomic_weak_ptr csp_atomic_weak_ptr_init_s(const csp_weak_ptr _desired)
 {
-    assert(_this);
+    call_once(&csp_mtx_pool_flag, csp_mtx_pool_init);
 
-    csp_weak_ptr_init_w_copy(&_this->_p, &_desired);
+    const csp_atomic_weak_ptr _this = { ._r = csp_weak_ptr_init_copy_w(&_desired) };
+
+    return _this;
 }
 
 void csp_atomic_weak_ptr_destroy(csp_atomic_weak_ptr *const _this)
 {
     assert(_this);
 
-    csp_weak_ptr_destroy(&_this->_p);
+    csp_weak_ptr_destroy(&_this->_r);
+}
+
+void csp_atomic_weak_ptr_s(csp_atomic_weak_ptr *const _this, const csp_weak_ptr _desired, csp_exception *const _e)
+{
+    assert(_this);
+    assert(_e);
+
+    csp_atomic_weak_ptr_store(_this, _desired, _e);
 }
 
 bool csp_atomic_weak_ptr_is_lock_free(const csp_atomic_weak_ptr *const _this)
@@ -31,209 +48,204 @@ bool csp_atomic_weak_ptr_is_lock_free(const csp_atomic_weak_ptr *const _this)
     return false;
 }
 
-csp_weak_ptr csp_atomic_weak_ptr_load(const csp_atomic_weak_ptr *const _this)
+csp_weak_ptr csp_atomic_weak_ptr_load(const csp_atomic_weak_ptr *const _this, csp_exception *const _e)
 {
     assert(_this);
+    assert(_e);
 
-    csp_weak_ptr _r;
-
-    mtx_t _mtx;
-
-    if (mtx_init(&_mtx, mtx_plain) != thrd_success)
+    auto _mutex = csp_mtx_pool_get(_this, _e);
+    if (*_e != CSP_SUCCESS)
     {
-        // TODO: error handling
+        return (csp_weak_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    if (mtx_lock(&_mtx) != thrd_success)
+    if (mtx_lock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return (csp_weak_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    csp_weak_ptr_init_w_copy(&_r, &_this->_p);
+    const auto _r = csp_weak_ptr_init_copy_w(&_this->_r);
 
-    if (mtx_unlock(&_mtx) != thrd_success)
+    if (mtx_unlock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return (csp_weak_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    mtx_destroy(&_mtx);
+    *_e = CSP_SUCCESS;
 
     return _r;
 }
 
-csp_weak_ptr csp_atomic_weak_ptr_load_explicit(const csp_atomic_weak_ptr *const _this, const memory_order _order)
+csp_weak_ptr csp_atomic_weak_ptr_load_explicit(const csp_atomic_weak_ptr *const _this, const memory_order _order, csp_exception *const _e)
 {
     assert(_this);
     assert(_order != memory_order_release && _order != memory_order_acq_rel);
+    assert(_e);
 
-    return csp_atomic_weak_ptr_load(_this);
+    return csp_atomic_weak_ptr_load(_this, _e);
 }
 
-void csp_atomic_weak_ptr_store(csp_atomic_weak_ptr *const _this, csp_weak_ptr _desired)
+void csp_atomic_weak_ptr_store(csp_atomic_weak_ptr *const _this, csp_weak_ptr _desired, csp_exception *const _e)
 {
     assert(_this);
+    assert(_e);
 
-    mtx_t _mtx;
-
-    if (mtx_init(&_mtx, mtx_plain) != thrd_success)
+    auto _mutex = csp_mtx_pool_get(_this, _e);
+    if (*_e != CSP_SUCCESS)
     {
-        // TODO: error handling
+        return;
     }
 
-    if (mtx_lock(&_mtx) != thrd_success)
+    if (mtx_lock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return;
     }
 
-    csp_weak_ptr_swap(&_this->_p, &_desired);
+    csp_weak_ptr_swap(&_this->_r, &_desired);
 
-    if (mtx_unlock(&_mtx) != thrd_success)
+    if (mtx_unlock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return;
     }
 
-    mtx_destroy(&_mtx);
+    *_e = CSP_SUCCESS;
 }
 
-void csp_atomic_weak_ptr_store_explicit(csp_atomic_weak_ptr *const _this, const csp_weak_ptr _desired, const memory_order _order)
+void csp_atomic_weak_ptr_store_explicit(csp_atomic_weak_ptr *const _this, const csp_weak_ptr _desired, const memory_order _order, csp_exception *const _e)
 {
     assert(_this);
     assert(_order != memory_order_consume && _order != memory_order_acquire && _order != memory_order_acq_rel);
+    assert(_e);
 
-    csp_atomic_weak_ptr_store(_this, _desired);
+    csp_atomic_weak_ptr_store(_this, _desired, _e);
 }
 
-csp_weak_ptr csp_atomic_weak_ptr_exchange(csp_atomic_weak_ptr *const _this, csp_weak_ptr _desired)
+csp_weak_ptr csp_atomic_weak_ptr_exchange(csp_atomic_weak_ptr *const _this, csp_weak_ptr _desired, csp_exception *const _e)
 {
     assert(_this);
+    assert(_e);
 
-    mtx_t _mtx;
-
-    if (mtx_init(&_mtx, mtx_plain) != thrd_success)
+    auto _mutex = csp_mtx_pool_get(_this, _e);
+    if (*_e != CSP_SUCCESS)
     {
-        // TODO: error handling
+        return (csp_weak_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    if (mtx_lock(&_mtx) != thrd_success)
+    if (mtx_lock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return (csp_weak_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    csp_weak_ptr_swap(&_this->_p, &_desired);
+    csp_weak_ptr_swap(&_this->_r, &_desired);
 
-    if (mtx_unlock(&_mtx) != thrd_success)
+    if (mtx_unlock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return (csp_weak_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    mtx_destroy(&_mtx);
+    *_e = CSP_SUCCESS;
 
     return _desired;
 }
 
-csp_weak_ptr csp_atomic_weak_ptr_exchange_explicit(csp_atomic_weak_ptr *const _this, const csp_weak_ptr _desired, const memory_order _order)
+csp_weak_ptr csp_atomic_weak_ptr_exchange_explicit(csp_atomic_weak_ptr *const _this, const csp_weak_ptr _desired, const memory_order _order, csp_exception *const _e)
 {
     assert(_this);
+    assert(_e);
 
-    return csp_atomic_weak_ptr_exchange(_this, _desired);
+    return csp_atomic_weak_ptr_exchange(_this, _desired, _e);
 }
 
-bool csp_atomic_weak_ptr_compare_exchange_weak(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired)
+bool csp_atomic_weak_ptr_compare_exchange_weak(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired, csp_exception *const _e)
 {
     assert(_this);
+    assert(_e);
 
-    return csp_atomic_weak_ptr_compare_exchange_strong(_this, _expected, _desired);
+    return csp_atomic_weak_ptr_compare_exchange_strong(_this, _expected, _desired, _e);
 }
 
-bool csp_atomic_weak_ptr_compare_exchange_weak_explicit(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired, const memory_order _success, const memory_order _failure)
+bool csp_atomic_weak_ptr_compare_exchange_weak_explicit(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired, const memory_order _success, const memory_order _failure, csp_exception *const _e)
 {
     assert(_this);
     assert(_failure != memory_order_release && _failure != memory_order_acq_rel);
+    assert(_e);
 
-    return csp_atomic_weak_ptr_compare_exchange_weak(_this, _expected, _desired);
+    return csp_atomic_weak_ptr_compare_exchange_weak(_this, _expected, _desired, _e);
 }
 
-bool csp_atomic_weak_ptr_compare_exchange_strong(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired)
+bool csp_atomic_weak_ptr_compare_exchange_strong(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired, csp_exception *const _e)
 {
     assert(_this);
+    assert(_e);
 
-    csp_weak_ptr _tmp;
-
-    mtx_t _mtx;
-
-    if (mtx_init(&_mtx, mtx_plain) != thrd_success)
+    auto _mutex = csp_mtx_pool_get(_this, _e);
+    if (*_e != CSP_SUCCESS)
     {
-        // TODO: error handling
+        return false;
     }
 
-    if (mtx_lock(&_mtx) != thrd_success)
+    if (mtx_lock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return false;
     }
 
-    if (csp_weak_ptr_owner_equals_w(&_this->_p, _expected))
+    if (csp_weak_ptr_owner_equals_w(&_this->_r, _expected))
     {
-        csp_weak_ptr_swap(&_tmp, &_this->_p);
-        csp_weak_ptr_init_w_copy(&_this->_p, &_desired);
+        auto _tmp = csp_weak_ptr_init();
+        csp_weak_ptr_swap(&_tmp, &_this->_r);
+        csp_weak_ptr_copy_w(&_this->_r, &_desired);
 
-        if (mtx_unlock(&_mtx) != thrd_success)
+        if (mtx_unlock(_mutex) != thrd_success)
         {
-            // TODO: error handling
+            *_e = CSP_BAD_ATOMIC;
+
+            return false;
         }
 
-        mtx_destroy(&_mtx);
-
         csp_weak_ptr_destroy(&_tmp);
+
+        *_e = CSP_SUCCESS;
 
         return true;
     }
 
+    auto _tmp = csp_weak_ptr_init();
     csp_weak_ptr_swap(&_tmp, _expected);
-    csp_weak_ptr_init_w_copy(_expected, &_this->_p);
+    csp_weak_ptr_copy_w(_expected, &_this->_r);
 
-    if (mtx_unlock(&_mtx) != thrd_success)
+    if (mtx_unlock(_mutex) != thrd_success)
     {
-        // TODO: error handling
+        *_e = CSP_BAD_ATOMIC;
+
+        return false;
     }
 
-    mtx_destroy(&_mtx);
-
     csp_weak_ptr_destroy(&_tmp);
+
+    *_e = CSP_SUCCESS;
 
     return false;
 }
 
-bool csp_atomic_weak_ptr_compare_exchange_strong_explicit(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired, const memory_order _success, const memory_order _failure)
+bool csp_atomic_weak_ptr_compare_exchange_strong_explicit(csp_atomic_weak_ptr *const _this, csp_weak_ptr *const _expected, const csp_weak_ptr _desired, const memory_order _success, const memory_order _failure, csp_exception *const _e)
 {
     assert(_this);
     assert(_failure != memory_order_release && _failure != memory_order_acq_rel);
+    assert(_e);
 
-    return csp_atomic_weak_ptr_compare_exchange_strong(_this, _expected, _desired);
-}
-
-// TODO: https://en.cppreference.com/w/c/thread
-void csp_atomic_weak_ptr_wait(const csp_atomic_weak_ptr *const _this, const csp_weak_ptr _old)
-{
-    assert(_this);
-}
-
-void csp_atomic_weak_ptr_wait_explicit(const csp_atomic_weak_ptr *const _this, const csp_weak_ptr _old, const memory_order _order)
-{
-    assert(_this);
-    assert(_order != memory_order_release && _order != memory_order_acq_rel);
-
-    csp_atomic_weak_ptr_wait(_this, _old);
-}
-
-void csp_atomic_weak_ptr_notify_one(csp_atomic_weak_ptr *const _this)
-{
-    assert(_this);
-
-    csp_atomic_weak_ptr_notify_all(_this);
-}
-
-// TODO: https://en.cppreference.com/w/c/thread
-void csp_atomic_weak_ptr_notify_all(csp_atomic_weak_ptr *const _this)
-{
-    assert(_this);
+    return csp_atomic_weak_ptr_compare_exchange_strong(_this, _expected, _desired, _e);
 }
