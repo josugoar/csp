@@ -1,31 +1,19 @@
 {
-    "C_Cpp.doxygen.sectionTags": [
-        "attention",
-        "author",
-        "authors",
-        "bug",
-        "copyright",
-        "date",
-        "deprecated",
-        "details",
-        "exception",
-        "invariant",
-        "note",
-        "param",
-        "post",
-        "pre",
-        "remark",
-        "remarks",
-        "result",
-        "returns",
-        "retval",
-        "since",
-        "test",
-        "todo",
-        "tparam",
-        "warning"
-    ],
     "files.associations": {
-        "*.h": "c"
+        "*.h": "c",
+        "atomic": "c",
+        "bit": "c",
+        "cmath": "c",
+        "compare": "c",
+        "concepts": "c",
+        "cstdarg": "c",
+        "cstdio": "c",
+        "cstdlib": "c",
+        "type_traits": "c",
+        "limits": "c",
+        "new": "c",
+        "*.tcc": "c",
+        "cstdint": "c",
+        "typeinfo": "c"
     }
 }
