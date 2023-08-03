@@ -13,6 +13,7 @@ typedef struct csp_shared_ptr csp_shared_ptr;
 
 typedef void csp_weak_ptr_T;
 
+/// @brief Weak reference to an object managed by csp_shared_ptr.
 typedef struct csp_weak_ptr csp_weak_ptr;
 
 /// @brief csp_weak_ptr_T.
@@ -80,9 +81,6 @@ void csp_weak_ptr_reset(csp_weak_ptr *_this);
 
 /// @brief Swaps the managed objects.
 void csp_weak_ptr_swap(csp_weak_ptr *_this, csp_weak_ptr *_r);
-
-/// @brief Swaps the managed objects.
-void csp_swap_w(csp_weak_ptr *_x, csp_weak_ptr *_y);
 
 typedef struct csp_cntrl_blk csp_cntrl_blk;
 

@@ -13,12 +13,14 @@
 
 typedef void csp_default_delete_T;
 
+///@brief Default deleter for csp_unique_ptr.
 void csp_default_delete(csp_default_delete_T *_ptr);
 
 typedef void csp_unique_ptr_T;
 
 typedef void (*csp_unique_ptr_D)(csp_unique_ptr_T *);
 
+/// @brief Smart pointer with unique object ownership semantics.
 typedef struct csp_unique_ptr csp_unique_ptr;
 
 /// @brief csp_unique_ptr_T*.
@@ -61,10 +63,10 @@ csp_unique_ptr *csp_unique_ptr_move_u(csp_unique_ptr *_this, csp_unique_ptr *_u)
 [[nodiscard]] const csp_unique_ptr_D *csp_unique_ptr_get_deleter_const(const csp_unique_ptr *_this);
 
 /// @brief Checks if there is an associated managed object.
-[[nodiscard]] const bool csp_unique_ptr_bool(const csp_unique_ptr *_this);
+[[nodiscard]] bool csp_unique_ptr_bool(const csp_unique_ptr *_this);
 
 /// @brief Returns a pointer to the managed object and releases the ownership.
-csp_unique_ptr_T *csp_unique_ptr_release(csp_unique_ptr *_this);
+[[nodiscard]] csp_unique_ptr_T *csp_unique_ptr_release(csp_unique_ptr *_this);
 
 /// @brief Replaces the managed object.
 void csp_unique_ptr_reset(csp_unique_ptr *_this);
@@ -76,10 +78,7 @@ void csp_unique_ptr_reset_p(csp_unique_ptr *_this, csp_unique_ptr_T *_p);
 void csp_unique_ptr_swap(csp_unique_ptr *_this, csp_unique_ptr *_u);
 
 /// @brief Creates a unique pointer that manages a new object.
-[[nodiscard]] csp_unique_ptr csp_make_unique_for_overwrite(size_t _size, csp_exception *_exception);
-
-/// @brief Swaps the managed objects.
-void csp_swap_u(csp_unique_ptr *_x, csp_unique_ptr *_y);
+[[nodiscard]] csp_unique_ptr csp_make_unique_for_overwrite(size_t _size, csp_exception *_e);
 
 /// @brief Compares to another csp_unique_ptr.
 [[nodiscard]] bool csp_unique_ptr_equal_to(const csp_unique_ptr *_x, const csp_unique_ptr *_y);
