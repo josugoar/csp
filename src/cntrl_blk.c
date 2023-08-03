@@ -1,23 +1,72 @@
 #include "cntrl_blk.h"
 
 #include <assert.h>
-#include <stdatomic.h>
 #include <stdlib.h>
 
-struct csp_cntrl_blk
+static inline long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG *const _value)
 {
-    csp_cntrl_blk_T *_p;
-    csp_cntrl_blk_D _d;
-#ifndef CSP_NO_SYNCHRONIZATION
-    atomic_long _shared_owners;
-    atomic_long _weak_owners;
+#ifdef __STD_NO_ATOMICS__
+    return *_value;
 #else
-    long _shared_owners;
-    long _weak_owners;
+    return atomic_load(_value);
 #endif
-};
+}
 
-void csp_cntrl_blk_init(csp_cntrl_blk *const _this, csp_cntrl_blk_T *const _p, const csp_cntrl_blk_D _d)
+static inline long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG *const _value)
+{
+#ifdef __STD_NO_ATOMICS__
+    return *_value;
+#else
+    return atomic_load_explicit(_value, memory_order_relaxed);
+#endif
+}
+
+static inline long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG *const _value)
+{
+#ifdef __STD_NO_ATOMICS__
+    return *_value;
+#else
+    return atomic_load_explicit(_value, memory_order_acquire);
+#endif
+}
+
+static inline long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG *const _value)
+{
+#ifdef __STD_NO_ATOMICS__
+    return ++(*_value);
+#else
+    return atomic_fetch_add_explicit(_value, 1, memory_order_relaxed) + 1;
+#endif
+}
+
+static inline long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG *const _value)
+{
+#ifdef __STD_NO_ATOMICS__
+    return --(*_value);
+#else
+    return atomic_fetch_sub_explicit(_value, 1, memory_order_relaxed) + 1;
+#endif
+}
+
+static inline bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG *const _value, long *_expected, const long _desired)
+{
+#ifdef __STD_NO_ATOMICS__
+    if (*_value == *_expected)
+    {
+        *_value = _desired;
+
+        return true;
+    }
+
+    *_expected = *_value;
+
+    return false;
+#else
+    return atomic_compare_exchange_weak(_value, _expected, _desired);
+#endif
+}
+
+csp_cntrl_blk *csp_cntrl_blk_pd(csp_cntrl_blk *const _this, csp_cntrl_blk_T *const _p, const csp_cntrl_blk_D _d)
 {
     assert(_this);
 
@@ -25,6 +74,8 @@ void csp_cntrl_blk_init(csp_cntrl_blk *const _this, csp_cntrl_blk_T *const _p, c
     _this->_d = _d;
     _this->_shared_owners = 0;
     _this->_weak_owners = 0;
+
+    return _this;
 }
 
 csp_cntrl_blk_D *csp_cntrl_blk_get_deleter(csp_cntrl_blk *const _this)
@@ -38,44 +89,23 @@ long csp_cntrl_blk_use_count(const csp_cntrl_blk *const _this)
 {
     assert(_this);
 
-#ifndef CSP_NO_SYNCHRONIZATION
-    const long _shared_owners = atomic_load_explicit(&_this->_shared_owners, memory_order_relaxed);
-#else
-    const long _shared_owners = _this->_shared_owners;
-#endif
-
-    return _shared_owners + 1;
+    return csp_cntrl_blk_load_relaxed(&_this->_shared_owners) + 1;
 }
 
 csp_cntrl_blk *csp_cntrl_blk_lock(csp_cntrl_blk *const _this)
 {
     assert(_this);
 
-#ifndef CSP_NO_SYNCHRONIZATION
-    long _shared_owners = atomic_load(&_this->_shared_owners);
-#else
-    long _shared_owners = _this->_shared_owners;
-#endif
+    auto _shared_owners = csp_cntrl_blk_load(&_this->_shared_owners);
 
     while (_shared_owners != -1)
     {
-#ifndef CSP_NO_SYNCHRONIZATION
-    const bool equal = atomic_compare_exchange_strong(&_this->_shared_owners, &_shared_owners, _shared_owners + 1);
-#else
-    bool equal = false;
-    if (_this->_shared_owners == _shared_owners) {
-        _this->_shared_owners = __after;
-        
-        equal = true;
-    }
-#endif
-
-        if (equal)
+        if (csp_cntrl_blk_compare_exchange_weak(&_this->_shared_owners, &_shared_owners, _shared_owners + 1))
         {
             return _this;
         }
     }
-
+        
     return nullptr;
 }
 
@@ -83,27 +113,16 @@ void csp_cntrl_blk_add_shared(csp_cntrl_blk *const _this)
 {
     assert(_this);
 
-#ifndef CSP_NO_SYNCHRONIZATION
-    atomic_fetch_add_explicit(&_this->_shared_owners, 1, memory_order_relaxed);
-#else
-    ++_this->_shared_owners;
-#endif
+    csp_cntrl_blk_add_fetch_relaxed(&_this->_shared_owners);
 }
 
 void csp_cntrl_blk_release_shared(csp_cntrl_blk *const _this)
 {
     assert(_this);
+    assert(_this->_d);
 
-#ifndef CSP_NO_SYNCHRONIZATION
-    atomic_fetch_sub_explicit(&_this->_shared_owners, 1, memory_order_acq_rel);
-#else
-    --_this->_shared_owners;
-#endif
-
-    if (_this->_shared_owners == -1)
+    if (csp_cntrl_blk_sub_fetch_relaxed(&_this->_shared_owners) == -1)
     {
-        assert(_this->_d);
-
         _this->_d(_this->_p);
 
         csp_cntrl_blk_release_weak(_this);
@@ -114,24 +133,14 @@ void csp_cntrl_blk_add_weak(csp_cntrl_blk *const _this)
 {
     assert(_this);
 
-#ifndef CSP_NO_SYNCHRONIZATION
-    atomic_fetch_add_explicit(&_this->_weak_owners, 1, memory_order_relaxed);
-#else
-    ++_this->_weak_owners;
-#endif
+    csp_cntrl_blk_add_fetch_relaxed(&_this->_weak_owners);
 }
 
 void csp_cntrl_blk_release_weak(csp_cntrl_blk *const _this)
 {
     assert(_this);
 
-#ifndef CSP_NO_SYNCHRONIZATION
-    atomic_fetch_sub_explicit(&_this->_weak_owners, 1, memory_order_acq_rel);
-#else
-    --_this->_weak_owners;
-#endif
-
-    if (_this->_weak_owners == -1)
+    if (csp_cntrl_blk_load_aquire(&_this->_weak_owners) == 0 || csp_cntrl_blk_sub_fetch_relaxed(&_this->_weak_owners) == -1)
     {
         free(_this);
     }
