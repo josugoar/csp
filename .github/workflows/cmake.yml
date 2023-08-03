@@ -11,8 +11,10 @@ jobs:
       - name: Configure the project
         run: cmake -S . -B build
 
-      - name: Debug CMake
-        run: cmake --version
+      - name: Update GCC
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade gcc
       
       - name: Debug GCC
         run: gcc --version
