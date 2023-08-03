@@ -9,10 +9,7 @@ jobs:
         uses: actions/checkout@v3.5.3
 
       - name: Configure the project
-        uses: threeal/cmake-action@v1.2.0
-        with:
-            run-build: true
-            run-test: true
+        run: cmake -S . -B build
 
       - name: Build the project
         run: cmake --build build
