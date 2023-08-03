@@ -1,5 +1,5 @@
-#ifndef CSP_ATOMIC_weak_PTR_H
-#define CSP_ATOMIC_weak_PTR_H
+#ifndef CSP_ATOMIC_WEAK_PTR_H
+#define CSP_ATOMIC_WEAK_PTR_H
 
 #include <stdatomic.h>
 
