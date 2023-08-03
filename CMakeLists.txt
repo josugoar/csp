@@ -5,6 +5,7 @@ project(csp
         HOMEPAGE_URL "https://github.com/josugoar/csp"
         LANGUAGES C)
 
+set(CMAKE_C_COMPILER gcc)
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
