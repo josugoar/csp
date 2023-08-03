@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/csp2.png" alt="csp" width="640" height="320" />
+  <img src="assets/csp.png" alt="csp" width="640" height="320" />
 </p>
 
 <h1></h1>
