@@ -4,7 +4,7 @@
 
 <h1></h1>
 
-> C++ style smart pointers for C23
+> ©️ 🧠 👉 C++ style smart pointers for C23
 
 # C Smart Pointers (CSP)
 
