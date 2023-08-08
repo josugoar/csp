@@ -3,7 +3,7 @@
 constexpr size_t csp_mtx_count = 32;
 static mtx_t csp_mtx_pool[csp_mtx_count];
 
-static csp_exception *csp_mtx_pool_e;
+static csp_exception *const csp_mtx_pool_e;
 
 void csp_mtx_pool_init(void)
 {
