@@ -15,7 +15,7 @@ static inline long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG *_value);
 
 static inline bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG *_value, long *_expected, long _desired);
 
-csp_cntrl_blk *csp_cntrl_blk_pd(csp_cntrl_blk *const _this, csp_cntrl_blk_T *const _p, const csp_cntrl_blk_D _d)
+csp_cntrl_blk *csp_cntrl_blk_init(csp_cntrl_blk *const _this, csp_cntrl_blk_T *const _p, const csp_cntrl_blk_D _d)
 {
     assert(_this);
 

@@ -7,6 +7,6 @@
 
 void csp_mtx_pool_init(void);
 
-mtx_t *csp_mtx_pool_get(const void *_p, csp_exception *_e);
+[[nodiscard]] mtx_t *csp_mtx_pool_get(const void *_p, csp_exception *_e);
 
 #endif
