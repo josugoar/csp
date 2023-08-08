@@ -165,7 +165,14 @@ void csp_unique_ptr_swap(csp_unique_ptr *const _this, csp_unique_ptr *const _u)
     _u->_d = _d;
 }
 
-csp_unique_ptr csp_make_unique_for_overwrite(const size_t _size, csp_exception *const _e)
+csp_unique_ptr csp_make_unique(const size_t _size, csp_exception *const _e)
+{
+    assert(_e);
+
+    return csp_make_unique_d(_size, csp_default_delete, _e);
+}
+
+csp_unique_ptr csp_make_unique_d(const size_t _size, const csp_unique_ptr_D _d, csp_exception *const _e)
 {
     assert(_e);
 
@@ -178,7 +185,6 @@ csp_unique_ptr csp_make_unique_for_overwrite(const size_t _size, csp_exception *
     }
 
     const auto _p = (csp_unique_ptr_T *)_ptr;
-    const auto _d = csp_default_delete;
 
     const csp_unique_ptr _u = { ._p = _p, ._d = _d };
 

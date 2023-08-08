@@ -113,7 +113,10 @@ void csp_shared_ptr_reset_p_move_s(csp_shared_ptr *_this, csp_shared_ptr *_r, cs
 void csp_shared_ptr_swap(csp_shared_ptr *_this, csp_shared_ptr *_r);
 
 /// @brief Creates a shared pointer that manages a new object.
-[[nodiscard]] csp_shared_ptr csp_make_shared_for_overwrite(size_t _size, csp_exception *_e);
+[[nodiscard]] csp_shared_ptr csp_make_shared(size_t _size, csp_exception *_e);
+
+/// @brief Creates a shared pointer that manages a new object.
+[[nodiscard]] csp_shared_ptr csp_make_shared_d(size_t _size, csp_shared_ptr_D _d, csp_exception *_e);
 
 /// @brief Compares to another csp_shared_ptr.
 [[nodiscard]] bool csp_shared_ptr_equal_to(const csp_shared_ptr *_x, const csp_shared_ptr *_y);

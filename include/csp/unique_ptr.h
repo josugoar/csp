@@ -78,7 +78,10 @@ void csp_unique_ptr_reset_p(csp_unique_ptr *_this, csp_unique_ptr_T *_p);
 void csp_unique_ptr_swap(csp_unique_ptr *_this, csp_unique_ptr *_u);
 
 /// @brief Creates a unique pointer that manages a new object.
-[[nodiscard]] csp_unique_ptr csp_make_unique_for_overwrite(size_t _size, csp_exception *_e);
+[[nodiscard]] csp_unique_ptr csp_make_unique(size_t _size, csp_exception *_e);
+
+/// @brief Creates a unique pointer that manages a new object.
+[[nodiscard]] csp_unique_ptr csp_make_unique_d(size_t _size, csp_unique_ptr_D _d, csp_exception *_e);
 
 /// @brief Compares to another csp_unique_ptr.
 [[nodiscard]] bool csp_unique_ptr_equal_to(const csp_unique_ptr *_x, const csp_unique_ptr *_y);

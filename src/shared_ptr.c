@@ -33,7 +33,7 @@ csp_shared_ptr csp_shared_ptr_init_p(csp_shared_ptr_T *const _p, csp_exception *
         return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_pd(_cntrl, _p, csp_default_delete) };
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, csp_default_delete) };
 
     *_e = CSP_SUCCESS;
 
@@ -58,7 +58,7 @@ csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T *const _p, const csp_shar
         return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_pd(_cntrl, _p, _d) };
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
 
     *_e = CSP_SUCCESS;
 
@@ -184,7 +184,7 @@ csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr *const _r, csp_exceptio
         return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const csp_shared_ptr _this = { ._p = csp_unique_ptr_release(_r), ._cntrl = csp_cntrl_blk_pd(_cntrl, _r->_p, _r->_d) };
+    const csp_shared_ptr _this = { ._p = csp_unique_ptr_release(_r), ._cntrl = csp_cntrl_blk_init(_cntrl, _r->_p, _r->_d) };
 
     *_e = CSP_SUCCESS;
 
@@ -399,7 +399,14 @@ void csp_shared_ptr_swap(csp_shared_ptr *const _this, csp_shared_ptr *const _r)
     _r->_cntrl = _cntrl;
 }
 
-csp_shared_ptr csp_make_shared_for_overwrite(const size_t _size, csp_exception *const _e)
+csp_shared_ptr csp_make_shared(const size_t _size, csp_exception *const _e)
+{
+    assert(_e);
+
+    return csp_make_shared_d(_size, csp_default_delete, _e);
+}
+
+csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception *const _e)
 {
     assert(_e);
 
@@ -414,7 +421,7 @@ csp_shared_ptr csp_make_shared_for_overwrite(const size_t _size, csp_exception *
     const auto _p = (csp_shared_ptr_T *)_ptr;
     const auto _cntrl = (csp_cntrl_blk *)(_ptr + _size);
 
-    const csp_shared_ptr _r = { ._p = _p, ._cntrl = csp_cntrl_blk_pd(_cntrl, _p, csp_default_delete) };
+    const csp_shared_ptr _r = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
 
     *_e = CSP_SUCCESS;
 
