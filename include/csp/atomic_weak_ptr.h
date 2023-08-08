@@ -67,18 +67,6 @@ bool csp_atomic_weak_ptr_compare_exchange_strong(csp_atomic_weak_ptr *_this, csp
 /// @brief If the underlying csp_weak_ptr stores the same pointer value as expected and shares ownership with it, or if both underlying and expected are empty, assigns from desired to the underlying csp_weak_ptr, returns true, and orders memory according to success, otherwise assigns from the underlying csp_weak_ptr to expected, returns false, and orders memory according to failure. The behavior is undefined if failure is memory_order_release or memory_order_acq_rel. On success, the operation is an atomic read-modify-write operation on this and expected is not accessed after the atomic update. On failure, the operation is an atomic load operation on this and expected is updated with the existing value read from the atomic object. This update to expected's csp_weak_ptr_use_count is part of this atomic operation, although the write itself (and any subsequent deallocation/destruction) is not required to be.
 bool csp_atomic_weak_ptr_compare_exchange_strong_explicit(csp_atomic_weak_ptr *_this, csp_weak_ptr *_expected, csp_weak_ptr _desired, memory_order _success, memory_order _failure, csp_exception *_e);
 
-/// @brief Performs an atomic waiting operation.
-void csp_atomic_weak_ptr_wait(const csp_atomic_weak_ptr *_this, csp_weak_ptr _old, csp_exception *_e);
-
-/// @brief Performs an atomic waiting operation.
-void csp_atomic_weak_ptr_wait_explicit(const csp_atomic_weak_ptr *_this, csp_weak_ptr _old, memory_order _order, csp_exception *_e);
-
-/// @brief Performs an atomic notifying operation.
-void csp_atomic_weak_ptr_notify_one(csp_atomic_weak_ptr *_this, csp_exception *_e);
-
-/// @brief Performs an atomic notifying operation.
-void csp_atomic_weak_ptr_notify_all(csp_atomic_weak_ptr *_this, csp_exception *_e);
-
 struct csp_atomic_weak_ptr
 {
     csp_weak_ptr _r;
