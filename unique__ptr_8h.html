@@ -154,9 +154,12 @@ Functions</h2></td></tr>
 <tr class="memitem:adb1c07d431ac32d9d44864d0cea3b925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unique__ptr_8h.html#adb1c07d431ac32d9d44864d0cea3b925">csp_unique_ptr_swap</a> (<a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> *_this, <a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> *_u)</td></tr>
 <tr class="memdesc:adb1c07d431ac32d9d44864d0cea3b925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the managed objects.  <a href="unique__ptr_8h.html#adb1c07d431ac32d9d44864d0cea3b925">More...</a><br /></td></tr>
 <tr class="separator:adb1c07d431ac32d9d44864d0cea3b925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a866c01730e9bf24526bbf120647da021"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unique__ptr_8h.html#a866c01730e9bf24526bbf120647da021">csp_make_unique_for_overwrite</a> (size_t _size, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a866c01730e9bf24526bbf120647da021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a unique pointer that manages a new object.  <a href="unique__ptr_8h.html#a866c01730e9bf24526bbf120647da021">More...</a><br /></td></tr>
-<tr class="separator:a866c01730e9bf24526bbf120647da021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae168588ee1b27e96df5fc6bf84961b3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unique__ptr_8h.html#ae168588ee1b27e96df5fc6bf84961b3c">csp_make_unique</a> (size_t _size, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
+<tr class="memdesc:ae168588ee1b27e96df5fc6bf84961b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a unique pointer that manages a new object.  <a href="unique__ptr_8h.html#ae168588ee1b27e96df5fc6bf84961b3c">More...</a><br /></td></tr>
+<tr class="separator:ae168588ee1b27e96df5fc6bf84961b3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a037c949aa4bdf015e5928ba3039d11ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unique__ptr_8h.html#a037c949aa4bdf015e5928ba3039d11ac">csp_make_unique_d</a> (size_t _size, <a class="el" href="unique__ptr_8h.html#a9ca5c662b5731a0794b40817798cd80f">csp_unique_ptr_D</a> _d, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
+<tr class="memdesc:a037c949aa4bdf015e5928ba3039d11ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a unique pointer that manages a new object.  <a href="unique__ptr_8h.html#a037c949aa4bdf015e5928ba3039d11ac">More...</a><br /></td></tr>
+<tr class="separator:a037c949aa4bdf015e5928ba3039d11ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa4bf259da6bfe205623be7d693a8ee6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unique__ptr_8h.html#afa4bf259da6bfe205623be7d693a8ee6">csp_unique_ptr_equal_to</a> (const <a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> *_x, const <a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> *_y)</td></tr>
 <tr class="memdesc:afa4bf259da6bfe205623be7d693a8ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares to another <a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a>.  <a href="unique__ptr_8h.html#afa4bf259da6bfe205623be7d693a8ee6">More...</a><br /></td></tr>
 <tr class="separator:afa4bf259da6bfe205623be7d693a8ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -307,17 +310,53 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a866c01730e9bf24526bbf120647da021"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a866c01730e9bf24526bbf120647da021">&#9670;&nbsp;</a></span>csp_make_unique_for_overwrite()</h2>
+<a id="ae168588ee1b27e96df5fc6bf84961b3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae168588ee1b27e96df5fc6bf84961b3c">&#9670;&nbsp;</a></span>csp_make_unique()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> csp_make_unique_for_overwrite </td>
+          <td class="memname"><a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> csp_make_unique </td>
           <td>(</td>
           <td class="paramtype">size_t&#160;</td>
           <td class="paramname"><em>_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
+          <td class="paramname"><em>_e</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a unique pointer that manages a new object. </p>
+
+</div>
+</div>
+<a id="a037c949aa4bdf015e5928ba3039d11ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a037c949aa4bdf015e5928ba3039d11ac">&#9670;&nbsp;</a></span>csp_make_unique_d()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> csp_make_unique_d </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="unique__ptr_8h.html#a9ca5c662b5731a0794b40817798cd80f">csp_unique_ptr_D</a>&#160;</td>
+          <td class="paramname"><em>_d</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
