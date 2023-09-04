@@ -8,13 +8,15 @@
 
 # C Smart Pointers (CSP)
 
-CSP is a C++ inspired smart pointer library for C23 (although it can be backported to C11 but wanted to check out the new features) specifically inspired by [Boost.SmartPtr](https://www.boost.org/doc/libs/1_82_0/libs/smart_ptr/doc/html/smart_ptr.html) and C++20 smart pointers from the [memory](https://en.cppreference.com/w/cpp/memory) header and the corresponding [libc++](https://github.com/llvm/llvm-project/tree/main/libcxx) implementation. It makes extensive use of modern C23 features such as `nullptr`, `constexpr`, attributes, unnamed arguments and `auto` type inference, as well as C11 atomics and threads, so a C23 compiler is required to build it. At the time of writing, only GCC is able to be used due to the lack of constexpr support of Clang, check support in [cppreference](https://en.cppreference.com/w/c/23).
+CSP is a C++ inspired smart pointer library for C23 (although it can be backported to C11 but wanted to check out the new features) specifically inspired by [Boost.SmartPtr](https://www.boost.org/doc/libs/1_82_0/libs/smart_ptr/doc/html/smart_ptr.html) and C++20 smart pointers from the [memory](https://en.cppreference.com/w/cpp/memory) header and the corresponding [libc++](https://github.com/llvm/llvm-project/tree/main/libcxx) implementation. It makes extensive use of modern C23 features such as `nullptr`, `constexpr`, attributes, unnamed arguments and `auto` type inference, as well as C11 atomics and threads, so a C23 compiler is required to build it. At the time of writing, only GCC is able to be used due to the lack of support of Clang, verify C23 support at [cppreference](https://en.cppreference.com/w/c/23).
 
 ## Features
 
-* **RAII** (Resource Acquisition Is Initialization), thanks to the use of GCC's cleanup attribute. This is mainly for convenience and to avoid having to call each objects "destructor" (or equivalent in C) manually. Inspired by its use in the [systemd](https://news.ycombinator.com/item?id=11305142) codebase. Avoid unless specifically using [GNUC](https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html) *-std=gnu** instead of plain C.
+* **Strict ownership semantics** up to what the C language allows. This is to say that ownership modifying operations must be explicitly stated in code and force the programmer to make the right decisions. Thanks to the "pass by value" nature of csp smart pointers, it is not possible (in a conventional fashion) to mix up types when passing pointers around.
 
-* A **similar interface to C++** smart pointers, with the exception of having to aquire the pointer from the smart pointer using the `get` function to manipulate it. This is due to the lack of operator overloading in C. Aside from that, it follows the standard "object oriented" interface commonly used in C libraries that is similar to the `init` and `destroy` functions originally present in posix, the C standard library and others, except for pointer like objects where copying is innexpensive (that's why "contructors" return a copy).
+* **RAII** (Resource Acquisition Is Initialization), thanks to the use of GCC's cleanup attribute. This is mainly for convenience and to avoid having to call each objects "destructor" (or equivalent in C) manually. Inspired by its use in the [systemd](https://news.ycombinator.com/item?id=11305142) codebase. Avoid unless specifically using [GNUC](https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html) *-std=gnu** instead of plain C. Also, having defined the API, it is possible to use a custom static analyzer to check wheater smart pointer destructors are called, which would "entirely" solve the memory allocation problem while defining strict ownership semantics.
+
+* A **similar interface to C++** smart pointers, with the exception of having to aquire the pointer from the smart pointer using the `get` function to manipulate it. This is due to the lack of operator overloading in C. Aside from that, it follows the standard "object oriented" interface commonly used in C libraries that is similar to the `init` and `destroy` functions originally present in posix, the C standard library and others, except that constructors return a copy due to the inexpensive nature of smart pointers (this allows for a **very** succinct calling style).
 
 * **Thread safe** reference counting, using C11 atomics and threads. Non local shared pointers make use of atomic operations to ensure thread safety and employ some of the optimizations present in libc++, altough not extensive.
 
@@ -24,11 +26,13 @@ CSP is a C++ inspired smart pointer library for C23 (although it can be backport
 
 * ~~Boost.SmartPtr **extended smart pointers** in the form of pointer types not present in the C++ standard library. They don't matter a whole lot in C++ because of weird class member packing optimizations with templates, but since C cannot do such things, they are useful to have as little (to practically none) overhead as possible.~~
 
+  * This would require splitting the API into multiple similary flavoured pointer types (eg. local, nonlocal) and would kill generalizability.
+
 * Implements common **optimizations** found in libc++ and Boost.SmartPtr, as well as the usual single allocations for the control block and the object itself using `csp_make_shared_for_overwrite` type functions.
 
 * **Error handling** is achieved through out error pointers to preserve return values and allow for a very terse syntax which allows for straight forward ownership semantics. Similar to [GLib](https://docs.gtk.org/glib/error-reporting.html) error reporting approach without the *absolutely crazy* decision of aborting the program on insufficient memory.
 
-## Missing features
+## Possible improvements
 
 * Custom allocation support. This is very easy to implement but would require and additional overhead of at least one function pointer in each control block of shared pointers, since it is not possible to explicitelly do [EBO](https://en.cppreference.com/w/cpp/language/ebo) (Empty Base class Optimization) and it would require to add the corresponding allocation and deallocation functions inside it. CSP smart pointers already have an overhead of one function pointer when using the default deleter (free), which is minuscule in comparison to other "generic" solutions that always require memory allocation.
 
@@ -54,6 +58,7 @@ CSP is a C++ inspired smart pointer library for C23 (although it can be backport
 #include <csp/unique_ptr>
 #include <csp/shared_ptr>
 
+// Smart pointers are passed by value (like normal pointers)
 void unique_pointer_consumer(csp_unique_ptr);
 
 void shared_pointer_consumer(csp_shared_ptr);
@@ -71,6 +76,9 @@ void foo_destroy(struct foo *const p)
     free(p);
 }
 
+// When construction the smart pointers notice how const
+// correctness can still be respected without having to
+// jump through hoops
 int main(void)
 {
     // CSP returns an error code if something goes wrong
@@ -86,17 +94,15 @@ int main(void)
         // Handle error
     }
 
+    // Initialize allocated memory to nothing to not crash the
+    // program. Pointer can be initialized now or before making
+    // it smart
+    struct foo *foo = csp_unique_ptr_get(&u);
+    foo->allocated_memory = nullptr;
+
     // Ownership is fully delegated to the consumer
     // when moving a unique pointer
     unique_pointer_consumer(csp_unique_ptr_init_move_u(&u));
-
-    // Now destroy will not do anything because u does not own the pointer
-    // Again, recommended to destroy the pointer manually, there is no way
-    // araound it in standard C without using extremelly costly abstractions
-    // (glib) or macro magic, which is arguably worse than anything else
-#ifndef HAS_CLEANUP_ATTRIBUTE
-    csp_unique_ptr_destroy(&u);
-#endif
 
     // Cleanup pointers don't need to be manually destroyed, but should
     // be avoided unless using gnuc extensions
@@ -129,6 +135,14 @@ int main(void)
     // object if it reaches 0. A cleanup pointer does not need to call it.
 #ifndef HAS_CLEANUP_ATTRIBUTE
     csp_shared_ptr_destroy(&r);
+#endif
+
+    // Now destroy will not do anything because u does not own the pointer
+    // Again, recommended to destroy the pointer manually, there is no way
+    // araound it in standard C without using extremelly costly abstractions
+    // (glib) or macro magic, which is arguably worse than anything else
+#ifndef HAS_CLEANUP_ATTRIBUTE
+    csp_unique_ptr_destroy(&u);
 #endif
 
     return 0;
@@ -174,4 +188,4 @@ cpack -C CPackConfig.cmake
 
 * The brief documentation is "adapted" (copied) from [cppreference](https://en.cppreference.com/w/).
 
-* Some of the reference counting code was inspired by [libc++](https://github.com/llvm/llvm-project/tree/main/libcxx), [MSVC](https://github.com/microsoft/STL) and [libstdc++](https://github.com/gcc-mirror/gcc/tree/master/libstdc%2B%2B-v3). It was interesting seeing the different but similar approaches to the same problem.
+* Some of the reference counting code was inspired mostly by [libc++](https://github.com/llvm/llvm-project/tree/main/libcxx) and also [MSVC](https://github.com/microsoft/STL) and [libstdc++](https://github.com/gcc-mirror/gcc/tree/master/libstdc%2B%2B-v3). It was interesting seeing the different but similar approaches to the same problem.
