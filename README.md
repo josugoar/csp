@@ -51,6 +51,12 @@ CSP is a C++ inspired smart pointer library for C23 (although it can be backport
 #endif
 #endif
 
+#ifdef HAS_CLEANUP_ATTRIBUTE
+#define csp_unique_ptr csp_unique_ptr_cleanup
+#define csp_shared_ptr csp_shared_ptr_cleanup
+#define csp_weak_ptr csp_weak_ptr_cleanup
+#endif
+
 // You can include the entire library with the csp header
 #include <csp/csp.h>
 
@@ -87,9 +93,9 @@ int main(void)
     // Create a unique pointer to a struct foo with a custom
     // deleter that is able to free the internal memory managed
     // by the pointer itself
-    csp_unique_ptr_cleanup u = csp_unique_ptr_init_pd(malloc(sizeof(struct foo)), foo_destroy, &e);
+    csp_unique_ptr u = csp_unique_ptr_init_pd(malloc(sizeof(struct foo)), foo_destroy, &e);
 
-    // Recommended to check for errors obviously
+    // Recommended to check for errors
     if (e != CSP_SUCCESS) {
         // Handle error
     }
@@ -107,9 +113,8 @@ int main(void)
     // Cleanup pointers don't need to be manually destroyed, but should
     // be avoided unless using gnuc extensions
     // Only one allocation is made (optimization)
-    csp_shared_ptr_cleanup r = csp_make_shared_for_overwrite(sizeof(int), &e);
+    csp_shared_ptr r = csp_make_shared_for_overwrite(sizeof(int), &e);
 
-    // Recommended to check for errors obviously
     if (e != CSP_SUCCESS) {
         // Handle error
     }
