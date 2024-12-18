@@ -54,7 +54,7 @@ csp_cntrl_blk *csp_cntrl_blk_lock(csp_cntrl_blk *const _this)
             return _this;
         }
     }
-        
+
     return nullptr;
 }
 
