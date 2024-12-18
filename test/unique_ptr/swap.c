@@ -6,11 +6,11 @@
 typedef int A;
 
 void test(void) {
-    A *const p1 = (A *)malloc(sizeof(*p1));
+    A* const p1 = (A*)malloc(sizeof(*p1));
     *p1 = 1;
     csp_unique_ptr s1 = csp_unique_ptr_init_p(p1);
 
-    A *const p2 = (A *)malloc(sizeof(*p2));
+    A* const p2 = (A*)malloc(sizeof(*p2));
     *p2 = 2;
     csp_unique_ptr s2 = csp_unique_ptr_init_p(p2);
 
@@ -26,10 +26,9 @@ void test(void) {
     csp_unique_ptr_destroy(&s2);
 }
 
-int main(int, const char *[])
+int main(int, const char* [])
 {
     test();
 
     return EXIT_SUCCESS;
 }
-

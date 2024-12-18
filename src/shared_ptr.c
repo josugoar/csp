@@ -20,18 +20,18 @@ csp_shared_ptr csp_shared_ptr_init(void)
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_p(csp_shared_ptr_T *const _p, csp_exception *const _e)
+csp_shared_ptr csp_shared_ptr_init_p(csp_shared_ptr_T* const _p, csp_exception* const _e)
 {
     assert(_e);
 
-    csp_cntrl_blk *const _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_cntrl));
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)malloc(sizeof(*_cntrl));
     if (!_cntrl)
     {
         csp_default_delete(_p);
 
         *_e = CSP_BAD_ALLOC;
 
-        return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
     const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, csp_default_delete) };
@@ -44,19 +44,19 @@ csp_shared_ptr csp_shared_ptr_init_p(csp_shared_ptr_T *const _p, csp_exception *
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T *const _p, const csp_shared_ptr_D _d, csp_exception *const _e)
+csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, csp_exception* const _e)
 {
     assert(_d);
     assert(_e);
 
-    csp_cntrl_blk *const _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_cntrl));
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)malloc(sizeof(*_cntrl));
     if (!_cntrl)
     {
         _d(_p);
 
         *_e = CSP_BAD_ALLOC;
 
-        return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
     const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
@@ -69,7 +69,7 @@ csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T *const _p, const csp_shar
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr *const _r)
+csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr* const _r)
 {
     assert(_r);
 
@@ -86,7 +86,7 @@ csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr *const _r)
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_move_s(csp_shared_ptr *const _r)
+csp_shared_ptr csp_shared_ptr_init_move_s(csp_shared_ptr* const _r)
 {
     assert(_r);
 
@@ -106,7 +106,7 @@ csp_shared_ptr csp_shared_ptr_init_move_s(csp_shared_ptr *const _r)
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr *const _r, csp_shared_ptr_T *const _p)
+csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr* const _r, csp_shared_ptr_T* const _p)
 {
     assert(_r);
 
@@ -123,7 +123,7 @@ csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr *const _r, csp_
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_p_move_s(csp_shared_ptr *const _r, csp_shared_ptr_T *const _p)
+csp_shared_ptr csp_shared_ptr_init_p_move_s(csp_shared_ptr* const _r, csp_shared_ptr_T* const _p)
 {
     assert(_r);
 
@@ -141,7 +141,7 @@ csp_shared_ptr csp_shared_ptr_init_p_move_s(csp_shared_ptr *const _r, csp_shared
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_copy_w(const csp_weak_ptr *const _r, csp_exception *const _e)
+csp_shared_ptr csp_shared_ptr_init_copy_w(const csp_weak_ptr* const _r, csp_exception* const _e)
 {
     assert(_r);
     assert(_e);
@@ -151,7 +151,7 @@ csp_shared_ptr csp_shared_ptr_init_copy_w(const csp_weak_ptr *const _r, csp_exce
     {
         *_e = CSP_BAD_WEAK_PTR;
 
-        return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
     const csp_shared_ptr _this = { ._p = _r->_p, ._cntrl = _cntrl };
@@ -163,7 +163,7 @@ csp_shared_ptr csp_shared_ptr_init_copy_w(const csp_weak_ptr *const _r, csp_exce
     return _this;
 }
 
-csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr *const _r, csp_exception *_e)
+csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr* const _r, csp_exception* _e)
 {
     assert(_r);
     assert(_e);
@@ -174,15 +174,15 @@ csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr *const _r, csp_exceptio
     {
         *_e = CSP_SUCCESS;
 
-        return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    csp_cntrl_blk *const _cntrl = (csp_cntrl_blk *)malloc(sizeof(*_cntrl));
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)malloc(sizeof(*_cntrl));
     if (!_cntrl)
     {
         *_e = CSP_BAD_ALLOC;
 
-        return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
     const csp_shared_ptr _this = { ._p = csp_unique_ptr_release(_r), ._cntrl = csp_cntrl_blk_init(_cntrl, _r->_p, _r->_d) };
@@ -196,7 +196,7 @@ csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr *const _r, csp_exceptio
     return _this;
 }
 
-void csp_shared_ptr_destroy(csp_shared_ptr *const _this)
+void csp_shared_ptr_destroy(csp_shared_ptr* const _this)
 {
     assert(_this);
 
@@ -206,7 +206,7 @@ void csp_shared_ptr_destroy(csp_shared_ptr *const _this)
     }
 }
 
-csp_shared_ptr *csp_shared_ptr_copy_s(csp_shared_ptr *const _this, const csp_shared_ptr *const _r)
+csp_shared_ptr* csp_shared_ptr_copy_s(csp_shared_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -218,7 +218,7 @@ csp_shared_ptr *csp_shared_ptr_copy_s(csp_shared_ptr *const _this, const csp_sha
     return _this;
 }
 
-csp_shared_ptr *csp_shared_ptr_move_s(csp_shared_ptr *const _this, csp_shared_ptr *const _r)
+csp_shared_ptr* csp_shared_ptr_move_s(csp_shared_ptr* const _this, csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -230,7 +230,7 @@ csp_shared_ptr *csp_shared_ptr_move_s(csp_shared_ptr *const _this, csp_shared_pt
     return _this;
 }
 
-csp_shared_ptr *csp_shared_ptr_move_u(csp_shared_ptr *const _this, csp_unique_ptr *const _r, csp_exception *const _e)
+csp_shared_ptr* csp_shared_ptr_move_u(csp_shared_ptr* const _this, csp_unique_ptr* const _r, csp_exception* const _e)
 {
     assert(_this);
     assert(_r);
@@ -248,35 +248,35 @@ csp_shared_ptr *csp_shared_ptr_move_u(csp_shared_ptr *const _this, csp_unique_pt
     return _this;
 }
 
-csp_shared_ptr_T *csp_shared_ptr_get(const csp_shared_ptr *const _this)
+csp_shared_ptr_T* csp_shared_ptr_get(const csp_shared_ptr* const _this)
 {
     assert(_this);
 
     return _this->_p;
 }
 
-csp_shared_ptr_D *csp_shared_ptr_get_deleter(const csp_shared_ptr *const _this)
+csp_shared_ptr_D* csp_shared_ptr_get_deleter(const csp_shared_ptr* const _this)
 {
     assert(_this);
 
     return _this->_cntrl ? csp_cntrl_blk_get_deleter(_this->_cntrl) : nullptr;
 }
 
-long csp_shared_ptr_use_count(const csp_shared_ptr *const _this)
+long csp_shared_ptr_use_count(const csp_shared_ptr* const _this)
 {
     assert(_this);
 
     return _this->_cntrl ? csp_cntrl_blk_use_count(_this->_cntrl) : 0;
 }
 
-bool csp_shared_ptr_bool(const csp_shared_ptr *const _this)
+bool csp_shared_ptr_bool(const csp_shared_ptr* const _this)
 {
     assert(_this);
 
     return _this->_p != nullptr;
 }
 
-bool csp_shared_ptr_owner_before_s(const csp_shared_ptr *const _this, const csp_shared_ptr *const _r)
+bool csp_shared_ptr_owner_before_s(const csp_shared_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -284,7 +284,7 @@ bool csp_shared_ptr_owner_before_s(const csp_shared_ptr *const _this, const csp_
     return _this->_cntrl < _r->_cntrl;
 }
 
-bool csp_shared_ptr_owner_before_w(const csp_shared_ptr *const _this, const csp_weak_ptr *const _r)
+bool csp_shared_ptr_owner_before_w(const csp_shared_ptr* const _this, const csp_weak_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -292,7 +292,7 @@ bool csp_shared_ptr_owner_before_w(const csp_shared_ptr *const _this, const csp_
     return _this->_cntrl < _r->_cntrl;
 }
 
-bool csp_shared_ptr_owner_equals_s(const csp_shared_ptr *const _this, const csp_shared_ptr *const _r)
+bool csp_shared_ptr_owner_equals_s(const csp_shared_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -300,7 +300,7 @@ bool csp_shared_ptr_owner_equals_s(const csp_shared_ptr *const _this, const csp_
     return _this->_cntrl == _r->_cntrl;
 }
 
-bool csp_shared_ptr_owner_equals_w(const csp_shared_ptr *const _this, const csp_weak_ptr *const _r)
+bool csp_shared_ptr_owner_equals_w(const csp_shared_ptr* const _this, const csp_weak_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -308,14 +308,14 @@ bool csp_shared_ptr_owner_equals_w(const csp_shared_ptr *const _this, const csp_
     return _this->_cntrl == _r->_cntrl;
 }
 
-size_t csp_shared_ptr_owner_hash_value(const csp_shared_ptr *const _this)
+size_t csp_shared_ptr_owner_hash_value(const csp_shared_ptr* const _this)
 {
     assert(_this);
 
     return _this->_cntrl ? (size_t)_this->_cntrl : 0;
 }
 
-void csp_shared_ptr_reset(csp_shared_ptr *const _this)
+void csp_shared_ptr_reset(csp_shared_ptr* const _this)
 {
     assert(_this);
 
@@ -324,7 +324,7 @@ void csp_shared_ptr_reset(csp_shared_ptr *const _this)
     csp_shared_ptr_destroy(&_tmp);
 }
 
-void csp_shared_ptr_reset_p(csp_shared_ptr *const _this, csp_shared_ptr_T *const _p, csp_exception *const _e)
+void csp_shared_ptr_reset_p(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, csp_exception* const _e)
 {
     assert(_this);
     assert(_e);
@@ -339,7 +339,7 @@ void csp_shared_ptr_reset_p(csp_shared_ptr *const _this, csp_shared_ptr_T *const
     csp_shared_ptr_destroy(&_tmp);
 }
 
-void csp_shared_ptr_reset_pd(csp_shared_ptr *const _this, csp_shared_ptr_T *const _p, const csp_shared_ptr_D _d, csp_exception *const _e)
+void csp_shared_ptr_reset_pd(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, csp_exception* const _e)
 {
     assert(_this);
     assert(_e);
@@ -354,7 +354,7 @@ void csp_shared_ptr_reset_pd(csp_shared_ptr *const _this, csp_shared_ptr_T *cons
     csp_shared_ptr_destroy(&_tmp);
 }
 
-void csp_shared_ptr_reset_p_copy_s(csp_shared_ptr *const _this, const csp_shared_ptr *const _r, csp_shared_ptr_T *const _p, csp_exception *const _e)
+void csp_shared_ptr_reset_p_copy_s(csp_shared_ptr* const _this, const csp_shared_ptr* const _r, csp_shared_ptr_T* const _p, csp_exception* const _e)
 {
     assert(_this);
     assert(_r);
@@ -370,7 +370,7 @@ void csp_shared_ptr_reset_p_copy_s(csp_shared_ptr *const _this, const csp_shared
     csp_shared_ptr_destroy(&_tmp);
 }
 
-void csp_shared_ptr_reset_p_move_s(csp_shared_ptr *const _this, csp_shared_ptr *const _r, csp_shared_ptr_T *const _p, csp_exception *const _e)
+void csp_shared_ptr_reset_p_move_s(csp_shared_ptr* const _this, csp_shared_ptr* const _r, csp_shared_ptr_T* const _p, csp_exception* const _e)
 {
     assert(_this);
     assert(_r);
@@ -386,7 +386,7 @@ void csp_shared_ptr_reset_p_move_s(csp_shared_ptr *const _this, csp_shared_ptr *
     csp_shared_ptr_destroy(&_tmp);
 }
 
-void csp_shared_ptr_swap(csp_shared_ptr *const _this, csp_shared_ptr *const _r)
+void csp_shared_ptr_swap(csp_shared_ptr* const _this, csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -400,28 +400,28 @@ void csp_shared_ptr_swap(csp_shared_ptr *const _this, csp_shared_ptr *const _r)
     _r->_cntrl = _cntrl;
 }
 
-csp_shared_ptr csp_make_shared(const size_t _size, csp_exception *const _e)
+csp_shared_ptr csp_make_shared(const size_t _size, csp_exception* const _e)
 {
     assert(_e);
 
     return csp_make_shared_d(_size, csp_default_delete, _e);
 }
 
-csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception *const _e)
+csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception* const _e)
 {
     assert(_e);
     assert(_size <= SIZE_MAX - sizeof(csp_cntrl_blk));
 
-    const auto _ptr = (unsigned char *)malloc(_size + sizeof(csp_cntrl_blk));
+    const auto _ptr = (unsigned char*)malloc(_size + sizeof(csp_cntrl_blk));
     if (!_ptr)
     {
         *_e = CSP_BAD_ALLOC;
 
-        return (csp_shared_ptr){ ._p = nullptr, ._cntrl = nullptr };
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const auto _p = (csp_shared_ptr_T *)_ptr;
-    const auto _cntrl = (csp_cntrl_blk *)(_ptr + _size);
+    const auto _p = (csp_shared_ptr_T*)_ptr;
+    const auto _cntrl = (csp_cntrl_blk*)(_ptr + _size);
 
     const csp_shared_ptr _r = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
 
@@ -430,7 +430,7 @@ csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_D _d, 
     return _r;
 }
 
-bool csp_shared_ptr_equal_to(const csp_shared_ptr *const _x, const csp_shared_ptr *const _y)
+bool csp_shared_ptr_equal_to(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
 {
     assert(_x);
     assert(_y);
@@ -438,7 +438,7 @@ bool csp_shared_ptr_equal_to(const csp_shared_ptr *const _x, const csp_shared_pt
     return _x->_p == _y->_p;
 }
 
-bool csp_shared_ptr_not_equal_to(const csp_shared_ptr *const _x, const csp_shared_ptr *const _y)
+bool csp_shared_ptr_not_equal_to(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
 {
     assert(_x);
     assert(_y);
@@ -446,7 +446,7 @@ bool csp_shared_ptr_not_equal_to(const csp_shared_ptr *const _x, const csp_share
     return _x->_p != _y->_p;
 }
 
-bool csp_shared_ptr_less(const csp_shared_ptr *const _x, const csp_shared_ptr *const _y)
+bool csp_shared_ptr_less(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
 {
     assert(_x);
     assert(_y);
@@ -454,7 +454,7 @@ bool csp_shared_ptr_less(const csp_shared_ptr *const _x, const csp_shared_ptr *c
     return _x->_p < _y->_p;
 }
 
-bool csp_shared_ptr_less_equal(const csp_shared_ptr *const _x, const csp_shared_ptr *const _y)
+bool csp_shared_ptr_less_equal(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
 {
     assert(_x);
     assert(_y);
@@ -462,7 +462,7 @@ bool csp_shared_ptr_less_equal(const csp_shared_ptr *const _x, const csp_shared_
     return _x->_p <= _y->_p;
 }
 
-bool csp_shared_ptr_greater(const csp_shared_ptr *const _x, const csp_shared_ptr *const _y)
+bool csp_shared_ptr_greater(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
 {
     assert(_x);
     assert(_y);
@@ -470,7 +470,7 @@ bool csp_shared_ptr_greater(const csp_shared_ptr *const _x, const csp_shared_ptr
     return _x->_p > _y->_p;
 }
 
-bool csp_shared_ptr_greater_equal(const csp_shared_ptr *const _x, const csp_shared_ptr *const _y)
+bool csp_shared_ptr_greater_equal(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
 {
     assert(_x);
     assert(_y);
@@ -478,7 +478,7 @@ bool csp_shared_ptr_greater_equal(const csp_shared_ptr *const _x, const csp_shar
     return _x->_p >= _y->_p;
 }
 
-size_t csp_shared_ptr_hash(const csp_shared_ptr *const _this)
+size_t csp_shared_ptr_hash(const csp_shared_ptr* const _this)
 {
     assert(_this);
 

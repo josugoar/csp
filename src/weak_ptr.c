@@ -15,7 +15,7 @@ csp_weak_ptr csp_weak_ptr_init(void)
     return _this;
 }
 
-csp_weak_ptr csp_weak_ptr_init_copy_w(const csp_weak_ptr *const _r)
+csp_weak_ptr csp_weak_ptr_init_copy_w(const csp_weak_ptr* const _r)
 {
     assert(_r);
 
@@ -31,7 +31,7 @@ csp_weak_ptr csp_weak_ptr_init_copy_w(const csp_weak_ptr *const _r)
     return _this;
 }
 
-csp_weak_ptr csp_weak_ptr_init_move_w(csp_weak_ptr *const _r)
+csp_weak_ptr csp_weak_ptr_init_move_w(csp_weak_ptr* const _r)
 {
     assert(_r);
 
@@ -48,7 +48,7 @@ csp_weak_ptr csp_weak_ptr_init_move_w(csp_weak_ptr *const _r)
     return _this;
 }
 
-csp_weak_ptr csp_weak_ptr_init_p_copy_w(const csp_weak_ptr *const _r, csp_weak_ptr_T *const _p)
+csp_weak_ptr csp_weak_ptr_init_p_copy_w(const csp_weak_ptr* const _r, csp_weak_ptr_T* const _p)
 {
     assert(_r);
 
@@ -64,7 +64,7 @@ csp_weak_ptr csp_weak_ptr_init_p_copy_w(const csp_weak_ptr *const _r, csp_weak_p
     return _this;
 }
 
-csp_weak_ptr csp_weak_ptr_init_p_move_w(csp_weak_ptr *const _r, csp_weak_ptr_T *const _p)
+csp_weak_ptr csp_weak_ptr_init_p_move_w(csp_weak_ptr* const _r, csp_weak_ptr_T* const _p)
 {
     assert(_r);
 
@@ -81,7 +81,7 @@ csp_weak_ptr csp_weak_ptr_init_p_move_w(csp_weak_ptr *const _r, csp_weak_ptr_T *
     return _this;
 }
 
-csp_weak_ptr csp_weak_ptr_init_copy_s(const csp_shared_ptr *const _r)
+csp_weak_ptr csp_weak_ptr_init_copy_s(const csp_shared_ptr* const _r)
 {
     assert(_r);
 
@@ -97,7 +97,7 @@ csp_weak_ptr csp_weak_ptr_init_copy_s(const csp_shared_ptr *const _r)
     return _this;
 }
 
-csp_weak_ptr csp_weak_ptr_init_p_copy_s(const csp_shared_ptr *const _r, csp_weak_ptr_T *const _p)
+csp_weak_ptr csp_weak_ptr_init_p_copy_s(const csp_shared_ptr* const _r, csp_weak_ptr_T* const _p)
 {
     assert(_r);
 
@@ -113,7 +113,7 @@ csp_weak_ptr csp_weak_ptr_init_p_copy_s(const csp_shared_ptr *const _r, csp_weak
     return _this;
 }
 
-void csp_weak_ptr_destroy(csp_weak_ptr *const _this)
+void csp_weak_ptr_destroy(csp_weak_ptr* const _this)
 {
     assert(_this);
 
@@ -123,7 +123,7 @@ void csp_weak_ptr_destroy(csp_weak_ptr *const _this)
     }
 }
 
-csp_weak_ptr *csp_weak_ptr_copy_w(csp_weak_ptr *_this, const csp_weak_ptr *_r)
+csp_weak_ptr* csp_weak_ptr_copy_w(csp_weak_ptr* _this, const csp_weak_ptr* _r)
 {
     assert(_this);
     assert(_r);
@@ -135,7 +135,7 @@ csp_weak_ptr *csp_weak_ptr_copy_w(csp_weak_ptr *_this, const csp_weak_ptr *_r)
     return _this;
 }
 
-csp_weak_ptr *csp_weak_ptr_move_w(csp_weak_ptr *_this, csp_weak_ptr *_r)
+csp_weak_ptr* csp_weak_ptr_move_w(csp_weak_ptr* _this, csp_weak_ptr* _r)
 {
     assert(_this);
     assert(_r);
@@ -147,7 +147,7 @@ csp_weak_ptr *csp_weak_ptr_move_w(csp_weak_ptr *_this, csp_weak_ptr *_r)
     return _this;
 }
 
-csp_weak_ptr *csp_weak_ptr_copy_s(csp_weak_ptr *_this, const csp_shared_ptr *_r)
+csp_weak_ptr* csp_weak_ptr_copy_s(csp_weak_ptr* _this, const csp_shared_ptr* _r)
 {
     assert(_this);
     assert(_r);
@@ -159,21 +159,21 @@ csp_weak_ptr *csp_weak_ptr_copy_s(csp_weak_ptr *_this, const csp_shared_ptr *_r)
     return _this;
 }
 
-long csp_weak_ptr_use_count(const csp_weak_ptr *const _this)
+long csp_weak_ptr_use_count(const csp_weak_ptr* const _this)
 {
     assert(_this);
 
     return _this->_cntrl ? csp_cntrl_blk_use_count(_this->_cntrl) : 0;
 }
 
-bool csp_weak_ptr_expired(const csp_weak_ptr *const _this)
+bool csp_weak_ptr_expired(const csp_weak_ptr* const _this)
 {
     assert(_this);
 
     return csp_weak_ptr_use_count(_this) == 0;
 }
 
-csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr *const _this)
+csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr* const _this)
 {
     assert(_this);
 
@@ -187,7 +187,7 @@ csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr *const _this)
     return _r;
 }
 
-bool csp_weak_ptr_owner_before_s(const csp_weak_ptr *const _this, const csp_shared_ptr *const _r)
+bool csp_weak_ptr_owner_before_s(const csp_weak_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -195,7 +195,7 @@ bool csp_weak_ptr_owner_before_s(const csp_weak_ptr *const _this, const csp_shar
     return _this->_cntrl < _r->_cntrl;
 }
 
-bool csp_weak_ptr_owner_before_w(const csp_weak_ptr *const _this, const csp_weak_ptr *const _r)
+bool csp_weak_ptr_owner_before_w(const csp_weak_ptr* const _this, const csp_weak_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -203,7 +203,7 @@ bool csp_weak_ptr_owner_before_w(const csp_weak_ptr *const _this, const csp_weak
     return _this->_cntrl < _r->_cntrl;
 }
 
-bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr *const _this, const csp_shared_ptr *const _r)
+bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -211,7 +211,7 @@ bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr *const _this, const csp_shar
     return _this->_cntrl == _r->_cntrl;
 }
 
-bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr *const _this, const csp_weak_ptr *const _r)
+bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr* const _this, const csp_weak_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -219,14 +219,14 @@ bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr *const _this, const csp_weak
     return _this->_cntrl == _r->_cntrl;
 }
 
-size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr *const _this)
+size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr* const _this)
 {
     assert(_this);
 
     return _this->_cntrl ? (size_t)_this->_cntrl : 0;
 }
 
-void csp_weak_ptr_reset(csp_weak_ptr *const _this)
+void csp_weak_ptr_reset(csp_weak_ptr* const _this)
 {
     assert(_this);
 
@@ -235,7 +235,7 @@ void csp_weak_ptr_reset(csp_weak_ptr *const _this)
     csp_weak_ptr_destroy(&_tmp);
 }
 
-void csp_weak_ptr_swap(csp_weak_ptr *const _this, csp_weak_ptr *const _r)
+void csp_weak_ptr_swap(csp_weak_ptr* const _this, csp_weak_ptr* const _r)
 {
     assert(_this);
     assert(_r);

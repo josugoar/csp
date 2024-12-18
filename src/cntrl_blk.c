@@ -3,19 +3,19 @@
 #include <assert.h>
 #include <stdlib.h>
 
-static inline long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG *_value);
+static inline long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG* _value);
 
-static inline long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG *_value);
+static inline long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG* _value);
 
-static inline long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG *_value);
+static inline long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG* _value);
 
-static inline long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG *_value);
+static inline long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG* _value);
 
-static inline long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG *_value);
+static inline long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG* _value);
 
-static inline bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG *_value, long *_expected, long _desired);
+static inline bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG* _value, long* _expected, long _desired);
 
-csp_cntrl_blk *csp_cntrl_blk_init(csp_cntrl_blk *const _this, csp_cntrl_blk_T *const _p, const csp_cntrl_blk_D _d)
+csp_cntrl_blk* csp_cntrl_blk_init(csp_cntrl_blk* const _this, csp_cntrl_blk_T* const _p, const csp_cntrl_blk_D _d)
 {
     assert(_this);
 
@@ -27,21 +27,21 @@ csp_cntrl_blk *csp_cntrl_blk_init(csp_cntrl_blk *const _this, csp_cntrl_blk_T *c
     return _this;
 }
 
-csp_cntrl_blk_D *csp_cntrl_blk_get_deleter(csp_cntrl_blk *const _this)
+csp_cntrl_blk_D* csp_cntrl_blk_get_deleter(csp_cntrl_blk* const _this)
 {
     assert(_this);
 
     return &_this->_d;
 }
 
-long csp_cntrl_blk_use_count(const csp_cntrl_blk *const _this)
+long csp_cntrl_blk_use_count(const csp_cntrl_blk* const _this)
 {
     assert(_this);
 
     return csp_cntrl_blk_load_relaxed(&_this->_shared_owners) + 1;
 }
 
-csp_cntrl_blk *csp_cntrl_blk_lock(csp_cntrl_blk *const _this)
+csp_cntrl_blk* csp_cntrl_blk_lock(csp_cntrl_blk* const _this)
 {
     assert(_this);
 
@@ -58,14 +58,14 @@ csp_cntrl_blk *csp_cntrl_blk_lock(csp_cntrl_blk *const _this)
     return nullptr;
 }
 
-void csp_cntrl_blk_add_shared(csp_cntrl_blk *const _this)
+void csp_cntrl_blk_add_shared(csp_cntrl_blk* const _this)
 {
     assert(_this);
 
     csp_cntrl_blk_add_fetch_relaxed(&_this->_shared_owners);
 }
 
-void csp_cntrl_blk_release_shared(csp_cntrl_blk *const _this)
+void csp_cntrl_blk_release_shared(csp_cntrl_blk* const _this)
 {
     assert(_this);
     assert(_this->_d);
@@ -78,14 +78,14 @@ void csp_cntrl_blk_release_shared(csp_cntrl_blk *const _this)
     }
 }
 
-void csp_cntrl_blk_add_weak(csp_cntrl_blk *const _this)
+void csp_cntrl_blk_add_weak(csp_cntrl_blk* const _this)
 {
     assert(_this);
 
     csp_cntrl_blk_add_fetch_relaxed(&_this->_weak_owners);
 }
 
-void csp_cntrl_blk_release_weak(csp_cntrl_blk *const _this)
+void csp_cntrl_blk_release_weak(csp_cntrl_blk* const _this)
 {
     assert(_this);
 
@@ -95,7 +95,7 @@ void csp_cntrl_blk_release_weak(csp_cntrl_blk *const _this)
     }
 }
 
-long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG *const _value)
+long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG* const _value)
 {
 #ifdef __STD_NO_ATOMICS__
     return *_value;
@@ -104,7 +104,7 @@ long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG *const _value)
 #endif
 }
 
-long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG *const _value)
+long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG* const _value)
 {
 #ifdef __STD_NO_ATOMICS__
     return *_value;
@@ -113,7 +113,7 @@ long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG *const _value)
 #endif
 }
 
-long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG *const _value)
+long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG* const _value)
 {
 #ifdef __STD_NO_ATOMICS__
     return *_value;
@@ -122,7 +122,7 @@ long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG *const _value)
 #endif
 }
 
-long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG *const _value)
+long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG* const _value)
 {
 #ifdef __STD_NO_ATOMICS__
     return ++(*_value);
@@ -131,7 +131,7 @@ long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG *const _value)
 #endif
 }
 
-long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG *const _value)
+long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG* const _value)
 {
 #ifdef __STD_NO_ATOMICS__
     return --(*_value);
@@ -140,7 +140,7 @@ long csp_cntrl_blk_sub_fetch_relaxed(CSP_CNTRL_BLK_LONG *const _value)
 #endif
 }
 
-bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG *const _value, long *const _expected, const long _desired)
+bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG* const _value, long* const _expected, const long _desired)
 {
 #ifdef __STD_NO_ATOMICS__
     if (*_value == *_expected)
