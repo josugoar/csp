@@ -80,7 +80,7 @@ csp_shared_ptr csp_atomic_shared_ptr_load(const csp_atomic_shared_ptr *const _th
     return _r;
 }
 
-csp_shared_ptr csp_atomic_shared_ptr_load_explicit(const csp_atomic_shared_ptr *const _this, const memory_order _order, csp_exception *const _e)
+csp_shared_ptr csp_atomic_shared_ptr_load_explicit(const csp_atomic_shared_ptr* const _this, [[maybe_unused]] const memory_order _order, csp_exception* const _e)
 {
     assert(_this);
     assert(_order != memory_order_release && _order != memory_order_acq_rel);
@@ -119,7 +119,7 @@ void csp_atomic_shared_ptr_store(csp_atomic_shared_ptr *const _this, csp_shared_
     *_e = CSP_SUCCESS;
 }
 
-void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr *const _this, const csp_shared_ptr _desired, const memory_order _order, csp_exception *const _e)
+void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired, [[maybe_unused]] const memory_order _order, csp_exception* const _e)
 {
     assert(_this);
     assert(_order != memory_order_consume && _order != memory_order_acquire && _order != memory_order_acq_rel);
@@ -160,7 +160,7 @@ csp_shared_ptr csp_atomic_shared_ptr_exchange(csp_atomic_shared_ptr *const _this
     return _desired;
 }
 
-csp_shared_ptr csp_atomic_shared_ptr_exchange_explicit(csp_atomic_shared_ptr *const _this, const csp_shared_ptr _desired, const memory_order _order, csp_exception *const _e)
+csp_shared_ptr csp_atomic_shared_ptr_exchange_explicit(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired, [[maybe_unused]] const memory_order _order, csp_exception* const _e)
 {
     assert(_this);
     assert(_e);
@@ -176,7 +176,7 @@ bool csp_atomic_shared_ptr_compare_exchange_weak(csp_atomic_shared_ptr *const _t
     return csp_atomic_shared_ptr_compare_exchange_strong(_this, _expected, _desired, _e);
 }
 
-bool csp_atomic_shared_ptr_compare_exchange_weak_explicit(csp_atomic_shared_ptr *const _this, csp_shared_ptr *const _expected, const csp_shared_ptr _desired, const memory_order _success, const memory_order _failure, csp_exception *const _e)
+bool csp_atomic_shared_ptr_compare_exchange_weak_explicit(csp_atomic_shared_ptr *const _this, csp_shared_ptr *const _expected, const csp_shared_ptr _desired, [[maybe_unused]] const memory_order _success, [[maybe_unused]] const memory_order _failure, csp_exception *const _e)
 {
     assert(_this);
     assert(_failure != memory_order_release && _failure != memory_order_acq_rel);
@@ -241,7 +241,7 @@ bool csp_atomic_shared_ptr_compare_exchange_strong(csp_atomic_shared_ptr *const 
     return false;
 }
 
-bool csp_atomic_shared_ptr_compare_exchange_strong_explicit(csp_atomic_shared_ptr *const _this, csp_shared_ptr *const _expected, const csp_shared_ptr _desired, const memory_order _success, const memory_order _failure, csp_exception *const _e)
+bool csp_atomic_shared_ptr_compare_exchange_strong_explicit(csp_atomic_shared_ptr* const _this, csp_shared_ptr* const _expected, const csp_shared_ptr _desired, [[maybe_unused]] const memory_order _success, [[maybe_unused]] const memory_order _failure, csp_exception* const _e)
 {
     assert(_this);
     assert(_failure != memory_order_release && _failure != memory_order_acq_rel);
