@@ -5,7 +5,7 @@ static mtx_t csp_mtx_pool[csp_mtx_count];
 
 static once_flag csp_mtx_pool_flag = ONCE_FLAG_INIT;
 
-static csp_exception csp_mtx_pool_e;
+static csp_exception csp_mtx_pool_e = CSP_BAD_ATOMIC;
 
 static inline void csp_mtx_pool_init(void);
 
@@ -28,8 +28,6 @@ void csp_mtx_pool_init(void)
     {
         if (mtx_init(&csp_mtx_pool[_i], mtx_plain) != thrd_success)
         {
-            csp_mtx_pool_e = CSP_BAD_ATOMIC;
-
             return;
         }
     }
