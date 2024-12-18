@@ -3,7 +3,24 @@
 constexpr size_t csp_mtx_count = 32;
 static mtx_t csp_mtx_pool[csp_mtx_count];
 
-static csp_exception *const csp_mtx_pool_e;
+static once_flag csp_mtx_pool_flag = ONCE_FLAG_INIT;
+
+static csp_exception csp_mtx_pool_e;
+
+static inline void csp_mtx_pool_init(void);
+
+mtx_t* csp_mtx_pool_get(const void* const _p, csp_exception* const _e)
+{
+    call_once(&csp_mtx_pool_flag, csp_mtx_pool_init);
+    if (csp_mtx_pool_e != CSP_SUCCESS)
+    {
+        *_e = csp_mtx_pool_e;
+
+        return nullptr;
+    }
+
+    return &csp_mtx_pool[(_p ? (size_t)_p : 0) & (csp_mtx_count - 1)];
+}
 
 void csp_mtx_pool_init(void)
 {
@@ -11,25 +28,11 @@ void csp_mtx_pool_init(void)
     {
         if (mtx_init(&csp_mtx_pool[_i], mtx_plain) != thrd_success)
         {
-            *csp_mtx_pool_e = CSP_BAD_ATOMIC;
+            csp_mtx_pool_e = CSP_BAD_ATOMIC;
 
             return;
         }
     }
 
-    *csp_mtx_pool_e = CSP_SUCCESS;
-}
-
-mtx_t *csp_mtx_pool_get(const void *const _p, csp_exception *const _e)
-{
-    if (*csp_mtx_pool_e != CSP_SUCCESS)
-    {
-        *_e = *csp_mtx_pool_e;
-
-        return nullptr;
-    }
-
-    *_e = CSP_SUCCESS;
-
-    return &csp_mtx_pool[(_p ? (size_t)_p : 0) & (csp_mtx_count - 1)];
+    csp_mtx_pool_e = CSP_SUCCESS;
 }
