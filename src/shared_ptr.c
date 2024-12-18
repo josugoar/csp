@@ -1,6 +1,7 @@
 #include "csp/shared_ptr.h"
 
 #include <assert.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 #include "csp/exception.h"
@@ -409,6 +410,7 @@ csp_shared_ptr csp_make_shared(const size_t _size, csp_exception *const _e)
 csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception *const _e)
 {
     assert(_e);
+    assert(_size <= SIZE_MAX - sizeof(csp_cntrl_blk));
 
     const auto _ptr = (unsigned char *)malloc(_size + sizeof(csp_cntrl_blk));
     if (!_ptr)
