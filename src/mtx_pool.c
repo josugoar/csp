@@ -7,7 +7,7 @@ static once_flag csp_mtx_pool_flag = ONCE_FLAG_INIT;
 
 static csp_exception csp_mtx_pool_e = CSP_BAD_ATOMIC;
 
-static inline void csp_mtx_pool_init(void);
+static void csp_mtx_pool_init(void);
 
 mtx_t* csp_mtx_pool_get(const void* const _p, csp_exception* const _e)
 {
