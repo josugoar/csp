@@ -114,42 +114,42 @@ Functions</h2></td></tr>
 <tr class="memitem:a4ad7671a725f59ee548cbefc41fb0373" id="r_a4ad7671a725f59ee548cbefc41fb0373"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a4ad7671a725f59ee548cbefc41fb0373">csp_atomic_weak_ptr_destroy</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this)</td></tr>
 <tr class="memdesc:a4ad7671a725f59ee548cbefc41fb0373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>.  <br /></td></tr>
 <tr class="separator:a4ad7671a725f59ee548cbefc41fb0373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ced1d879dd46c41629a158efea9ba6f" id="r_a0ced1d879dd46c41629a158efea9ba6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a0ced1d879dd46c41629a158efea9ba6f">csp_atomic_weak_ptr_w</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a0ced1d879dd46c41629a158efea9ba6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to csp_atomic_weak_ptr_store(_this, _desired, _e).  <br /></td></tr>
-<tr class="separator:a0ced1d879dd46c41629a158efea9ba6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a873a519362fe0790bde6ed6e26423208" id="r_a873a519362fe0790bde6ed6e26423208"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a873a519362fe0790bde6ed6e26423208">csp_atomic_weak_ptr_w</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired)</td></tr>
+<tr class="memdesc:a873a519362fe0790bde6ed6e26423208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to csp_atomic_weak_ptr_store(_this, _desired).  <br /></td></tr>
+<tr class="separator:a873a519362fe0790bde6ed6e26423208"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99f5701d9a54ccf1038ec08c705dccad" id="r_a99f5701d9a54ccf1038ec08c705dccad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a99f5701d9a54ccf1038ec08c705dccad">csp_atomic_weak_ptr_is_lock_free</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this)</td></tr>
 <tr class="memdesc:a99f5701d9a54ccf1038ec08c705dccad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the atomic operations on all objects of this type are lock-free, false otherwise.  <br /></td></tr>
 <tr class="separator:a99f5701d9a54ccf1038ec08c705dccad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7061b39e5d26b7d009c5ed3a19e803fa" id="r_a7061b39e5d26b7d009c5ed3a19e803fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a7061b39e5d26b7d009c5ed3a19e803fa">csp_atomic_weak_ptr_load</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a7061b39e5d26b7d009c5ed3a19e803fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically returns a copy of the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>.  <br /></td></tr>
-<tr class="separator:a7061b39e5d26b7d009c5ed3a19e803fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7820cebcdece7bc2e179a1833d20f888" id="r_a7820cebcdece7bc2e179a1833d20f888"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a7820cebcdece7bc2e179a1833d20f888">csp_atomic_weak_ptr_load_explicit</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, memory_order _order, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a7820cebcdece7bc2e179a1833d20f888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically returns a copy of the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>. Memory is ordered according to order. The behavior is undefined if order is memory_order_release or memory_order_acq_rel.  <br /></td></tr>
-<tr class="separator:a7820cebcdece7bc2e179a1833d20f888"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42eb817c6d6825dc0ebc9d14a2d1a956" id="r_a42eb817c6d6825dc0ebc9d14a2d1a956"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a42eb817c6d6825dc0ebc9d14a2d1a956">csp_atomic_weak_ptr_store</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a42eb817c6d6825dc0ebc9d14a2d1a956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the value of this with the value of desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>.  <br /></td></tr>
-<tr class="separator:a42eb817c6d6825dc0ebc9d14a2d1a956"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3471cd916fdcb23c78fdd2a9b0053a78" id="r_a3471cd916fdcb23c78fdd2a9b0053a78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a3471cd916fdcb23c78fdd2a9b0053a78">csp_atomic_weak_ptr_store_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _order, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a3471cd916fdcb23c78fdd2a9b0053a78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the value of this with the value of desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>. Memory is ordered according to order. The behavior is undefined if order is memory_order_consume, memory_order_acquire, or memory_order_acq_rel.  <br /></td></tr>
-<tr class="separator:a3471cd916fdcb23c78fdd2a9b0053a78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ca535c4f52fd775bdb5c2e9021cd815" id="r_a7ca535c4f52fd775bdb5c2e9021cd815"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a7ca535c4f52fd775bdb5c2e9021cd815">csp_atomic_weak_ptr_exchange</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a7ca535c4f52fd775bdb5c2e9021cd815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> with desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, and returns a copy of the value that p had immediately before the swap. This is an atomic read-modify-write operation.  <br /></td></tr>
-<tr class="separator:a7ca535c4f52fd775bdb5c2e9021cd815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ff4b43c3140bf9cc4d46fa422e6fbb4" id="r_a1ff4b43c3140bf9cc4d46fa422e6fbb4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a1ff4b43c3140bf9cc4d46fa422e6fbb4">csp_atomic_weak_ptr_exchange_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _order, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a1ff4b43c3140bf9cc4d46fa422e6fbb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> with desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, and returns a copy of the value that p had immediately before the swap. Memory is ordered according to order. This is an atomic read-modify-write operation.  <br /></td></tr>
-<tr class="separator:a1ff4b43c3140bf9cc4d46fa422e6fbb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4452e83356979eea12b77d3fe12f4a8d" id="r_a4452e83356979eea12b77d3fe12f4a8d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a4452e83356979eea12b77d3fe12f4a8d">csp_atomic_weak_ptr_compare_exchange_weak</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a4452e83356979eea12b77d3fe12f4a8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to: return csp_atomic_weak_ptr_compare_exchange_weak(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst, _e).  <br /></td></tr>
-<tr class="separator:a4452e83356979eea12b77d3fe12f4a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65d28b736ca29c6b6a470f7f9fdd8996" id="r_a65d28b736ca29c6b6a470f7f9fdd8996"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a65d28b736ca29c6b6a470f7f9fdd8996">csp_atomic_weak_ptr_compare_exchange_weak_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _success, memory_order _failure, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a65d28b736ca29c6b6a470f7f9fdd8996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as csp_atomic_weak_ptr_compare_exchange_strong_explicit, but may also fail spuriously.  <br /></td></tr>
-<tr class="separator:a65d28b736ca29c6b6a470f7f9fdd8996"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42486d937aa7ec53b6e19e2953b943df" id="r_a42486d937aa7ec53b6e19e2953b943df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a42486d937aa7ec53b6e19e2953b943df">csp_atomic_weak_ptr_compare_exchange_strong</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a42486d937aa7ec53b6e19e2953b943df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to: return csp_atomic_weak_ptr_compare_exchange_strong_explicit(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst, _e).  <br /></td></tr>
-<tr class="separator:a42486d937aa7ec53b6e19e2953b943df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9be5d38b7ad70ac93d8d59491a98c37d" id="r_a9be5d38b7ad70ac93d8d59491a98c37d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a9be5d38b7ad70ac93d8d59491a98c37d">csp_atomic_weak_ptr_compare_exchange_strong_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _success, memory_order _failure, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
-<tr class="memdesc:a9be5d38b7ad70ac93d8d59491a98c37d"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> stores the same pointer value as expected and shares ownership with it, or if both underlying and expected are empty, assigns from desired to the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, returns true, and orders memory according to success, otherwise assigns from the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> to expected, returns false, and orders memory according to failure. The behavior is undefined if failure is memory_order_release or memory_order_acq_rel. On success, the operation is an atomic read-modify-write operation on this and expected is not accessed after the atomic update. On failure, the operation is an atomic load operation on this and expected is updated with the existing value read from the atomic object. This update to expected's csp_weak_ptr_use_count is part of this atomic operation, although the write itself (and any subsequent deallocation/destruction) is not required to be.  <br /></td></tr>
-<tr class="separator:a9be5d38b7ad70ac93d8d59491a98c37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a070ad2d9d5d3e0729f027035dd77c667" id="r_a070ad2d9d5d3e0729f027035dd77c667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a070ad2d9d5d3e0729f027035dd77c667">csp_atomic_weak_ptr_load</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this)</td></tr>
+<tr class="memdesc:a070ad2d9d5d3e0729f027035dd77c667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically returns a copy of the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>.  <br /></td></tr>
+<tr class="separator:a070ad2d9d5d3e0729f027035dd77c667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b9f7d84111ae0eb4bd4c18af9c6281" id="r_ae0b9f7d84111ae0eb4bd4c18af9c6281"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#ae0b9f7d84111ae0eb4bd4c18af9c6281">csp_atomic_weak_ptr_load_explicit</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, memory_order _order)</td></tr>
+<tr class="memdesc:ae0b9f7d84111ae0eb4bd4c18af9c6281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically returns a copy of the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>. Memory is ordered according to order. The behavior is undefined if order is memory_order_release or memory_order_acq_rel.  <br /></td></tr>
+<tr class="separator:ae0b9f7d84111ae0eb4bd4c18af9c6281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad29c9732ab65fdc843740cd7a9d16560" id="r_ad29c9732ab65fdc843740cd7a9d16560"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#ad29c9732ab65fdc843740cd7a9d16560">csp_atomic_weak_ptr_store</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired)</td></tr>
+<tr class="memdesc:ad29c9732ab65fdc843740cd7a9d16560"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the value of this with the value of desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>.  <br /></td></tr>
+<tr class="separator:ad29c9732ab65fdc843740cd7a9d16560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa86712311f138f5849f6efaf523bcf20" id="r_aa86712311f138f5849f6efaf523bcf20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#aa86712311f138f5849f6efaf523bcf20">csp_atomic_weak_ptr_store_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _order)</td></tr>
+<tr class="memdesc:aa86712311f138f5849f6efaf523bcf20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the value of this with the value of desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>. Memory is ordered according to order. The behavior is undefined if order is memory_order_consume, memory_order_acquire, or memory_order_acq_rel.  <br /></td></tr>
+<tr class="separator:aa86712311f138f5849f6efaf523bcf20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e09ce3bf5080ace9e3621fbeba6b43" id="r_ac6e09ce3bf5080ace9e3621fbeba6b43"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#ac6e09ce3bf5080ace9e3621fbeba6b43">csp_atomic_weak_ptr_exchange</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired)</td></tr>
+<tr class="memdesc:ac6e09ce3bf5080ace9e3621fbeba6b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> with desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, and returns a copy of the value that p had immediately before the swap. This is an atomic read-modify-write operation.  <br /></td></tr>
+<tr class="separator:ac6e09ce3bf5080ace9e3621fbeba6b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5301be872478c4db50660fd204a5dd9b" id="r_a5301be872478c4db50660fd204a5dd9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a5301be872478c4db50660fd204a5dd9b">csp_atomic_weak_ptr_exchange_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _order)</td></tr>
+<tr class="memdesc:a5301be872478c4db50660fd204a5dd9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atomically replaces the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> with desired as if by csp_weak_ptr_swap(_this-&gt;_r, &amp;desired) where _r is the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, and returns a copy of the value that p had immediately before the swap. Memory is ordered according to order. This is an atomic read-modify-write operation.  <br /></td></tr>
+<tr class="separator:a5301be872478c4db50660fd204a5dd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea6056de0647c0e41ee2f632b870e63" id="r_a6ea6056de0647c0e41ee2f632b870e63"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a6ea6056de0647c0e41ee2f632b870e63">csp_atomic_weak_ptr_compare_exchange_weak</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired)</td></tr>
+<tr class="memdesc:a6ea6056de0647c0e41ee2f632b870e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to: return csp_atomic_weak_ptr_compare_exchange_weak(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst).  <br /></td></tr>
+<tr class="separator:a6ea6056de0647c0e41ee2f632b870e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e309869927ac695abc8858de7d3223c" id="r_a3e309869927ac695abc8858de7d3223c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a3e309869927ac695abc8858de7d3223c">csp_atomic_weak_ptr_compare_exchange_weak_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _success, memory_order _failure)</td></tr>
+<tr class="memdesc:a3e309869927ac695abc8858de7d3223c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as csp_atomic_weak_ptr_compare_exchange_strong_explicit, but may also fail spuriously.  <br /></td></tr>
+<tr class="separator:a3e309869927ac695abc8858de7d3223c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ba2532dedcb449e2bf383d1e53afd31" id="r_a8ba2532dedcb449e2bf383d1e53afd31"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a8ba2532dedcb449e2bf383d1e53afd31">csp_atomic_weak_ptr_compare_exchange_strong</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired)</td></tr>
+<tr class="memdesc:a8ba2532dedcb449e2bf383d1e53afd31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to: return csp_atomic_weak_ptr_compare_exchange_strong_explicit(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst).  <br /></td></tr>
+<tr class="separator:a8ba2532dedcb449e2bf383d1e53afd31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1811906d05ffc73d935e1948d6035548" id="r_a1811906d05ffc73d935e1948d6035548"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a1811906d05ffc73d935e1948d6035548">csp_atomic_weak_ptr_compare_exchange_strong_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _success, memory_order _failure)</td></tr>
+<tr class="memdesc:a1811906d05ffc73d935e1948d6035548"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> stores the same pointer value as expected and shares ownership with it, or if both underlying and expected are empty, assigns from desired to the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, returns true, and orders memory according to success, otherwise assigns from the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> to expected, returns false, and orders memory according to failure. The behavior is undefined if failure is memory_order_release or memory_order_acq_rel. On success, the operation is an atomic read-modify-write operation on this and expected is not accessed after the atomic update. On failure, the operation is an atomic load operation on this and expected is updated with the existing value read from the atomic object. This update to expected's csp_weak_ptr_use_count is part of this atomic operation, although the write itself (and any subsequent deallocation/destruction) is not required to be.  <br /></td></tr>
+<tr class="separator:a1811906d05ffc73d935e1948d6035548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -204,8 +204,8 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a42486d937aa7ec53b6e19e2953b943df" name="a42486d937aa7ec53b6e19e2953b943df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42486d937aa7ec53b6e19e2953b943df">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_strong()</h2>
+<a id="a8ba2532dedcb449e2bf383d1e53afd31" name="a8ba2532dedcb449e2bf383d1e53afd31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ba2532dedcb449e2bf383d1e53afd31">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_strong()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,13 +226,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td>
-          <td class="paramname"><em>_desired</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_desired</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -242,12 +236,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Equivalent to: return csp_atomic_weak_ptr_compare_exchange_strong_explicit(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst, _e). </p>
+<p>Equivalent to: return csp_atomic_weak_ptr_compare_exchange_strong_explicit(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst). </p>
 
 </div>
 </div>
-<a id="a9be5d38b7ad70ac93d8d59491a98c37d" name="a9be5d38b7ad70ac93d8d59491a98c37d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9be5d38b7ad70ac93d8d59491a98c37d">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_strong_explicit()</h2>
+<a id="a1811906d05ffc73d935e1948d6035548" name="a1811906d05ffc73d935e1948d6035548"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1811906d05ffc73d935e1948d6035548">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_strong_explicit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,13 +274,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">memory_order&#160;</td>
-          <td class="paramname"><em>_failure</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_failure</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -300,8 +288,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a4452e83356979eea12b77d3fe12f4a8d" name="a4452e83356979eea12b77d3fe12f4a8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4452e83356979eea12b77d3fe12f4a8d">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_weak()</h2>
+<a id="a6ea6056de0647c0e41ee2f632b870e63" name="a6ea6056de0647c0e41ee2f632b870e63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ea6056de0647c0e41ee2f632b870e63">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_weak()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -322,13 +310,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td>
-          <td class="paramname"><em>_desired</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_desired</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -338,12 +320,12 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Equivalent to: return csp_atomic_weak_ptr_compare_exchange_weak(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst, _e). </p>
+<p>Equivalent to: return csp_atomic_weak_ptr_compare_exchange_weak(_this, _expected, _desired, memory_order_seq_cst, memory_order_seq_cst). </p>
 
 </div>
 </div>
-<a id="a65d28b736ca29c6b6a470f7f9fdd8996" name="a65d28b736ca29c6b6a470f7f9fdd8996"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65d28b736ca29c6b6a470f7f9fdd8996">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_weak_explicit()</h2>
+<a id="a3e309869927ac695abc8858de7d3223c" name="a3e309869927ac695abc8858de7d3223c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e309869927ac695abc8858de7d3223c">&#9670;&#160;</a></span>csp_atomic_weak_ptr_compare_exchange_weak_explicit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -376,13 +358,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">memory_order&#160;</td>
-          <td class="paramname"><em>_failure</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_failure</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -416,8 +392,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a7ca535c4f52fd775bdb5c2e9021cd815" name="a7ca535c4f52fd775bdb5c2e9021cd815"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ca535c4f52fd775bdb5c2e9021cd815">&#9670;&#160;</a></span>csp_atomic_weak_ptr_exchange()</h2>
+<a id="ac6e09ce3bf5080ace9e3621fbeba6b43" name="ac6e09ce3bf5080ace9e3621fbeba6b43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6e09ce3bf5080ace9e3621fbeba6b43">&#9670;&#160;</a></span>csp_atomic_weak_ptr_exchange()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -432,13 +408,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td>
-          <td class="paramname"><em>_desired</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_desired</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -452,8 +422,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1ff4b43c3140bf9cc4d46fa422e6fbb4" name="a1ff4b43c3140bf9cc4d46fa422e6fbb4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ff4b43c3140bf9cc4d46fa422e6fbb4">&#9670;&#160;</a></span>csp_atomic_weak_ptr_exchange_explicit()</h2>
+<a id="a5301be872478c4db50660fd204a5dd9b" name="a5301be872478c4db50660fd204a5dd9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5301be872478c4db50660fd204a5dd9b">&#9670;&#160;</a></span>csp_atomic_weak_ptr_exchange_explicit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -474,13 +444,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">memory_order&#160;</td>
-          <td class="paramname"><em>_order</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_order</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -554,8 +518,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a7061b39e5d26b7d009c5ed3a19e803fa" name="a7061b39e5d26b7d009c5ed3a19e803fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7061b39e5d26b7d009c5ed3a19e803fa">&#9670;&#160;</a></span>csp_atomic_weak_ptr_load()</h2>
+<a id="a070ad2d9d5d3e0729f027035dd77c667" name="a070ad2d9d5d3e0729f027035dd77c667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a070ad2d9d5d3e0729f027035dd77c667">&#9670;&#160;</a></span>csp_atomic_weak_ptr_load()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -564,18 +528,8 @@ Variables</h2></td></tr>
           <td class="memname"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> csp_atomic_weak_ptr_load </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *&#160;</td>
-          <td class="paramname"><em>_this</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>_this</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -584,8 +538,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a7820cebcdece7bc2e179a1833d20f888" name="a7820cebcdece7bc2e179a1833d20f888"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7820cebcdece7bc2e179a1833d20f888">&#9670;&#160;</a></span>csp_atomic_weak_ptr_load_explicit()</h2>
+<a id="ae0b9f7d84111ae0eb4bd4c18af9c6281" name="ae0b9f7d84111ae0eb4bd4c18af9c6281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0b9f7d84111ae0eb4bd4c18af9c6281">&#9670;&#160;</a></span>csp_atomic_weak_ptr_load_explicit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -600,13 +554,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">memory_order&#160;</td>
-          <td class="paramname"><em>_order</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_order</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -620,8 +568,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a42eb817c6d6825dc0ebc9d14a2d1a956" name="a42eb817c6d6825dc0ebc9d14a2d1a956"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42eb817c6d6825dc0ebc9d14a2d1a956">&#9670;&#160;</a></span>csp_atomic_weak_ptr_store()</h2>
+<a id="ad29c9732ab65fdc843740cd7a9d16560" name="ad29c9732ab65fdc843740cd7a9d16560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad29c9732ab65fdc843740cd7a9d16560">&#9670;&#160;</a></span>csp_atomic_weak_ptr_store()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -636,13 +584,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td>
-          <td class="paramname"><em>_desired</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_desired</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -656,8 +598,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a3471cd916fdcb23c78fdd2a9b0053a78" name="a3471cd916fdcb23c78fdd2a9b0053a78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3471cd916fdcb23c78fdd2a9b0053a78">&#9670;&#160;</a></span>csp_atomic_weak_ptr_store_explicit()</h2>
+<a id="aa86712311f138f5849f6efaf523bcf20" name="aa86712311f138f5849f6efaf523bcf20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa86712311f138f5849f6efaf523bcf20">&#9670;&#160;</a></span>csp_atomic_weak_ptr_store_explicit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -678,13 +620,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">memory_order&#160;</td>
-          <td class="paramname"><em>_order</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_order</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -698,8 +634,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0ced1d879dd46c41629a158efea9ba6f" name="a0ced1d879dd46c41629a158efea9ba6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ced1d879dd46c41629a158efea9ba6f">&#9670;&#160;</a></span>csp_atomic_weak_ptr_w()</h2>
+<a id="a873a519362fe0790bde6ed6e26423208" name="a873a519362fe0790bde6ed6e26423208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a873a519362fe0790bde6ed6e26423208">&#9670;&#160;</a></span>csp_atomic_weak_ptr_w()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -714,13 +650,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>&#160;</td>
-          <td class="paramname"><em>_desired</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *&#160;</td>
-          <td class="paramname"><em>_e</em>&#160;</td>
+          <td class="paramname"><em>_desired</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -730,7 +660,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Equivalent to csp_atomic_weak_ptr_store(_this, _desired, _e). </p>
+<p>Equivalent to csp_atomic_weak_ptr_store(_this, _desired). </p>
 
 </div>
 </div>
