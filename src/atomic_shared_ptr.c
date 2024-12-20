@@ -27,13 +27,6 @@ void csp_atomic_shared_ptr_destroy(csp_atomic_shared_ptr* const _this)
     csp_shared_ptr_destroy(&_this->_r);
 }
 
-void csp_atomic_shared_ptr_s(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired)
-{
-    assert(_this);
-
-    csp_atomic_shared_ptr_store(_this, _desired);
-}
-
 bool csp_atomic_shared_ptr_is_lock_free(const csp_atomic_shared_ptr* const _this)
 {
     assert(_this);
@@ -81,6 +74,13 @@ void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* const _this, co
 {
     assert(_this);
     assert(_order != memory_order_consume && _order != memory_order_acquire && _order != memory_order_acq_rel);
+
+    csp_atomic_shared_ptr_store(_this, _desired);
+}
+
+void csp_atomic_shared_ptr_s(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired)
+{
+    assert(_this);
 
     csp_atomic_shared_ptr_store(_this, _desired);
 }
