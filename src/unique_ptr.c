@@ -185,7 +185,7 @@ csp_unique_ptr csp_make_unique_d(const size_t _size, const csp_unique_ptr_T* con
         return _u;
     }
 
-    memccpy(_u._p, _p, _size);
+    memcpy(_u._p, _p, _size);
 
     return _u;
 }

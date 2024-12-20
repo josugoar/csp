@@ -388,7 +388,7 @@ csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_T* con
         return _r;
     }
 
-    memccpy(_r._p, _p, _size);
+    memcpy(_r._p, _p, _size);
 
     return _r;
 }
