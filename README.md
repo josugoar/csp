@@ -36,7 +36,7 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (although
 
 * ~~Custom allocation support. This is very easy to implement but would require and additional overhead of at least one function pointer in each control block of shared pointers, since it is not possible to explicitelly do [EBO](https://en.cppreference.com/w/cpp/language/ebo) (Empty Base class Optimization) and it would require to add the corresponding allocation and deallocation functions inside it. CSP smart pointers already have an overhead of one function pointer when using the default deleter (free), which is minuscule in comparison to other "generic" solutions that always require memory allocation.~~
 
-    * The overhead is negligible while the benefits are inmense, like being able to use smart pointers on some freestanding libc implementations that don't have malloc (even though now it seem to be required anyway).
+    * Since the overhead is negligible while the benefits are inmense, like being able to use smart pointers on some freestanding libc implementations that don't have malloc (even though now it seem to be required anyway), it is now implemented.
 
 * ~~C++20 wait/notify atomic functions. They are not trivial to implement and are hard to test, so they are not a priority at the moment.~~
 
