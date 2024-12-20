@@ -415,7 +415,6 @@ csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_T* con
     assert(_e);
 
     const auto _r = csp_make_shared_for_overwrite_d(_size, _d, _e);
-
     if (*_e != CSP_SUCCESS)
     {
         return _r;
