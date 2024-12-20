@@ -38,16 +38,16 @@ typedef csp_weak_ptr csp_shared_ptr_weak_type;
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_exception* _e);
 
 /// @brief Constructs new csp_shared_ptr.
-[[nodiscard]] csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr* _r);
-
-/// @brief Constructs new csp_shared_ptr.
-[[nodiscard]] csp_shared_ptr csp_shared_ptr_init_move_s(csp_shared_ptr* _r);
-
-/// @brief Constructs new csp_shared_ptr.
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr* _r, csp_shared_ptr_T* _p);
 
 /// @brief Constructs new csp_shared_ptr.
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_p_move_s(csp_shared_ptr* _r, csp_shared_ptr_T* _p);
+
+/// @brief Constructs new csp_shared_ptr.
+[[nodiscard]] csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr* _r);
+
+/// @brief Constructs new csp_shared_ptr.
+[[nodiscard]] csp_shared_ptr csp_shared_ptr_init_move_s(csp_shared_ptr* _r);
 
 /// @brief Constructs new csp_shared_ptr.
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_copy_w(const csp_weak_ptr* _r, csp_exception* _e);
@@ -67,6 +67,18 @@ csp_shared_ptr* csp_shared_ptr_move_s(csp_shared_ptr* _this, csp_shared_ptr* _r)
 /// @brief Assigns the csp_shared_ptr.
 csp_shared_ptr* csp_shared_ptr_move_u(csp_shared_ptr* _this, csp_unique_ptr* _r, csp_exception* _e);
 
+/// @brief Swaps the managed objects.
+void csp_shared_ptr_swap(csp_shared_ptr* _this, csp_shared_ptr* _r);
+
+/// @brief Replaces the managed object.
+void csp_shared_ptr_reset(csp_shared_ptr* _this);
+
+/// @brief Replaces the managed object.
+void csp_shared_ptr_reset_p(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_exception* _e);
+
+/// @brief Replaces the managed object.
+void csp_shared_ptr_reset_pd(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_exception* _e);
+
 /// @brief Returns the stored pointer.
 [[nodiscard]] csp_shared_ptr_T* csp_shared_ptr_get(const csp_shared_ptr* _this);
 
@@ -85,32 +97,14 @@ csp_shared_ptr* csp_shared_ptr_move_u(csp_shared_ptr* _this, csp_unique_ptr* _r,
 /// @brief Provides owner-based ordering of shared pointers.
 [[nodiscard]] bool csp_shared_ptr_owner_before_w(const csp_shared_ptr* _this, const csp_weak_ptr* _r);
 
+/// @brief Owner-based hash support for csp_shared_ptr.
+[[nodiscard]] size_t csp_shared_ptr_owner_hash(const csp_shared_ptr* _this);
+
 /// @brief Provides owner-based ordering of shared pointers.
 [[nodiscard]] bool csp_shared_ptr_owner_equal_s(const csp_shared_ptr* _this, const csp_shared_ptr* _r);
 
 /// @brief Provides owner-based ordering of shared pointers.
 [[nodiscard]] bool csp_shared_ptr_owner_equal_w(const csp_shared_ptr* _this, const csp_weak_ptr* _r);
-
-/// @brief Owner-based hash support for csp_shared_ptr.
-[[nodiscard]] size_t csp_shared_ptr_owner_hash(const csp_shared_ptr* _this);
-
-/// @brief Replaces the managed object.
-void csp_shared_ptr_reset(csp_shared_ptr* _this);
-
-/// @brief Replaces the managed object.
-void csp_shared_ptr_reset_p(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_exception* _e);
-
-/// @brief Replaces the managed object.
-void csp_shared_ptr_reset_pd(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_exception* _e);
-
-/// @brief Replaces the managed object.
-void csp_shared_ptr_reset_p_copy_s(csp_shared_ptr* _this, const csp_shared_ptr* _r, csp_shared_ptr_T* _p, csp_exception* _e);
-
-/// @brief Replaces the managed object.
-void csp_shared_ptr_reset_p_move_s(csp_shared_ptr* _this, csp_shared_ptr* _r, csp_shared_ptr_T* _p, csp_exception* _e);
-
-/// @brief Swaps the managed objects.
-void csp_shared_ptr_swap(csp_shared_ptr* _this, csp_shared_ptr* _r);
 
 /// @brief Creates a shared pointer that manages a new object.
 [[nodiscard]] csp_shared_ptr csp_make_shared(size_t _size, const csp_shared_ptr_T* _p, csp_exception* _e);

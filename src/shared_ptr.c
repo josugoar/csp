@@ -70,6 +70,41 @@ csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T* const _p, const csp_shar
     return _this;
 }
 
+csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr* const _r, csp_shared_ptr_T* const _p)
+{
+    assert(_r);
+
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = _r->_cntrl };
+
+    if (_this._cntrl)
+    {
+        csp_cntrl_blk_add_shared(_this._cntrl);
+    }
+
+    assert(csp_shared_ptr_get(&_this) == _p);
+    assert(csp_shared_ptr_use_count(&_this) == csp_shared_ptr_use_count(_r));
+
+    return _this;
+}
+
+csp_shared_ptr csp_shared_ptr_init_p_move_s(csp_shared_ptr* const _r, csp_shared_ptr_T* const _p)
+{
+    assert(_r);
+
+    [[maybe_unused]] const auto _shared_owners = csp_shared_ptr_use_count(_r);
+
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = _r->_cntrl };
+
+    _r->_p = nullptr;
+    _r->_cntrl = nullptr;
+
+    assert(csp_shared_ptr_get(&_this) == _p);
+    assert(!csp_shared_ptr_get(_r));
+    assert(csp_shared_ptr_use_count(&_this) == _shared_owners);
+
+    return _this;
+}
+
 csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr* const _r)
 {
     assert(_r);
@@ -103,41 +138,6 @@ csp_shared_ptr csp_shared_ptr_init_move_s(csp_shared_ptr* const _r)
     assert(!csp_shared_ptr_get(_r));
     assert(csp_shared_ptr_use_count(&_this) == _shared_owners);
     assert(csp_shared_ptr_use_count(_r) == 0);
-
-    return _this;
-}
-
-csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr* const _r, csp_shared_ptr_T* const _p)
-{
-    assert(_r);
-
-    const csp_shared_ptr _this = { ._p = _p, ._cntrl = _r->_cntrl };
-
-    if (_this._cntrl)
-    {
-        csp_cntrl_blk_add_shared(_this._cntrl);
-    }
-
-    assert(csp_shared_ptr_get(&_this) == _p);
-    assert(csp_shared_ptr_use_count(&_this) == csp_shared_ptr_use_count(_r));
-
-    return _this;
-}
-
-csp_shared_ptr csp_shared_ptr_init_p_move_s(csp_shared_ptr* const _r, csp_shared_ptr_T* const _p)
-{
-    assert(_r);
-
-    [[maybe_unused]] const auto _shared_owners = csp_shared_ptr_use_count(_r);
-
-    const csp_shared_ptr _this = { ._p = _p, ._cntrl = _r->_cntrl };
-
-    _r->_p = nullptr;
-    _r->_cntrl = nullptr;
-
-    assert(csp_shared_ptr_get(&_this) == _p);
-    assert(!csp_shared_ptr_get(_r));
-    assert(csp_shared_ptr_use_count(&_this) == _shared_owners);
 
     return _this;
 }
@@ -249,6 +249,59 @@ csp_shared_ptr* csp_shared_ptr_move_u(csp_shared_ptr* const _this, csp_unique_pt
     return _this;
 }
 
+void csp_shared_ptr_swap(csp_shared_ptr* const _this, csp_shared_ptr* const _r)
+{
+    assert(_this);
+    assert(_r);
+
+    const auto _p = _this->_p;
+    _this->_p = _r->_p;
+    _r->_p = _p;
+
+    const auto _cntrl = _this->_cntrl;
+    _this->_cntrl = _r->_cntrl;
+    _r->_cntrl = _cntrl;
+}
+
+void csp_shared_ptr_reset(csp_shared_ptr* const _this)
+{
+    assert(_this);
+
+    csp_shared_ptr _tmp = csp_shared_ptr_init();
+    csp_shared_ptr_swap(&_tmp, _this);
+    csp_shared_ptr_destroy(&_tmp);
+}
+
+void csp_shared_ptr_reset_p(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, csp_exception* const _e)
+{
+    assert(_this);
+    assert(_e);
+
+    csp_shared_ptr _tmp = csp_shared_ptr_init_p(_p, _e);
+    if (*_e != CSP_SUCCESS)
+    {
+        return;
+    }
+
+    csp_shared_ptr_swap(&_tmp, _this);
+    csp_shared_ptr_destroy(&_tmp);
+}
+
+void csp_shared_ptr_reset_pd(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, csp_exception* const _e)
+{
+    assert(_this);
+    assert(_e);
+
+    csp_shared_ptr _tmp = csp_shared_ptr_init_pd(_p, _d, _e);
+    if (*_e != CSP_SUCCESS)
+    {
+        return;
+    }
+
+    csp_shared_ptr_swap(&_tmp, _this);
+    csp_shared_ptr_destroy(&_tmp);
+}
+
 csp_shared_ptr_T* csp_shared_ptr_get(const csp_shared_ptr* const _this)
 {
     assert(_this);
@@ -293,6 +346,13 @@ bool csp_shared_ptr_owner_before_w(const csp_shared_ptr* const _this, const csp_
     return _this->_cntrl < _r->_cntrl;
 }
 
+size_t csp_shared_ptr_owner_hash(const csp_shared_ptr* const _this)
+{
+    assert(_this);
+
+    return _this->_cntrl ? (size_t)_this->_cntrl : 0;
+}
+
 bool csp_shared_ptr_owner_equal_s(const csp_shared_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
@@ -307,98 +367,6 @@ bool csp_shared_ptr_owner_equal_w(const csp_shared_ptr* const _this, const csp_w
     assert(_r);
 
     return _this->_cntrl == _r->_cntrl;
-}
-
-size_t csp_shared_ptr_owner_hash(const csp_shared_ptr* const _this)
-{
-    assert(_this);
-
-    return _this->_cntrl ? (size_t)_this->_cntrl : 0;
-}
-
-void csp_shared_ptr_reset(csp_shared_ptr* const _this)
-{
-    assert(_this);
-
-    csp_shared_ptr _tmp = csp_shared_ptr_init();
-    csp_shared_ptr_swap(&_tmp, _this);
-    csp_shared_ptr_destroy(&_tmp);
-}
-
-void csp_shared_ptr_reset_p(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, csp_exception* const _e)
-{
-    assert(_this);
-    assert(_e);
-
-    csp_shared_ptr _tmp = csp_shared_ptr_init_p(_p, _e);
-    if (*_e != CSP_SUCCESS)
-    {
-        return;
-    }
-
-    csp_shared_ptr_swap(&_tmp, _this);
-    csp_shared_ptr_destroy(&_tmp);
-}
-
-void csp_shared_ptr_reset_pd(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, csp_exception* const _e)
-{
-    assert(_this);
-    assert(_e);
-
-    csp_shared_ptr _tmp = csp_shared_ptr_init_pd(_p, _d, _e);
-    if (*_e != CSP_SUCCESS)
-    {
-        return;
-    }
-
-    csp_shared_ptr_swap(&_tmp, _this);
-    csp_shared_ptr_destroy(&_tmp);
-}
-
-void csp_shared_ptr_reset_p_copy_s(csp_shared_ptr* const _this, const csp_shared_ptr* const _r, csp_shared_ptr_T* const _p, csp_exception* const _e)
-{
-    assert(_this);
-    assert(_r);
-    assert(_e);
-
-    csp_shared_ptr _tmp = csp_shared_ptr_init_p_copy_s(_p, _e);
-    if (*_e != CSP_SUCCESS)
-    {
-        return;
-    }
-
-    csp_shared_ptr_swap(&_tmp, _this);
-    csp_shared_ptr_destroy(&_tmp);
-}
-
-void csp_shared_ptr_reset_p_move_s(csp_shared_ptr* const _this, csp_shared_ptr* const _r, csp_shared_ptr_T* const _p, csp_exception* const _e)
-{
-    assert(_this);
-    assert(_r);
-    assert(_e);
-
-    csp_shared_ptr _tmp = csp_shared_ptr_init_p_move_s(_p, _e);
-    if (*_e != CSP_SUCCESS)
-    {
-        return;
-    }
-
-    csp_shared_ptr_swap(&_tmp, _this);
-    csp_shared_ptr_destroy(&_tmp);
-}
-
-void csp_shared_ptr_swap(csp_shared_ptr* const _this, csp_shared_ptr* const _r)
-{
-    assert(_this);
-    assert(_r);
-
-    const auto _p = _this->_p;
-    _this->_p = _r->_p;
-    _r->_p = _p;
-
-    const auto _cntrl = _this->_cntrl;
-    _this->_cntrl = _r->_cntrl;
-    _r->_cntrl = _cntrl;
 }
 
 csp_shared_ptr csp_make_shared(const size_t _size, const csp_shared_ptr_T* const _p, csp_exception* const _e)
@@ -435,7 +403,6 @@ csp_shared_ptr csp_make_shared_for_overwrite(const size_t _size, csp_exception* 
 csp_shared_ptr csp_make_shared_for_overwrite_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception* const _e)
 {
     assert(_e);
-    assert(_size <= SIZE_MAX - sizeof(csp_cntrl_blk));
 
     const auto _ptr = (unsigned char*)malloc(_size + sizeof(csp_cntrl_blk));
     if (!_ptr)
