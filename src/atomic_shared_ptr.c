@@ -61,7 +61,7 @@ void csp_atomic_shared_ptr_store(csp_atomic_shared_ptr* const _this, csp_shared_
     csp_atomic_shared_ptr_store_explicit(_this, _desired, memory_order_seq_cst);
 }
 
-void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired, [[maybe_unused]] const memory_order _order)
+void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* const _this, csp_shared_ptr _desired, [[maybe_unused]] const memory_order _order)
 {
     assert(_this);
     assert(_order != memory_order_consume && _order != memory_order_acquire && _order != memory_order_acq_rel);
@@ -80,7 +80,7 @@ csp_shared_ptr csp_atomic_shared_ptr_exchange(csp_atomic_shared_ptr* const _this
     return csp_atomic_shared_ptr_exchange_explicit(_this, _desired, memory_order_seq_cst);
 }
 
-csp_shared_ptr csp_atomic_shared_ptr_exchange_explicit(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired, [[maybe_unused]] const memory_order _order)
+csp_shared_ptr csp_atomic_shared_ptr_exchange_explicit(csp_atomic_shared_ptr* const _this, csp_shared_ptr _desired, [[maybe_unused]] const memory_order _order)
 {
     assert(_this);
 
