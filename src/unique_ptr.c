@@ -179,14 +179,19 @@ csp_unique_ptr csp_make_unique_d(const size_t _size, const csp_unique_ptr_T* con
     assert(_p);
     assert(_e);
 
-    const auto _u = csp_make_unique_for_overwrite_d(_size, _d, _e);
-
-    if (*_e != CSP_SUCCESS)
+    const auto _ptr = (unsigned char*)malloc(_size);
+    if (!_ptr)
     {
-        return _u;
+        *_e = CSP_BAD_ALLOC;
+
+        return (csp_unique_ptr) { ._p = nullptr, ._d = nullptr };
     }
 
-    memccpy(_u._p, _p, _size);
+    const auto _p = (csp_unique_ptr_T*)memcpy(_ptr, _p, _size);
+
+    const csp_unique_ptr _u = { ._p = _p, ._d = _d };
+
+    *_e = CSP_SUCCESS;
 
     return _u;
 }

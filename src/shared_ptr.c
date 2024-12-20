@@ -413,15 +413,22 @@ csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_T* con
 {
     assert(_p);
     assert(_e);
+    assert(_size <= SIZE_MAX - sizeof(csp_cntrl_blk));
 
-    const auto _r = csp_make_shared_for_overwrite_d(_size, _d, _e);
-
-    if (*_e != CSP_SUCCESS)
+    const auto _ptr = (unsigned char*)malloc(_size + sizeof(csp_cntrl_blk));
+    if (!_ptr)
     {
-        return _r;
+        *_e = CSP_BAD_ALLOC;
+
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    memccpy(_r._p, _p, _size);
+    const auto _p = (csp_shared_ptr_T*)memcpy(_ptr, _p, _size);
+    const auto _cntrl = (csp_cntrl_blk*)(_ptr + _size);
+
+    const csp_shared_ptr _r = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
+
+    *_e = CSP_SUCCESS;
 
     return _r;
 }
