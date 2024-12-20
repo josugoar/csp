@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 void csp_default_delete(csp_default_delete_T* const _ptr)
 {
@@ -165,14 +166,39 @@ void csp_unique_ptr_swap(csp_unique_ptr* const _this, csp_unique_ptr* const _u)
     _u->_d = _d;
 }
 
-csp_unique_ptr csp_make_unique(const size_t _size, csp_exception* const _e)
+csp_unique_ptr csp_make_unique(const size_t _size, const csp_unique_ptr_T* const _p, csp_exception* const _e)
+{
+    assert(_p);
+    assert(_e);
+
+    return csp_make_unique_d(_size, _p, csp_default_delete, _e);
+}
+
+csp_unique_ptr csp_make_unique_d(const size_t _size, const csp_unique_ptr_T* const _p, const csp_unique_ptr_D _d, csp_exception* const _e)
+{
+    assert(_p);
+    assert(_e);
+
+    const auto _u = csp_make_unique_for_overwrite_d(_size, _d, _e);
+
+    if (*_e != CSP_SUCCESS)
+    {
+        return _u;
+    }
+
+    memccpy(_u._p, _p, _size);
+
+    return _u;
+}
+
+csp_unique_ptr csp_make_unique_for_overwrite(const size_t _size, csp_exception* const _e)
 {
     assert(_e);
 
-    return csp_make_unique_d(_size, csp_default_delete, _e);
+    return csp_make_unique_for_overwrite_d(_size, csp_default_delete, _e);
 }
 
-csp_unique_ptr csp_make_unique_d(const size_t _size, const csp_unique_ptr_D _d, csp_exception* const _e)
+csp_unique_ptr csp_make_unique_for_overwrite_d(const size_t _size, const csp_unique_ptr_D _d, csp_exception* const _e)
 {
     assert(_e);
 

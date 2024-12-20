@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "csp/exception.h"
 #include "csp/unique_ptr.h"
@@ -400,14 +401,39 @@ void csp_shared_ptr_swap(csp_shared_ptr* const _this, csp_shared_ptr* const _r)
     _r->_cntrl = _cntrl;
 }
 
-csp_shared_ptr csp_make_shared(const size_t _size, csp_exception* const _e)
+csp_shared_ptr csp_make_shared(const size_t _size, const csp_shared_ptr_T* const _p, csp_exception* const _e)
+{
+    assert(_p);
+    assert(_e);
+
+    return csp_make_shared_d(_size, _p, csp_default_delete, _e);
+}
+
+csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, csp_exception* const _e)
+{
+    assert(_p);
+    assert(_e);
+
+    const auto _r = csp_make_shared_for_overwrite_d(_size, _d, _e);
+
+    if (*_e != CSP_SUCCESS)
+    {
+        return _r;
+    }
+
+    memccpy(_r._p, _p, _size);
+
+    return _r;
+}
+
+csp_shared_ptr csp_make_shared_for_overwrite(const size_t _size, csp_exception* const _e)
 {
     assert(_e);
 
-    return csp_make_shared_d(_size, csp_default_delete, _e);
+    return csp_make_shared_for_overwrite_d(_size, csp_default_delete, _e);
 }
 
-csp_shared_ptr csp_make_shared_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception* const _e)
+csp_shared_ptr csp_make_shared_for_overwrite_d(const size_t _size, const csp_shared_ptr_D _d, csp_exception* const _e)
 {
     assert(_e);
     assert(_size <= SIZE_MAX - sizeof(csp_cntrl_blk));
