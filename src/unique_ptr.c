@@ -72,7 +72,7 @@ void csp_unique_ptr_destroy(csp_unique_ptr* const _this)
     csp_unique_ptr_reset(_this);
 }
 
-csp_unique_ptr* csp_unique_ptr_move_u(csp_unique_ptr* _this, csp_unique_ptr* _u)
+csp_unique_ptr* csp_unique_ptr_move_u(csp_unique_ptr* const _this, csp_unique_ptr* const _u)
 {
     assert(_this);
     assert(_u);
