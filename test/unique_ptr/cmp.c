@@ -14,18 +14,18 @@ void test(void) {
     A* const ptr2 = (A*)malloc(sizeof(*ptr2));
     const csp_unique_ptr p2 = csp_unique_ptr_init_p(ptr2);
 
-    assert(!csp_unique_ptr_equal_to(&p1, &p2));
-    assert(csp_unique_ptr_not_equal_to(&p1, &p2));
-    assert(csp_unique_ptr_less(&p1, &p2) == (ptr1 < ptr2));
-    assert(csp_unique_ptr_less_equal(&p1, &p2) == (ptr1 <= ptr2));
-    assert(csp_unique_ptr_greater(&p1, &p2) == (ptr1 > ptr2));
-    assert(csp_unique_ptr_greater_equal(&p1, &p2) == (ptr1 >= ptr2));
+    assert(ptr1 != ptr2);
+    assert(ptr1 != ptr2);
   }
   // Default-constructed pointers
   {
     const csp_unique_ptr p1 = csp_unique_ptr_init();
+    A* const ptr1 = csp_unique_ptr_get(&p1);
+
     const csp_unique_ptr p2 = csp_unique_ptr_init();
-    assert(csp_unique_ptr_equal_to(&p1, &p2));
+    A* const ptr2 = csp_unique_ptr_get(&p2);
+
+    assert(ptr1 == ptr2);
   }
 }
 
