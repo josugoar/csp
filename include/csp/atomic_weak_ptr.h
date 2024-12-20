@@ -46,9 +46,6 @@ void csp_atomic_weak_ptr_store(csp_atomic_weak_ptr* _this, csp_weak_ptr _desired
 /// @brief Atomically replaces the value of this with the value of desired as if by csp_weak_ptr_swap(_this->_r, &desired) where _r is the underlying csp_weak_ptr. Memory is ordered according to order. The behavior is undefined if order is memory_order_consume, memory_order_acquire, or memory_order_acq_rel.
 void csp_atomic_weak_ptr_store_explicit(csp_atomic_weak_ptr* _this, csp_weak_ptr _desired, memory_order _order);
 
-/// @brief Equivalent to csp_atomic_weak_ptr_store(_this, _desired).
-void csp_atomic_weak_ptr_w(csp_atomic_weak_ptr* _this, csp_weak_ptr _desired);
-
 /// @brief Atomically replaces the underlying csp_weak_ptr with desired as if by csp_weak_ptr_swap(_this->_r, &desired) where _r is the underlying csp_weak_ptr, and returns a copy of the value that p had immediately before the swap. This is an atomic read-modify-write operation.
 csp_weak_ptr csp_atomic_weak_ptr_exchange(csp_atomic_weak_ptr* _this, csp_weak_ptr _desired);
 

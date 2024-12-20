@@ -110,13 +110,6 @@ const csp_unique_ptr_D* csp_unique_ptr_get_deleter_const(const csp_unique_ptr* c
     return &_this->_d;
 }
 
-bool csp_unique_ptr_bool(const csp_unique_ptr* const _this)
-{
-    assert(_this);
-
-    return _this->_p != nullptr;
-}
-
 csp_unique_ptr_T* csp_unique_ptr_release(csp_unique_ptr* const _this)
 {
     assert(_this);
@@ -216,54 +209,6 @@ csp_unique_ptr csp_make_unique_for_overwrite_d(const size_t _size, const csp_uni
     *_e = CSP_SUCCESS;
 
     return _u;
-}
-
-bool csp_unique_ptr_equal_to(const csp_unique_ptr* const _x, const csp_unique_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p == _y->_p;
-}
-
-bool csp_unique_ptr_not_equal_to(const csp_unique_ptr* const _x, const csp_unique_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p != _y->_p;
-}
-
-bool csp_unique_ptr_less(const csp_unique_ptr* const _x, const csp_unique_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p < _y->_p;
-}
-
-bool csp_unique_ptr_less_equal(const csp_unique_ptr* const _x, const csp_unique_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p <= _y->_p;
-}
-
-bool csp_unique_ptr_greater(const csp_unique_ptr* const _x, const csp_unique_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p > _y->_p;
-}
-
-bool csp_unique_ptr_greater_equal(const csp_unique_ptr* const _x, const csp_unique_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p >= _y->_p;
 }
 
 size_t csp_unique_ptr_hash(const csp_unique_ptr* const _this)

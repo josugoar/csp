@@ -88,9 +88,6 @@ void csp_shared_ptr_reset_pd(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_sh
 /// @brief Returns the number of csp_shared_ptr objects referring to the same managed object.
 [[nodiscard]] long csp_shared_ptr_use_count(const csp_shared_ptr* _this);
 
-/// @brief Checks if the stored pointer is not null.
-[[nodiscard]] bool csp_shared_ptr_bool(const csp_shared_ptr* _this);
-
 /// @brief Provides owner-based ordering of shared pointers.
 [[nodiscard]] bool csp_shared_ptr_owner_before_s(const csp_shared_ptr* _this, const csp_shared_ptr* _r);
 
@@ -117,24 +114,6 @@ void csp_shared_ptr_reset_pd(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_sh
 
 /// @brief Creates a shared pointer that manages a new object.
 [[nodiscard]] csp_shared_ptr csp_make_shared_for_overwrite_d(size_t _size, csp_shared_ptr_D _d, csp_exception* _e);
-
-/// @brief Compares to another csp_shared_ptr.
-[[nodiscard]] bool csp_shared_ptr_equal_to(const csp_shared_ptr* _x, const csp_shared_ptr* _y);
-
-/// @brief Compares to another csp_shared_ptr.
-[[nodiscard]] bool csp_shared_ptr_not_equal_to(const csp_shared_ptr* _x, const csp_shared_ptr* _y);
-
-/// @brief Compares to another csp_shared_ptr.
-[[nodiscard]] bool csp_shared_ptr_less(const csp_shared_ptr* _x, const csp_shared_ptr* _y);
-
-/// @brief Compares to another csp_shared_ptr.
-[[nodiscard]] bool csp_shared_ptr_less_equal(const csp_shared_ptr* _x, const csp_shared_ptr* _y);
-
-/// @brief Compares to another csp_shared_ptr.
-[[nodiscard]] bool csp_shared_ptr_greater(const csp_shared_ptr* _x, const csp_shared_ptr* _y);
-
-/// @brief Compares to another csp_shared_ptr.
-[[nodiscard]] bool csp_shared_ptr_greater_equal(const csp_shared_ptr* _x, const csp_shared_ptr* _y);
 
 /// @brief Hash support for csp_shared_ptr.
 [[nodiscard]] size_t csp_shared_ptr_hash(const csp_shared_ptr* _this);

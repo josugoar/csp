@@ -62,9 +62,6 @@ csp_unique_ptr* csp_unique_ptr_move_u(csp_unique_ptr* _this, csp_unique_ptr* _u)
 /// @brief Returns the deleter that is used for destruction of the managed object.
 [[nodiscard]] const csp_unique_ptr_D* csp_unique_ptr_get_deleter_const(const csp_unique_ptr* _this);
 
-/// @brief Checks if there is an associated managed object.
-[[nodiscard]] bool csp_unique_ptr_bool(const csp_unique_ptr* _this);
-
 /// @brief Returns a pointer to the managed object and releases the ownership.
 [[nodiscard]] csp_unique_ptr_T* csp_unique_ptr_release(csp_unique_ptr* _this);
 
@@ -88,24 +85,6 @@ void csp_unique_ptr_swap(csp_unique_ptr* _this, csp_unique_ptr* _u);
 
 /// @brief Creates a unique pointer that manages a new object.
 [[nodiscard]] csp_unique_ptr csp_make_unique_for_overwrite_d(size_t _size, csp_unique_ptr_D _d, csp_exception* _e);
-
-/// @brief Compares to another csp_unique_ptr.
-[[nodiscard]] bool csp_unique_ptr_equal_to(const csp_unique_ptr* _x, const csp_unique_ptr* _y);
-
-/// @brief Compares to another csp_unique_ptr.
-[[nodiscard]] bool csp_unique_ptr_not_equal_to(const csp_unique_ptr* _x, const csp_unique_ptr* _y);
-
-/// @brief Compares to another csp_unique_ptr.
-[[nodiscard]] bool csp_unique_ptr_less(const csp_unique_ptr* _x, const csp_unique_ptr* _y);
-
-/// @brief Compares to another csp_unique_ptr.
-[[nodiscard]] bool csp_unique_ptr_less_equal(const csp_unique_ptr* _x, const csp_unique_ptr* _y);
-
-/// @brief Compares to another csp_unique_ptr.
-[[nodiscard]] bool csp_unique_ptr_greater(const csp_unique_ptr* _x, const csp_unique_ptr* _y);
-
-/// @brief Compares to another csp_unique_ptr.
-[[nodiscard]] bool csp_unique_ptr_greater_equal(const csp_unique_ptr* _x, const csp_unique_ptr* _y);
 
 /// @brief Hash support for csp_unique_ptr.
 [[nodiscard]] size_t csp_unique_ptr_hash(const csp_unique_ptr* _this);

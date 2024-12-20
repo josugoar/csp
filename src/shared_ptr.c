@@ -323,13 +323,6 @@ long csp_shared_ptr_use_count(const csp_shared_ptr* const _this)
     return _this->_cntrl ? csp_cntrl_blk_use_count(_this->_cntrl) : 0;
 }
 
-bool csp_shared_ptr_bool(const csp_shared_ptr* const _this)
-{
-    assert(_this);
-
-    return _this->_p != nullptr;
-}
-
 bool csp_shared_ptr_owner_before_s(const csp_shared_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
@@ -420,54 +413,6 @@ csp_shared_ptr csp_make_shared_for_overwrite_d(const size_t _size, const csp_sha
     *_e = CSP_SUCCESS;
 
     return _r;
-}
-
-bool csp_shared_ptr_equal_to(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p == _y->_p;
-}
-
-bool csp_shared_ptr_not_equal_to(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p != _y->_p;
-}
-
-bool csp_shared_ptr_less(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p < _y->_p;
-}
-
-bool csp_shared_ptr_less_equal(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p <= _y->_p;
-}
-
-bool csp_shared_ptr_greater(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p > _y->_p;
-}
-
-bool csp_shared_ptr_greater_equal(const csp_shared_ptr* const _x, const csp_shared_ptr* const _y)
-{
-    assert(_x);
-    assert(_y);
-
-    return _x->_p >= _y->_p;
 }
 
 size_t csp_shared_ptr_hash(const csp_shared_ptr* const _this)

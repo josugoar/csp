@@ -46,9 +46,6 @@ void csp_atomic_shared_ptr_store(csp_atomic_shared_ptr* _this, csp_shared_ptr _d
 /// @brief Atomically replaces the value of this with the value of desired as if by csp_shared_ptr_swap(_this->_r, &desired) where _r is the underlying csp_shared_ptr. Memory is ordered according to order. The behavior is undefined if order is memory_order_consume, memory_order_acquire, or memory_order_acq_rel.
 void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* _this, csp_shared_ptr _desired, memory_order _order);
 
-/// @brief Equivalent to csp_atomic_shared_ptr_store(_this, _desired).
-void csp_atomic_shared_ptr_s(csp_atomic_shared_ptr* _this, csp_shared_ptr _desired);
-
 /// @brief Atomically replaces the underlying csp_shared_ptr with desired as if by csp_shared_ptr_swap(_this->_r, &desired) where _r is the underlying csp_shared_ptr, and returns a copy of the value that _r had immediately before the swap. This is an atomic read-modify-write operation.
 [[nodiscard]] csp_shared_ptr csp_atomic_shared_ptr_exchange(csp_atomic_shared_ptr* _this, csp_shared_ptr _desired);
 

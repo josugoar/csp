@@ -78,13 +78,6 @@ void csp_atomic_weak_ptr_store_explicit(csp_atomic_weak_ptr* const _this, const 
     csp_atomic_weak_ptr_store(_this, _desired);
 }
 
-void csp_atomic_weak_ptr_w(csp_atomic_weak_ptr* const _this, const csp_weak_ptr _desired)
-{
-    assert(_this);
-
-    csp_atomic_weak_ptr_store(_this, _desired);
-}
-
 csp_weak_ptr csp_atomic_weak_ptr_exchange(csp_atomic_weak_ptr* const _this, csp_weak_ptr _desired)
 {
     assert(_this);

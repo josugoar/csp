@@ -75,13 +75,6 @@ void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* const _this, co
     mtx_unlock(_mutex);
 }
 
-void csp_atomic_shared_ptr_s(csp_atomic_shared_ptr* const _this, const csp_shared_ptr _desired)
-{
-    assert(_this);
-
-    csp_atomic_shared_ptr_store(_this, _desired);
-}
-
 csp_shared_ptr csp_atomic_shared_ptr_exchange(csp_atomic_shared_ptr* const _this, csp_shared_ptr _desired)
 {
     return csp_atomic_shared_ptr_exchange_explicit(_this, _desired, memory_order_seq_cst);
