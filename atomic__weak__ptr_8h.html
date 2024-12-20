@@ -150,6 +150,18 @@ Functions</h2></td></tr>
 <tr class="memitem:a1811906d05ffc73d935e1948d6035548" id="r_a1811906d05ffc73d935e1948d6035548"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a1811906d05ffc73d935e1948d6035548">csp_atomic_weak_ptr_compare_exchange_strong_explicit</a> (<a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_expected, <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> _desired, memory_order _success, memory_order _failure)</td></tr>
 <tr class="memdesc:a1811906d05ffc73d935e1948d6035548"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> stores the same pointer value as expected and shares ownership with it, or if both underlying and expected are empty, assigns from desired to the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a>, returns true, and orders memory according to success, otherwise assigns from the underlying <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> to expected, returns false, and orders memory according to failure. The behavior is undefined if failure is memory_order_release or memory_order_acq_rel. On success, the operation is an atomic read-modify-write operation on this and expected is not accessed after the atomic update. On failure, the operation is an atomic load operation on this and expected is updated with the existing value read from the atomic object. This update to expected's csp_weak_ptr_use_count is part of this atomic operation, although the write itself (and any subsequent deallocation/destruction) is not required to be.  <br /></td></tr>
 <tr class="separator:a1811906d05ffc73d935e1948d6035548"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abab3efd251fda04a1d3d7b4b923655e0" id="r_abab3efd251fda04a1d3d7b4b923655e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#abab3efd251fda04a1d3d7b4b923655e0">csp_atomic_weak_ptr_wait</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, const <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_old)</td></tr>
+<tr class="memdesc:abab3efd251fda04a1d3d7b4b923655e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to: csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst).  <br /></td></tr>
+<tr class="separator:abab3efd251fda04a1d3d7b4b923655e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab583c66e9237e0668a4d62b3bc1645ff" id="r_ab583c66e9237e0668a4d62b3bc1645ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#ab583c66e9237e0668a4d62b3bc1645ff">csp_atomic_weak_ptr_wait_explicit</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this, const <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *_old, memory_order _order)</td></tr>
+<tr class="memdesc:ab583c66e9237e0668a4d62b3bc1645ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an atomic waiting operation. Compares csp_atomic_weak_ptr_load_explicit(_this, _order) with _old and if they are equivalent then blocks until _this is notified by <a class="el" href="atomic__weak__ptr_8h.html#a268289175e7a9ac240411f570ce3b8ba" title="Performs an atomic notifying operation. If there is a thread blocked in atomic waiting operations(i....">csp_atomic_weak_ptr_notify_one()</a> or <a class="el" href="atomic__weak__ptr_8h.html#a8049f1e863340d36ff52b371a6d744cd" title="Performs an atomic notifying operation. Unblocks all threads blocked in atomic waiting operations(i....">csp_atomic_weak_ptr_notify_all()</a>. This is repeated until csp_atomic_weak_ptr_load(_this, _order) changes. This function is guaranteed to return only if value has changed, even if underlying implementation unblocks spuriously. Memory is ordered according to _order. The behavior is undefined if order is memory_order_release or memory_order_acq_rel. Notes: two csp_weak_ptrs are equivalent if they store the same pointer and either share ownership or are both empty.  <br /></td></tr>
+<tr class="separator:ab583c66e9237e0668a4d62b3bc1645ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a268289175e7a9ac240411f570ce3b8ba" id="r_a268289175e7a9ac240411f570ce3b8ba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a268289175e7a9ac240411f570ce3b8ba">csp_atomic_weak_ptr_notify_one</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this)</td></tr>
+<tr class="memdesc:a268289175e7a9ac240411f570ce3b8ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an atomic notifying operation. If there is a thread blocked in atomic waiting operations(i.e. <a class="el" href="atomic__weak__ptr_8h.html#abab3efd251fda04a1d3d7b4b923655e0" title="Equivalent to: csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst).">csp_atomic_weak_ptr_wait()</a>) on _this, then unblocks at least one such thread; otherwise does nothing.  <br /></td></tr>
+<tr class="separator:a268289175e7a9ac240411f570ce3b8ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8049f1e863340d36ff52b371a6d744cd" id="r_a8049f1e863340d36ff52b371a6d744cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atomic__weak__ptr_8h.html#a8049f1e863340d36ff52b371a6d744cd">csp_atomic_weak_ptr_notify_all</a> (const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *_this)</td></tr>
+<tr class="memdesc:a8049f1e863340d36ff52b371a6d744cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an atomic notifying operation. Unblocks all threads blocked in atomic waiting operations(i.e. <a class="el" href="atomic__weak__ptr_8h.html#abab3efd251fda04a1d3d7b4b923655e0" title="Equivalent to: csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst).">csp_atomic_weak_ptr_wait()</a>) on* this, if there are any; otherwise does nothing.  <br /></td></tr>
+<tr class="separator:a8049f1e863340d36ff52b371a6d744cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -568,6 +580,46 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a8049f1e863340d36ff52b371a6d744cd" name="a8049f1e863340d36ff52b371a6d744cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8049f1e863340d36ff52b371a6d744cd">&#9670;&#160;</a></span>csp_atomic_weak_ptr_notify_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void csp_atomic_weak_ptr_notify_all </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *&#160;</td>
+          <td class="paramname"><em>_this</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs an atomic notifying operation. Unblocks all threads blocked in atomic waiting operations(i.e. <a class="el" href="atomic__weak__ptr_8h.html#abab3efd251fda04a1d3d7b4b923655e0" title="Equivalent to: csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst).">csp_atomic_weak_ptr_wait()</a>) on* this, if there are any; otherwise does nothing. </p>
+
+</div>
+</div>
+<a id="a268289175e7a9ac240411f570ce3b8ba" name="a268289175e7a9ac240411f570ce3b8ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a268289175e7a9ac240411f570ce3b8ba">&#9670;&#160;</a></span>csp_atomic_weak_ptr_notify_one()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void csp_atomic_weak_ptr_notify_one </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *&#160;</td>
+          <td class="paramname"><em>_this</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs an atomic notifying operation. If there is a thread blocked in atomic waiting operations(i.e. <a class="el" href="atomic__weak__ptr_8h.html#abab3efd251fda04a1d3d7b4b923655e0" title="Equivalent to: csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst).">csp_atomic_weak_ptr_wait()</a>) on _this, then unblocks at least one such thread; otherwise does nothing. </p>
+
+</div>
+</div>
 <a id="ad29c9732ab65fdc843740cd7a9d16560" name="ad29c9732ab65fdc843740cd7a9d16560"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad29c9732ab65fdc843740cd7a9d16560">&#9670;&#160;</a></span>csp_atomic_weak_ptr_store()</h2>
 
@@ -661,6 +713,72 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Equivalent to csp_atomic_weak_ptr_store(_this, _desired). </p>
+
+</div>
+</div>
+<a id="abab3efd251fda04a1d3d7b4b923655e0" name="abab3efd251fda04a1d3d7b4b923655e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abab3efd251fda04a1d3d7b4b923655e0">&#9670;&#160;</a></span>csp_atomic_weak_ptr_wait()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void csp_atomic_weak_ptr_wait </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *&#160;</td>
+          <td class="paramname"><em>_this</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *&#160;</td>
+          <td class="paramname"><em>_old</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Equivalent to: csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst). </p>
+
+</div>
+</div>
+<a id="ab583c66e9237e0668a4d62b3bc1645ff" name="ab583c66e9237e0668a4d62b3bc1645ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab583c66e9237e0668a4d62b3bc1645ff">&#9670;&#160;</a></span>csp_atomic_weak_ptr_wait_explicit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void csp_atomic_weak_ptr_wait_explicit </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcsp__atomic__weak__ptr.html">csp_atomic_weak_ptr</a> *&#160;</td>
+          <td class="paramname"><em>_this</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcsp__weak__ptr.html">csp_weak_ptr</a> *&#160;</td>
+          <td class="paramname"><em>_old</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">memory_order&#160;</td>
+          <td class="paramname"><em>_order</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs an atomic waiting operation. Compares csp_atomic_weak_ptr_load_explicit(_this, _order) with _old and if they are equivalent then blocks until _this is notified by <a class="el" href="atomic__weak__ptr_8h.html#a268289175e7a9ac240411f570ce3b8ba" title="Performs an atomic notifying operation. If there is a thread blocked in atomic waiting operations(i....">csp_atomic_weak_ptr_notify_one()</a> or <a class="el" href="atomic__weak__ptr_8h.html#a8049f1e863340d36ff52b371a6d744cd" title="Performs an atomic notifying operation. Unblocks all threads blocked in atomic waiting operations(i....">csp_atomic_weak_ptr_notify_all()</a>. This is repeated until csp_atomic_weak_ptr_load(_this, _order) changes. This function is guaranteed to return only if value has changed, even if underlying implementation unblocks spuriously. Memory is ordered according to _order. The behavior is undefined if order is memory_order_release or memory_order_acq_rel. Notes: two csp_weak_ptrs are equivalent if they store the same pointer and either share ownership or are both empty. </p>
 
 </div>
 </div>
