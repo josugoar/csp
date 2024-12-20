@@ -203,7 +203,7 @@ bool csp_weak_ptr_owner_before_w(const csp_weak_ptr* const _this, const csp_weak
     return _this->_cntrl < _r->_cntrl;
 }
 
-bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr* const _this, const csp_shared_ptr* const _r)
+bool csp_weak_ptr_owner_equal_s(const csp_weak_ptr* const _this, const csp_shared_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -211,7 +211,7 @@ bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr* const _this, const csp_shar
     return _this->_cntrl == _r->_cntrl;
 }
 
-bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr* const _this, const csp_weak_ptr* const _r)
+bool csp_weak_ptr_owner_equal_w(const csp_weak_ptr* const _this, const csp_weak_ptr* const _r)
 {
     assert(_this);
     assert(_r);
@@ -219,7 +219,7 @@ bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr* const _this, const csp_weak
     return _this->_cntrl == _r->_cntrl;
 }
 
-size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr* const _this)
+size_t csp_weak_ptr_owner_hash(const csp_weak_ptr* const _this)
 {
     assert(_this);
 

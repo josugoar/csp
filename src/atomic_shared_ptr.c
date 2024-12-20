@@ -130,7 +130,7 @@ bool csp_atomic_shared_ptr_compare_exchange_strong(csp_atomic_shared_ptr* const 
 
     mtx_lock(_mutex);
 
-    if (csp_shared_ptr_owner_equals_s(&_this->_r, _expected))
+    if (csp_shared_ptr_owner_equal_s(&_this->_r, _expected))
     {
         auto _tmp = csp_shared_ptr_init();
         csp_shared_ptr_swap(&_tmp, &_this->_r);

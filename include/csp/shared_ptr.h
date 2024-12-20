@@ -86,13 +86,13 @@ csp_shared_ptr* csp_shared_ptr_move_u(csp_shared_ptr* _this, csp_unique_ptr* _r,
 [[nodiscard]] bool csp_shared_ptr_owner_before_w(const csp_shared_ptr* _this, const csp_weak_ptr* _r);
 
 /// @brief Provides owner-based ordering of shared pointers.
-[[nodiscard]] bool csp_shared_ptr_owner_equals_s(const csp_shared_ptr* _this, const csp_shared_ptr* _r);
+[[nodiscard]] bool csp_shared_ptr_owner_equal_s(const csp_shared_ptr* _this, const csp_shared_ptr* _r);
 
 /// @brief Provides owner-based ordering of shared pointers.
-[[nodiscard]] bool csp_shared_ptr_owner_equals_w(const csp_shared_ptr* _this, const csp_weak_ptr* _r);
+[[nodiscard]] bool csp_shared_ptr_owner_equal_w(const csp_shared_ptr* _this, const csp_weak_ptr* _r);
 
 /// @brief Owner-based hash support for csp_shared_ptr.
-[[nodiscard]] size_t csp_shared_ptr_owner_hash_value(const csp_shared_ptr* _this);
+[[nodiscard]] size_t csp_shared_ptr_owner_hash(const csp_shared_ptr* _this);
 
 /// @brief Replaces the managed object.
 void csp_shared_ptr_reset(csp_shared_ptr* _this);

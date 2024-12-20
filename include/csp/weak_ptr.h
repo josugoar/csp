@@ -68,13 +68,13 @@ csp_weak_ptr* csp_weak_ptr_copy_s(csp_weak_ptr* _this, const csp_shared_ptr* _r)
 [[nodiscard]] bool csp_weak_ptr_owner_before_w(const csp_weak_ptr* _this, const csp_weak_ptr* _r);
 
 /// @brief Provides owner-based ordering of weak pointers.
-[[nodiscard]] bool csp_weak_ptr_owner_equals_s(const csp_weak_ptr* _this, const csp_shared_ptr* _r);
+[[nodiscard]] bool csp_weak_ptr_owner_equal_s(const csp_weak_ptr* _this, const csp_shared_ptr* _r);
 
 /// @brief Provides owner-based ordering of weak pointers.
-[[nodiscard]] bool csp_weak_ptr_owner_equals_w(const csp_weak_ptr* _this, const csp_weak_ptr* _r);
+[[nodiscard]] bool csp_weak_ptr_owner_equal_w(const csp_weak_ptr* _this, const csp_weak_ptr* _r);
 
 /// @brief Owner-based hash support for csp_weak_ptr.
-[[nodiscard]] size_t csp_weak_ptr_owner_hash_value(const csp_weak_ptr* _this);
+[[nodiscard]] size_t csp_weak_ptr_owner_hash(const csp_weak_ptr* _this);
 
 /// @brief Releases the ownership of the managed object.
 void csp_weak_ptr_reset(csp_weak_ptr* _this);

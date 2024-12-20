@@ -130,7 +130,7 @@ bool csp_atomic_weak_ptr_compare_exchange_strong(csp_atomic_weak_ptr* const _thi
 
     mtx_lock(_mutex);
 
-    if (csp_weak_ptr_owner_equals_w(&_this->_r, _expected))
+    if (csp_weak_ptr_owner_equal_w(&_this->_r, _expected))
     {
         auto _tmp = csp_weak_ptr_init();
         csp_weak_ptr_swap(&_tmp, &_this->_r);
