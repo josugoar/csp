@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <stddef.h>
+#include <string.h>
 #include <threads.h>
 
 #include "mtx_pool.h"
