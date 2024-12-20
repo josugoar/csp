@@ -67,6 +67,18 @@ void csp_atomic_shared_ptr_s(csp_atomic_shared_ptr* _this, csp_shared_ptr _desir
 /// @brief If the underlying csp_shared_ptr stores the same pointer value as expected and shares ownership with it, or if both underlying and expected are empty, assigns from desired to the underlying csp_shared_ptr, returns true, and orders memory according to success, otherwise assigns from the underlying csp_shared_ptr to expected, returns false, and orders memory according to failure. The behavior is undefined if failure is memory_order_release or memory_order_acq_rel. On success, the operation is an atomic read-modify-write operation on this and expected is not accessed after the atomic update. On failure, the operation is an atomic load operation on this and expected is updated with the existing value read from the atomic object. This update to expected's csp_shared_ptr_use_count is part of this atomic operation, although the write itself (and any subsequent deallocation/destruction) is not required to be.
 [[nodiscard]] bool csp_atomic_shared_ptr_compare_exchange_strong_explicit(csp_atomic_shared_ptr* _this, csp_shared_ptr* _expected, csp_shared_ptr _desired, memory_order _success, memory_order _failure);
 
+/// @brief Equivalent to: csp_atomic_shared_ptr_wait_explicit(_this, _old, memory_order_seq_cst).
+void csp_atomic_shared_ptr_wait(const csp_atomic_shared_ptr* _this, const csp_shared_ptr* _old);
+
+/// @brief Performs an atomic waiting operation. Compares csp_atomic_shared_ptr_load_explicit(_this, _order) with _old and if they are equivalent then blocks until _this is notified by csp_atomic_shared_ptr_notify_one() or csp_atomic_shared_ptr_notify_all(). This is repeated until csp_atomic_shared_ptr_load(_this, _order) changes. This function is guaranteed to return only if value has changed, even if underlying implementation unblocks spuriously. Memory is ordered according to _order. The behavior is undefined if order is memory_order_release or memory_order_acq_rel. Notes: two csp_shared_ptrs are equivalent if they store the same pointer and either share ownership or are both empty.
+void csp_atomic_shared_ptr_wait_explicit(const csp_atomic_shared_ptr* _this, const csp_shared_ptr* _old, memory_order _order);
+
+/// @brief Performs an atomic notifying operation. If there is a thread blocked in atomic waiting operations(i.e. csp_atomic_shared_ptr_wait()) on _this, then unblocks at least one such thread; otherwise does nothing.
+void csp_atomic_shared_ptr_notify_one(const csp_atomic_shared_ptr* _this);
+
+/// @brief Performs an atomic notifying operation. Unblocks all threads blocked in atomic waiting operations(i.e. csp_atomic_shared_ptr_wait()) on* this, if there are any; otherwise does nothing.
+void csp_atomic_shared_ptr_notify_all(const csp_atomic_shared_ptr* _this);
+
 struct csp_atomic_shared_ptr
 {
     csp_shared_ptr _r;

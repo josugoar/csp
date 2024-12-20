@@ -161,3 +161,43 @@ bool csp_atomic_weak_ptr_compare_exchange_strong_explicit(csp_atomic_weak_ptr* c
 
     return csp_atomic_weak_ptr_compare_exchange_strong(_this, _expected, _desired);
 }
+
+void csp_atomic_weak_ptr_wait(const csp_atomic_weak_ptr* const _this, const csp_weak_ptr* const _old)
+{
+    csp_atomic_weak_ptr_wait_explicit(_this, _old, memory_order_seq_cst);
+}
+
+void csp_atomic_weak_ptr_wait_explicit(const csp_atomic_weak_ptr* const _this, const csp_weak_ptr* const _old, const memory_order _order)
+{
+    assert(_this);
+    assert(_old);
+    assert(_order != memory_order_release && _order != memory_order_acq_rel);
+
+    while (true)
+    {
+        const auto _r = csp_atomic_weak_ptr_load_explicit(_this, _order);
+
+        if (memcmp(&_r, _old, sizeof(_old)) != 0)
+        {
+            break;
+        }
+
+        thrd_yield();
+    }
+}
+
+void csp_atomic_weak_ptr_notify_one(const csp_atomic_weak_ptr* const _this)
+{
+    assert(_this);
+
+    csp_atomic_weak_ptr_notify_all(_this);
+}
+
+void csp_atomic_weak_ptr_notify_all(const csp_atomic_weak_ptr* const _this)
+{
+    assert(_this);
+
+    auto _mutex = csp_mtx_pool_get(_this);
+
+    mtx_unlock(_mutex);
+}
