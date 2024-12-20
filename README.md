@@ -20,7 +20,7 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (although
 
 * **Thread safe** reference counting, using C11 atomics and threads. Non local shared pointers make use of atomic operations to ensure thread safety and employ some of the optimizations present in libc++, altough not extensive.
 
-* **Atomic** specializations of shared pointers. Shared pointers themselves are not atomic by default, but their reference counters are, which can cause data races if accessed concurrently. Atomic shared pointers are useful for when the shared pointer itself needs to be accessed concurrently, but they are implemented using mutexes, which are slower than intrinsic atomic operations, due to the (very heavily) increased complexity of pure atomics.
+* **Atomic** specializations of shared pointers. Shared pointers themselves are not atomic by default, but their reference counters are, which can cause data races if accessed concurrently. Atomic shared pointers are useful for when the shared pointer itself needs to be accessed concurrently, but they are implemented using mutexes, which are slower than intrinsic atomic operations, due to the (very heavily) increased complexity of pure atomics. They even have modern wait/notify support!
 
 * **Generic** pointers thanks to the use of `void *`. This allows the use of any type of pointer for storage, **NOT** including function pointers (technically undefined bahaviour because of no guarantees of both sharing the same size). This approach, however, limits type safety, and while it is possible to use macro and `_Generic` magic to distpatch to the correct function depending on the number and type of the arguments at compile type, or generate the entire code from macros or use gnuc macro extensions, it gets messy extremely quickly and `void *` is usually the prefered solution, even by the standard.
 
@@ -36,9 +36,11 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (although
 
 * Custom allocation support. This is very easy to implement but would require and additional overhead of at least one function pointer in each control block of shared pointers, since it is not possible to explicitelly do [EBO](https://en.cppreference.com/w/cpp/language/ebo) (Empty Base class Optimization) and it would require to add the corresponding allocation and deallocation functions inside it. CSP smart pointers already have an overhead of one function pointer when using the default deleter (free), which is minuscule in comparison to other "generic" solutions that always require memory allocation.
 
-* C++20 wait/notify atomic functions. They are not trivial to implement and are hard to test, so they are not a priority at the moment.
+* ~~C++20 wait/notify atomic functions. They are not trivial to implement and are hard to test, so they are not a priority at the moment.~~
 
-* Lock-free atomic pointer specializations. Same as above.
+    * Wait/notify is supported BUT the implementation is not lock free, which impacts performance when there is heavy thread congestion, otherwise it's more than fine.
+
+* Lock-free atomic pointer specializations. Harder to implement. See [Inside STL: The atomic shared_ptr](https://devblogs.microsoft.com/oldnewthing/20241219-00/?p=110663).
 
 ## Example
 
@@ -119,6 +121,14 @@ int main(void)
         // Handle error
     }
 
+    // Now it is even possible to initialize pointer directly, which is much more ergonomic
+    int member = 10;
+    auto other = csp_make_shared(sizeof(int), &member, &e);
+
+    if (e != CSP_SUCCESS) {
+        // Handle error
+    }
+
     // "Constructors" type functions return a copy (inexpensive) of the
     // created shared pointer that stores a pointer to the internally
     // allocated memory
@@ -131,10 +141,15 @@ int main(void)
     const auto d = csp_shared_ptr_get_deleter(&r);
 
     // Share ownership of the pointer with another function
-    shared_pointer_consumer(csp_shared_ptr_init_copy_s(&_r));
+    shared_pointer_consumer(csp_shared_ptr_init_copy_s(&r));
 
     // Let go of your ownership and pass it to the consumer
-    shared_pointer_consumer(csp_shared_ptr_init_move_s(&_r));
+    shared_pointer_consumer(csp_shared_ptr_init_move_s(&r));
+
+    // Remember, this check is not necessary, it is here for illustrative purposes only
+#ifndef HAS_CLEANUP_ATTRIBUTE
+    csp_shared_ptr_destroy(&other);
+#endif
 
     // This will decrement the internal reference counter and destroy the
     // object if it reaches 0. A cleanup pointer does not need to call it.
