@@ -25,7 +25,7 @@ csp_shared_ptr csp_shared_ptr_init_p(csp_shared_ptr_T* const _p, csp_exception* 
 {
     assert(_e);
 
-    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)malloc(sizeof(*_cntrl));
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)csp_default_allocator->allocate(sizeof(*_cntrl));
     if (!_cntrl)
     {
         csp_default_delete(_p);
@@ -35,7 +35,7 @@ csp_shared_ptr csp_shared_ptr_init_p(csp_shared_ptr_T* const _p, csp_exception* 
         return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, csp_default_delete) };
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, csp_default_delete, csp_default_allocator) };
 
     *_e = CSP_SUCCESS;
 
@@ -50,7 +50,7 @@ csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T* const _p, const csp_shar
     assert(_d);
     assert(_e);
 
-    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)malloc(sizeof(*_cntrl));
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)csp_default_allocator->allocate(sizeof(*_cntrl));
     if (!_cntrl)
     {
         _d(_p);
@@ -60,7 +60,32 @@ csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T* const _p, const csp_shar
         return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d, csp_default_allocator) };
+
+    *_e = CSP_SUCCESS;
+
+    assert(csp_shared_ptr_get(&_this) == _p);
+    assert(csp_shared_ptr_use_count(&_this) == 1);
+
+    return _this;
+}
+
+csp_shared_ptr csp_shared_ptr_init_pda(csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, const csp_shared_ptr_A _a, csp_exception* const _e)
+{
+    assert(_d);
+    assert(_e);
+
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)_a->allocate(sizeof(*_cntrl));
+    if (!_cntrl)
+    {
+        _d(_p);
+
+        *_e = CSP_BAD_ALLOC;
+
+        return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
+    }
+
+    const csp_shared_ptr _this = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d, _a) };
 
     *_e = CSP_SUCCESS;
 
@@ -178,7 +203,7 @@ csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr* const _r, csp_exceptio
         return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)malloc(sizeof(*_cntrl));
+    csp_cntrl_blk* const _cntrl = (csp_cntrl_blk*)csp_default_allocator->allocate(sizeof(*_cntrl));
     if (!_cntrl)
     {
         *_e = CSP_BAD_ALLOC;
@@ -186,7 +211,7 @@ csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr* const _r, csp_exceptio
         return (csp_shared_ptr) { ._p = nullptr, ._cntrl = nullptr };
     }
 
-    const csp_shared_ptr _this = { ._p = csp_unique_ptr_release(_r), ._cntrl = csp_cntrl_blk_init(_cntrl, _r->_p, _r->_d) };
+    const csp_shared_ptr _this = { ._p = csp_unique_ptr_release(_r), ._cntrl = csp_cntrl_blk_init(_cntrl, _r->_p, _r->_d, csp_default_allocator) };
 
     *_e = CSP_SUCCESS;
 
@@ -302,6 +327,21 @@ void csp_shared_ptr_reset_pd(csp_shared_ptr* const _this, csp_shared_ptr_T* cons
     csp_shared_ptr_destroy(&_tmp);
 }
 
+void csp_shared_ptr_reset_pda(csp_shared_ptr* const _this, csp_shared_ptr_T* const _p, const csp_shared_ptr_D _d, const csp_shared_ptr_A _a, csp_exception* const _e)
+{
+    assert(_this);
+    assert(_e);
+
+    csp_shared_ptr _tmp = csp_shared_ptr_init_pda(_p, _d, _a, _e);
+    if (*_e != CSP_SUCCESS)
+    {
+        return;
+    }
+
+    csp_shared_ptr_swap(&_tmp, _this);
+    csp_shared_ptr_destroy(&_tmp);
+}
+
 csp_shared_ptr_T* csp_shared_ptr_get(const csp_shared_ptr* const _this)
 {
     assert(_this);
@@ -397,7 +437,7 @@ csp_shared_ptr csp_make_shared_for_overwrite_d(const size_t _size, const csp_sha
 {
     assert(_e);
 
-    const auto _ptr = (unsigned char*)malloc(_size + sizeof(csp_cntrl_blk));
+    const auto _ptr = (unsigned char*)csp_default_allocator->allocate(_size + sizeof(csp_cntrl_blk));
     if (!_ptr)
     {
         *_e = CSP_BAD_ALLOC;
@@ -408,7 +448,7 @@ csp_shared_ptr csp_make_shared_for_overwrite_d(const size_t _size, const csp_sha
     const auto _p = (csp_shared_ptr_T*)_ptr;
     const auto _cntrl = (csp_cntrl_blk*)(_ptr + _size);
 
-    const csp_shared_ptr _r = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d) };
+    const csp_shared_ptr _r = { ._p = _p, ._cntrl = csp_cntrl_blk_init(_cntrl, _p, _d, csp_default_allocator) };
 
     *_e = CSP_SUCCESS;
 

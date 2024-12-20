@@ -1,12 +1,13 @@
 #include "csp/unique_ptr.h"
 
 #include <assert.h>
-#include <stdlib.h>
 #include <string.h>
+
+#include "csp/allocator.h"
 
 void csp_default_delete(csp_default_delete_T* const _ptr)
 {
-    free(_ptr);
+    csp_default_allocator->deallocate(_ptr);
 }
 
 csp_unique_ptr csp_unique_ptr_init(void)
@@ -125,7 +126,19 @@ csp_unique_ptr_T* csp_unique_ptr_release(csp_unique_ptr* const _this)
 
 void csp_unique_ptr_reset(csp_unique_ptr* const _this)
 {
-    csp_unique_ptr_reset_p(_this, nullptr);
+    assert(_this);
+    assert(*csp_unique_ptr_get_deleter(_this));
+
+    const auto _old_p = _this->_p;
+
+    _this->_p = nullptr;
+
+    assert(!csp_unique_ptr_get(_this));
+
+    if (_old_p)
+    {
+        _this->_d(_old_p);
+    }
 }
 
 void csp_unique_ptr_reset_p(csp_unique_ptr* const _this, csp_unique_ptr_T* const _p)
@@ -164,7 +177,15 @@ csp_unique_ptr csp_make_unique(const size_t _size, const csp_unique_ptr_T* const
     assert(_p);
     assert(_e);
 
-    return csp_make_unique_d(_size, _p, csp_default_delete, _e);
+    const auto _u = csp_make_unique_for_overwrite(_size, _e);
+    if (*_e != CSP_SUCCESS)
+    {
+        return _u;
+    }
+
+    memcpy(_u._p, _p, _size);
+
+    return _u;
 }
 
 csp_unique_ptr csp_make_unique_d(const size_t _size, const csp_unique_ptr_T* const _p, const csp_unique_ptr_D _d, csp_exception* const _e)
@@ -187,14 +208,29 @@ csp_unique_ptr csp_make_unique_for_overwrite(const size_t _size, csp_exception* 
 {
     assert(_e);
 
-    return csp_make_unique_for_overwrite_d(_size, csp_default_delete, _e);
+    const auto _ptr = (unsigned char*)csp_default_allocator->allocate(_size);
+    if (!_ptr)
+    {
+        *_e = CSP_BAD_ALLOC;
+
+        return (csp_unique_ptr) { ._p = nullptr, ._d = nullptr };
+    }
+
+    const auto _p = (csp_unique_ptr_T*)_ptr;
+    const auto _d = csp_default_delete;
+
+    const csp_unique_ptr _u = { ._p = _p, ._d = _d };
+
+    *_e = CSP_SUCCESS;
+
+    return _u;
 }
 
 csp_unique_ptr csp_make_unique_for_overwrite_d(const size_t _size, const csp_unique_ptr_D _d, csp_exception* const _e)
 {
     assert(_e);
 
-    const auto _ptr = (unsigned char*)malloc(_size);
+    const auto _ptr = (unsigned char*)csp_default_allocator->allocate(_size);
     if (!_ptr)
     {
         *_e = CSP_BAD_ALLOC;

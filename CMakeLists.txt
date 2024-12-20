@@ -10,6 +10,7 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED True)
 
 add_library(csp SHARED
+            "${PROJECT_SOURCE_DIR}/src/allocator.c"
             "${PROJECT_SOURCE_DIR}/src/atomic_shared_ptr.c"
             "${PROJECT_SOURCE_DIR}/src/atomic_weak_ptr.c"
             "${PROJECT_SOURCE_DIR}/src/cntrl_blk.c"
@@ -26,6 +27,7 @@ target_sources(csp
                PUBLIC FILE_SET HEADERS
                BASE_DIRS "${PROJECT_SOURCE_DIR}/include"
                FILES "${PROJECT_SOURCE_DIR}/include/csp.h"
+                     "${PROJECT_SOURCE_DIR}/include/csp/allocator.h"
                      "${PROJECT_SOURCE_DIR}/include/csp/atomic_shared_ptr.h"
                      "${PROJECT_SOURCE_DIR}/include/csp/atomic_weak_ptr.h"
                      "${PROJECT_SOURCE_DIR}/include/csp/exception.h"

@@ -7,13 +7,17 @@
 #include <stdatomic.h>
 #endif
 
+#include "csp/allocator.h"
+
 typedef void csp_cntrl_blk_T;
 
 typedef void (*csp_cntrl_blk_D)(csp_cntrl_blk_T*);
 
+typedef const csp_allocator* csp_cntrl_blk_A;
+
 typedef struct csp_cntrl_blk csp_cntrl_blk;
 
-csp_cntrl_blk* csp_cntrl_blk_init(csp_cntrl_blk* _this, csp_cntrl_blk_T* _p, csp_cntrl_blk_D _d);
+csp_cntrl_blk* csp_cntrl_blk_init(csp_cntrl_blk* _this, csp_cntrl_blk_T* _p, csp_cntrl_blk_D _d, csp_cntrl_blk_A _a);
 
 [[nodiscard]] csp_cntrl_blk_D* csp_cntrl_blk_get_deleter(csp_cntrl_blk* _this);
 
@@ -41,6 +45,7 @@ struct csp_cntrl_blk
     CSP_CNTRL_BLK_LONG _weak_owners;
     csp_cntrl_blk_T* _p;
     csp_cntrl_blk_D _d;
+    csp_cntrl_blk_A _a;
 };
 
 #endif

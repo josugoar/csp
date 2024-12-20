@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 
+#include "csp/allocator.h"
 #include "csp/exception.h"
 
 #if defined __has_attribute
@@ -18,6 +19,8 @@ typedef struct csp_unique_ptr csp_unique_ptr;
 typedef void csp_shared_ptr_T;
 
 typedef void (*csp_shared_ptr_D)(csp_shared_ptr_T*);
+
+typedef const csp_allocator* csp_shared_ptr_A;
 
 /// @brief Smart pointer with shared object ownership semantics.
 typedef struct csp_shared_ptr csp_shared_ptr;
@@ -36,6 +39,9 @@ typedef csp_weak_ptr csp_shared_ptr_weak_type;
 
 /// @brief Constructs new csp_shared_ptr.
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_pd(csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_exception* _e);
+
+/// @brief Constructs new csp_shared_ptr.
+[[nodiscard]] csp_shared_ptr csp_shared_ptr_init_pda(csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_shared_ptr_A _a, csp_exception* _e);
 
 /// @brief Constructs new csp_shared_ptr.
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr* _r, csp_shared_ptr_T* _p);
@@ -78,6 +84,9 @@ void csp_shared_ptr_reset_p(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_exc
 
 /// @brief Replaces the managed object.
 void csp_shared_ptr_reset_pd(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_exception* _e);
+
+/// @brief Replaces the managed object.
+void csp_shared_ptr_reset_pda(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_shared_ptr_A _a, csp_exception* _e);
 
 /// @brief Returns the stored pointer.
 [[nodiscard]] csp_shared_ptr_T* csp_shared_ptr_get(const csp_shared_ptr* _this);
