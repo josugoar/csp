@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>csp: Data Structures</title>
+<title>csp: csp_allocator Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,7 +46,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -68,20 +67,55 @@ $(function() {
 </div>
 </div>
 
+</div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">Data Structures</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">csp_allocator Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here are the data structures with brief descriptions:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcsp__allocator.html" target="_self">csp_allocator</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcsp__atomic__shared__ptr.html" target="_self">csp_atomic_shared_ptr</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcsp__atomic__weak__ptr.html" target="_self">csp_atomic_weak_ptr</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcsp__shared__ptr.html" target="_self">csp_shared_ptr</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcsp__unique__ptr.html" target="_self">csp_unique_ptr</a></td><td class="desc"></td></tr>
-<tr id="row_5_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structcsp__weak__ptr.html" target="_self">csp_weak_ptr</a></td><td class="desc"></td></tr>
+
+<p><code>#include &lt;<a class="el" href="allocator_8h_source.html">allocator.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a3697469874bde142dbb7b415ba68af3f" id="r_a3697469874bde142dbb7b415ba68af3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="allocator_8h.html#a497677d7bdf29044176c336001482cf9">csp_allocator_T</a> *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsp__allocator.html#a3697469874bde142dbb7b415ba68af3f">allocate</a> )(size_t _n)</td></tr>
+<tr class="separator:a3697469874bde142dbb7b415ba68af3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82c60ea7c2c4b43e278959b74f06b012" id="r_a82c60ea7c2c4b43e278959b74f06b012"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcsp__allocator.html#a82c60ea7c2c4b43e278959b74f06b012">deallocate</a> )(<a class="el" href="allocator_8h.html#a497677d7bdf29044176c336001482cf9">csp_allocator_T</a> *_p)</td></tr>
+<tr class="separator:a82c60ea7c2c4b43e278959b74f06b012"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- directory -->
+<h2 class="groupheader">Field Documentation</h2>
+<a id="a3697469874bde142dbb7b415ba68af3f" name="a3697469874bde142dbb7b415ba68af3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3697469874bde142dbb7b415ba68af3f">&#9670;&#160;</a></span>allocate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="allocator_8h.html#a497677d7bdf29044176c336001482cf9">csp_allocator_T</a> *(* csp_allocator::allocate) (size_t _n)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a82c60ea7c2c4b43e278959b74f06b012" name="a82c60ea7c2c4b43e278959b74f06b012"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82c60ea7c2c4b43e278959b74f06b012">&#9670;&#160;</a></span>deallocate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* csp_allocator::deallocate) (<a class="el" href="allocator_8h.html#a497677d7bdf29044176c336001482cf9">csp_allocator_T</a> *_p)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>include/csp/<a class="el" href="allocator_8h_source.html">allocator.h</a></li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
