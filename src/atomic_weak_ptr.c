@@ -27,7 +27,7 @@ void csp_atomic_weak_ptr_destroy(csp_atomic_weak_ptr* const _this)
     csp_weak_ptr_destroy(&_this->_r);
 }
 
-void csp_atomic_weak_ptr_s(csp_atomic_weak_ptr* const _this, const csp_weak_ptr _desired)
+void csp_atomic_weak_ptr_w(csp_atomic_weak_ptr* const _this, const csp_weak_ptr _desired)
 {
     assert(_this);
 
