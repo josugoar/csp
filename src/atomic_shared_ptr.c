@@ -178,3 +178,4 @@ void csp_atomic_shared_ptr_notify_one(const csp_atomic_shared_ptr* const _this)
 void csp_atomic_shared_ptr_notify_all(const csp_atomic_shared_ptr* const _this)
 {
     assert(_this);
+}
