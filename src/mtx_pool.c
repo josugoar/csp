@@ -16,7 +16,7 @@ mtx_t* csp_mtx_pool_get(const void* const _p)
 
 void csp_mtx_pool_init(void)
 {
-    for (size_t _i = 0; _i < csp_mtx_count; ++_i)
+    for (auto _i = 0; _i < csp_mtx_count; ++_i)
     {
         mtx_init(&csp_mtx_pool[_i], mtx_plain);
     }
