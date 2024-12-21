@@ -161,7 +161,7 @@ void csp_atomic_shared_ptr_wait_explicit(const csp_atomic_shared_ptr* const _thi
     {
         const auto _r = csp_atomic_shared_ptr_load_explicit(_this, _order);
 
-        if (memcmp(&_r, _old, sizeof(_old)) != 0)
+        if (memcmp(&_r, _old, sizeof(_r)) != 0)
         {
             break;
         }
