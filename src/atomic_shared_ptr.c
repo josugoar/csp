@@ -1,9 +1,9 @@
 #include "csp/atomic_shared_ptr.h"
 
 #include <assert.h>
-#include <stddef.h>
 #include <string.h>
 #include <threads.h>
+#include <time.h>
 
 #include "mtx_pool.h"
 
@@ -45,7 +45,7 @@ csp_shared_ptr csp_atomic_shared_ptr_load_explicit(const csp_atomic_shared_ptr* 
     assert(_this);
     assert(_order != memory_order_release && _order != memory_order_acq_rel);
 
-    auto _mutex = csp_mtx_pool_get(_this);
+    const auto _mutex = csp_mtx_pool_get(_this);
 
     mtx_lock(_mutex);
 
@@ -66,7 +66,7 @@ void csp_atomic_shared_ptr_store_explicit(csp_atomic_shared_ptr* const _this, cs
     assert(_this);
     assert(_order != memory_order_consume && _order != memory_order_acquire && _order != memory_order_acq_rel);
 
-    auto _mutex = csp_mtx_pool_get(_this);
+    const auto _mutex = csp_mtx_pool_get(_this);
 
     mtx_lock(_mutex);
 
@@ -84,7 +84,7 @@ csp_shared_ptr csp_atomic_shared_ptr_exchange_explicit(csp_atomic_shared_ptr* co
 {
     assert(_this);
 
-    auto _mutex = csp_mtx_pool_get(_this);
+    const auto _mutex = csp_mtx_pool_get(_this);
 
     mtx_lock(_mutex);
 
@@ -118,7 +118,7 @@ bool csp_atomic_shared_ptr_compare_exchange_strong_explicit(csp_atomic_shared_pt
     assert(_this);
     assert(_failure != memory_order_release && _failure != memory_order_acq_rel);
 
-    auto _mutex = csp_mtx_pool_get(_this);
+    const auto _mutex = csp_mtx_pool_get(_this);
 
     mtx_lock(_mutex);
 
@@ -157,6 +157,13 @@ void csp_atomic_shared_ptr_wait_explicit(const csp_atomic_shared_ptr* const _thi
     assert(_old);
     assert(_order != memory_order_release && _order != memory_order_acq_rel);
 
+    auto _count = 0;
+    constexpr auto _polling_count = 64;
+
+    auto _start_ts = (struct timespec){};
+    timespec_get(&_start_ts, TIME_UTC);
+    const auto _start_ms = _start_ts.tv_sec * 1000 + _start_ts.tv_nsec / 1000000;
+
     while (true)
     {
         const auto _r = csp_atomic_shared_ptr_load_explicit(_this, _order);
@@ -166,7 +173,30 @@ void csp_atomic_shared_ptr_wait_explicit(const csp_atomic_shared_ptr* const _thi
             break;
         }
 
-        thrd_yield();
+        if (_count < _polling_count) {
+            ++_count;
+
+            continue;
+        }
+
+        auto _now_ts = (struct timespec){};
+        timespec_get(&_now_ts, TIME_UTC);
+        const auto _now_ms = _now_ts.tv_sec * 1000 + _now_ts.tv_nsec / 1000000;
+
+        const auto _elapsed_ms = _now_ms - _start_ms;
+
+        if (_elapsed_ms > 128)
+        {
+            thrd_sleep(&(struct timespec) { .tv_nsec = 8000000 }, NULL);
+        }
+        else if (_elapsed_ms > 64)
+        {
+            thrd_sleep(&(struct timespec) { .tv_nsec = _elapsed_ms * 500000 }, NULL);
+        }
+        else if (_elapsed_ms > 4)
+        {
+            thrd_yield();
+        }
     }
 }
 
