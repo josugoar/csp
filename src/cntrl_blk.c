@@ -17,6 +17,8 @@ static inline bool csp_cntrl_blk_compare_exchange_weak(CSP_CNTRL_BLK_LONG* _valu
 csp_cntrl_blk* csp_cntrl_blk_init(csp_cntrl_blk* const _this, csp_cntrl_blk_T* const _p, const csp_cntrl_blk_D _d, const csp_cntrl_blk_A _a)
 {
     assert(_this);
+    assert(_d);
+    assert(_a);
 
     _this->_shared_owners = 0;
     _this->_weak_owners = 0;
@@ -68,7 +70,6 @@ void csp_cntrl_blk_add_shared(csp_cntrl_blk* const _this)
 void csp_cntrl_blk_release_shared(csp_cntrl_blk* const _this)
 {
     assert(_this);
-    assert(_this->_d);
 
     if (csp_cntrl_blk_sub_fetch_relaxed(&_this->_shared_owners) == -1)
     {
