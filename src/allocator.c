@@ -2,4 +2,4 @@
 
 #include <stdlib.h>
 
-const csp_allocator* csp_default_allocator = &(csp_allocator) { .allocate = malloc, .deallocate = free };
+const csp_allocator* const csp_default_allocator = &(csp_allocator) { .allocate = malloc, .deallocate = free };

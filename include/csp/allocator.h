@@ -9,7 +9,7 @@ typedef struct csp_allocator csp_allocator;
 
 typedef csp_allocator_T csp_allocator_value_type;
 
-extern const csp_allocator* csp_default_allocator;
+extern const csp_allocator* const csp_default_allocator;
 
 struct csp_allocator
 {
