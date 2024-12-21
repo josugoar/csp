@@ -1,7 +1,6 @@
 #include "cntrl_blk.h"
 
 #include <assert.h>
-#include <stdlib.h>
 
 static inline long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG* _value);
 
@@ -19,11 +18,11 @@ csp_cntrl_blk* csp_cntrl_blk_init(csp_cntrl_blk* const _this, csp_cntrl_blk_T* c
 {
     assert(_this);
 
+    _this->_shared_owners = 0;
+    _this->_weak_owners = 0;
     _this->_p = _p;
     _this->_d = _d;
     _this->_a = _a;
-    _this->_shared_owners = 0;
-    _this->_weak_owners = 0;
 
     return _this;
 }
