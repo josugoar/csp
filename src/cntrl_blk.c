@@ -6,7 +6,7 @@ static inline long csp_cntrl_blk_load(const CSP_CNTRL_BLK_LONG* _value);
 
 static inline long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG* _value);
 
-static inline long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG* _value);
+static inline long csp_cntrl_blk_load_acquire(const CSP_CNTRL_BLK_LONG* _value);
 
 static inline long csp_cntrl_blk_add_fetch_relaxed(CSP_CNTRL_BLK_LONG* _value);
 
@@ -89,7 +89,7 @@ void csp_cntrl_blk_release_weak(csp_cntrl_blk* const _this)
 {
     assert(_this);
 
-    if (csp_cntrl_blk_load_aquire(&_this->_weak_owners) == 0 || csp_cntrl_blk_sub_fetch_relaxed(&_this->_weak_owners) == -1)
+    if (csp_cntrl_blk_load_acquire(&_this->_weak_owners) == 0 || csp_cntrl_blk_sub_fetch_relaxed(&_this->_weak_owners) == -1)
     {
         _this->_a->deallocate(_this);
     }
@@ -113,7 +113,7 @@ long csp_cntrl_blk_load_relaxed(const CSP_CNTRL_BLK_LONG* const _value)
 #endif
 }
 
-long csp_cntrl_blk_load_aquire(const CSP_CNTRL_BLK_LONG* const _value)
+long csp_cntrl_blk_load_acquire(const CSP_CNTRL_BLK_LONG* const _value)
 {
 #ifdef __STD_NO_ATOMICS__
     return *_value;
