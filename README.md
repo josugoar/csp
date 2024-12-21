@@ -14,21 +14,21 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (although
 
 * **Strict ownership semantics** up to what the C language allows. This is to say that ownership modifying operations must be explicitly stated in code and force the programmer to make the right decisions. Thanks to the "pass by value" nature of csp smart pointers, it is not possible (in a conventional fashion) to mix up types when passing pointers around.
 
-* **RAII** (Resource Acquisition Is Initialization), thanks to the use of GCC's cleanup attribute. This is mainly for convenience and to avoid having to call each object's "destructor" (or equivalent in C) manually. Inspired by its use in the [systemd](https://news.ycombinator.com/item?id=11305142) codebase. Avoid unless specifically using [GNUC](https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html) *-std=gnu** instead of plain C. Also, having defined the API, it is possible to use a custom static analyzer to check wheater smart pointer destructors are called, which would "entirely" solve the memory allocation problem while defining strict ownership semantics.
+* **RAII** (Resource Acquisition Is Initialization), thanks to the use of GCC's cleanup attribute. This is mainly for convenience and to avoid having to call each object's "destructor" (or equivalent in C) manually. Inspired by its use in the [systemd](https://news.ycombinator.com/item?id=11305142) codebase. Avoid unless specifically using [GNUC](https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html) *-std=gnu** instead of plain C. Also, having defined the API, it is possible to use a custom static analyzer to check whether smart pointer destructors are called, which would "entirely" solve the memory allocation problem while defining strict ownership semantics.
 
-* A **similar interface to C++** smart pointers, with the exception of having to aquire the pointer from the smart pointer using the `get` function to manipulate it. This is due to the lack of operator overloading in C. Aside from that, it follows the standard "object oriented" interface commonly used in C libraries that is similar to the `init` and `destroy` functions originally present in posix, the C standard library and others, except that constructors return a copy due to the inexpensive nature of smart pointers (this allows for a **very** succinct calling style).
+* A **similar interface to C++** smart pointers, with the exception of having to acquire the pointer from the smart pointer using the `get` function to manipulate it. This is due to the lack of operator overloading in C. Aside from that, it follows the standard "object oriented" interface commonly used in C libraries that is similar to the `init` and `destroy` functions originally present in posix, the C standard library and others, except that constructors return a copy due to the inexpensive nature of smart pointers (this allows for a **very** succinct calling style).
 
-* **Thread safe** reference counting, using C11 atomics and threads. Non local shared pointers make use of atomic operations to ensure thread safety and employ some of the optimizations present in libc++, altough not extensive.
+* **Thread safe** reference counting, using C11 atomics and threads. Non local shared pointers make use of atomic operations to ensure thread safety and employ some of the optimizations present in libc++, although not extensive.
 
 * **Atomic** specializations of shared pointers. Shared pointers themselves are not atomic by default, but their reference counters are, which can cause data races if accessed concurrently. Atomic shared pointers are useful for when the shared pointer itself needs to be accessed concurrently, but they are implemented using mutexes, which are slower than intrinsic atomic operations, due to the (very heavily) increased complexity of pure atomics. They even have modern wait/notify support!
 
-* **Generic** pointers thanks to the use of `void *`. This allows the use of any type of pointer for storage, **NOT** including function pointers (technically undefined bahaviour because of no guarantees of both sharing the same size). This approach, however, limits type safety, and while it is possible to use macro and `_Generic` magic to distpatch to the correct function depending on the number and type of the arguments at compile type, or generate the entire code from macros or use gnuc macro extensions, it gets messy extremely quickly and `void *` is usually the prefered solution, even by the standard.
+* **Generic** pointers thanks to the use of `void *`. This allows the use of any type of pointer for storage, not including function pointers (technically undefined behavior because of no guarantees of both sharing the same size). This approach, however, limits type safety, and while it is possible to use macro and `_Generic` magic to dispatch to the correct function depending on the number and type of the arguments at compile type, or generate the entire code from macros or use gnuc macro extensions, it gets messy extremely quickly and `void *` is usually the preferred solution, even by the standard.
 
 * ~~Boost.SmartPtr **extended smart pointers** in the form of pointer types not present in the C++ standard library. They don't matter a whole lot in C++ because of weird class member packing optimizations with templates, but since C cannot do such things, they are useful to have as little (to practically none) overhead as possible.~~
 
-  * This would require splitting the API into multiple similary flavoured pointer types (eg. local, nonlocal) and would kill generalizability.
+  * This would require splitting the API into multiple similarly flavoured pointer types (eg. local, nonlocal) and would kill generalizability.
 
-* Implements common **optimizations** found in libc++ and Boost.SmartPtr, as well as the usual single allocations for the control block and the object itself using `csp_make_shared_for_overwrite` type functions.
+* Implements common **optimizations** found in libc++ and Boost.SmartPtr, as well as the usual single allocations for the control block and the object itself using `csp_make_*` and `csp_allocate_*` type functions.
 
 * **Error handling** is achieved through out error pointers to preserve return values and allow for a very terse syntax which allows for straight forward ownership semantics. Similar to [GLib](https://docs.gtk.org/glib/error-reporting.html) error reporting approach without the *absolutely crazy* decision of aborting the program on insufficient memory.
 
@@ -36,11 +36,11 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (although
 
 * ~~Custom allocation support. This is very easy to implement but would require and additional overhead of at least one function pointer in each control block of shared pointers, since it is not possible to explicitelly do [EBO](https://en.cppreference.com/w/cpp/language/ebo) (Empty Base class Optimization) and it would require to add the corresponding allocation and deallocation functions inside it. CSP smart pointers already have an overhead of one function pointer when using the default deleter (free), which is minuscule in comparison to other "generic" solutions that always require memory allocation.~~
 
-    * Since the overhead is negligible while the benefits are inmense, like being able to use smart pointers on some freestanding libc implementations that don't have malloc (even though now it seem to be required anyway), it is now implemented.
+    * Since the overhead is negligible while the benefits are immense, like being able to use smart pointers on some freestanding libc implementations that don't have malloc (even though now it seem to be required anyway), it is now implemented.
 
 * ~~C++20 wait/notify atomic functions. They are not trivial to implement and are hard to test, so they are not a priority at the moment.~~
 
-    * Wait/notify is supported BUT the implementation is does not use condition variables because of the overhead, instead, it uses a thread polling with timed backoff algorithm, so it's not atomic unfortunately.
+    * Wait/notify is supported but the implementation is does not use condition variables because of the overhead, instead, it uses a thread polling with timed backoff algorithm, so it's not atomic unfortunately.
 
 * Lock-free atomic pointer specializations. Harder to implement. See [Inside STL: The atomic shared_ptr](https://devblogs.microsoft.com/oldnewthing/20241219-00/?p=110663).
 
@@ -161,7 +161,7 @@ int main(void)
 
     // Now destroy will not do anything because u does not own the pointer
     // Again, recommended to destroy the pointer manually, there is no way
-    // araound it in standard C without using extremelly costly abstractions
+    // around it in standard C without using extremely costly abstractions
     // (glib) or macro magic, which is arguably worse than anything else
 #ifndef HAS_CLEANUP_ATTRIBUTE
     csp_unique_ptr_destroy(&u);
