@@ -124,6 +124,18 @@ void csp_shared_ptr_reset_pda(csp_shared_ptr* _this, csp_shared_ptr_T* _p, csp_s
 /// @brief Creates a shared pointer that manages a new object.
 [[nodiscard]] csp_shared_ptr csp_make_shared_for_overwrite_d(size_t _size, csp_shared_ptr_D _d, csp_exception* _e);
 
+/// @brief Creates a shared pointer that manages a new object allocated using an allocator.
+[[nodiscard]] csp_shared_ptr csp_allocate_shared(size_t _size, const csp_shared_ptr_T* _p, csp_shared_ptr_A _a, csp_exception* _e);
+
+/// @brief Creates a shared pointer that manages a new object allocated using an allocator.
+[[nodiscard]] csp_shared_ptr csp_allocate_shared_d(size_t _size, const csp_shared_ptr_T* _p, csp_shared_ptr_D _d, csp_shared_ptr_A _a, csp_exception* _e);
+
+/// @brief Creates a shared pointer that manages a new object allocated using an allocator.
+[[nodiscard]] csp_shared_ptr csp_allocate_shared_for_overwrite(size_t _size, csp_shared_ptr_A _a, csp_exception* _e);
+
+/// @brief Creates a shared pointer that manages a new object allocated using an allocator.
+[[nodiscard]] csp_shared_ptr csp_allocate_shared_for_overwrite_d(size_t _size, csp_shared_ptr_D _d, csp_shared_ptr_A _a, csp_exception* _e);
+
 /// @brief Hash support for csp_shared_ptr.
 [[nodiscard]] size_t csp_shared_ptr_hash(const csp_shared_ptr* _this);
 
