@@ -179,7 +179,6 @@ void csp_atomic_weak_ptr_wait_explicit(const csp_atomic_weak_ptr* const _this, c
     while (true)
     {
         const auto _r = csp_atomic_weak_ptr_load_explicit(_this, _order);
-
         if (memcmp(&_r, _old, sizeof(_r)) != 0)
         {
             break;
@@ -196,7 +195,6 @@ void csp_atomic_weak_ptr_wait_explicit(const csp_atomic_weak_ptr* const _this, c
         const auto _now_ms = _now_ts.tv_sec * 1000 + _now_ts.tv_nsec / 1000000;
 
         const auto _elapsed_ms = _now_ms - _start_ms;
-
         if (_elapsed_ms > 128)
         {
             thrd_sleep(&(struct timespec) { .tv_nsec = 8000000 }, NULL);

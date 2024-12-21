@@ -48,7 +48,6 @@ csp_cntrl_blk* csp_cntrl_blk_lock(csp_cntrl_blk* const _this)
     assert(_this);
 
     auto _shared_owners = csp_cntrl_blk_load(&_this->_shared_owners);
-
     while (_shared_owners != -1)
     {
         if (csp_cntrl_blk_compare_exchange_weak(&_this->_shared_owners, &_shared_owners, _shared_owners + 1))

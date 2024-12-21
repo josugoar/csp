@@ -99,7 +99,6 @@ csp_shared_ptr csp_shared_ptr_init_p_copy_s(const csp_shared_ptr* const _r, csp_
     assert(_r);
 
     const auto _this = (csp_shared_ptr){ ._p = _p, ._cntrl = _r->_cntrl };
-
     if (_this._cntrl)
     {
         csp_cntrl_blk_add_shared(_this._cntrl);
@@ -134,7 +133,6 @@ csp_shared_ptr csp_shared_ptr_init_copy_s(const csp_shared_ptr* const _r)
     assert(_r);
 
     const auto _this = (csp_shared_ptr){ ._p = _r->_p, ._cntrl = _r->_cntrl };
-
     if (_this._cntrl)
     {
         csp_cntrl_blk_add_shared(_this._cntrl);

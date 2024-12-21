@@ -20,7 +20,6 @@ csp_weak_ptr csp_weak_ptr_init_copy_w(const csp_weak_ptr* const _r)
     assert(_r);
 
     const auto _this = (csp_weak_ptr){ ._p = _r->_p, ._cntrl = _r->_cntrl };
-
     if (_this._cntrl)
     {
         csp_cntrl_blk_add_weak(_this._cntrl);
@@ -36,7 +35,6 @@ csp_weak_ptr csp_weak_ptr_init_copy_s(const csp_shared_ptr* const _r)
     assert(_r);
 
     const auto _this = (csp_weak_ptr){ ._p = _r->_p, ._cntrl = _r->_cntrl };
-
     if (_this._cntrl)
     {
         csp_cntrl_blk_add_weak(_this._cntrl);
@@ -160,7 +158,6 @@ csp_shared_ptr csp_weak_ptr_lock(const csp_weak_ptr* const _this)
     assert(_this);
 
     auto _r = (csp_shared_ptr){ ._p = nullptr, ._cntrl = _this->_cntrl ? csp_cntrl_blk_lock(_this->_cntrl) : _this->_cntrl };
-
     if (_r._cntrl)
     {
         _r._p = _this->_p;
