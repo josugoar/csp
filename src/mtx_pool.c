@@ -1,9 +1,9 @@
 #include "mtx_pool.h"
 
-constexpr size_t csp_mtx_count = 32;
-static mtx_t csp_mtx_pool[csp_mtx_count];
+constexpr auto csp_mtx_count = 32;
+static auto csp_mtx_pool = (mtx_t[csp_mtx_count]){};
 
-static once_flag csp_mtx_pool_flag = ONCE_FLAG_INIT;
+static auto csp_mtx_pool_flag = (once_flag)ONCE_FLAG_INIT;
 
 static void csp_mtx_pool_init(void);
 

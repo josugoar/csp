@@ -12,7 +12,7 @@ void csp_default_delete(csp_default_delete_T* const _ptr)
 
 csp_unique_ptr csp_unique_ptr_init(void)
 {
-    const csp_unique_ptr _this = { ._p = nullptr, ._d = csp_default_delete };
+    const auto _this = (csp_unique_ptr){ ._p = nullptr, ._d = csp_default_delete };
 
     assert(!csp_unique_ptr_get(&_this));
     assert(*csp_unique_ptr_get_deleter_const(&_this) == csp_default_delete);
@@ -22,7 +22,7 @@ csp_unique_ptr csp_unique_ptr_init(void)
 
 csp_unique_ptr csp_unique_ptr_init_p(csp_unique_ptr_T* const _p)
 {
-    const csp_unique_ptr _this = { ._p = _p, ._d = csp_default_delete };
+    const auto _this = (csp_unique_ptr){ ._p = _p, ._d = csp_default_delete };
 
     assert(csp_unique_ptr_get(&_this) == _p);
     assert(*csp_unique_ptr_get_deleter_const(&_this) == csp_default_delete);
@@ -32,7 +32,7 @@ csp_unique_ptr csp_unique_ptr_init_p(csp_unique_ptr_T* const _p)
 
 csp_unique_ptr csp_unique_ptr_init_d(const csp_unique_ptr_D _d)
 {
-    const csp_unique_ptr _this = { ._p = nullptr, ._d = _d };
+    const auto _this = (csp_unique_ptr){ ._p = nullptr, ._d = _d };
 
     assert(!csp_unique_ptr_get(&_this));
     assert(*csp_unique_ptr_get_deleter_const(&_this) == _d);
@@ -42,7 +42,7 @@ csp_unique_ptr csp_unique_ptr_init_d(const csp_unique_ptr_D _d)
 
 csp_unique_ptr csp_unique_ptr_init_pd(csp_unique_ptr_T* const _p, const csp_unique_ptr_D _d)
 {
-    const csp_unique_ptr _this = { ._p = _p, ._d = _d };
+    const auto _this = (csp_unique_ptr){ ._p = _p, ._d = _d };
 
     assert(csp_unique_ptr_get(&_this) == _p);
     assert(*csp_unique_ptr_get_deleter_const(&_this) == _d);
@@ -56,7 +56,7 @@ csp_unique_ptr csp_unique_ptr_init_move_u(csp_unique_ptr* const _u)
 
     [[maybe_unused]] const auto _p = csp_unique_ptr_get(_u);
 
-    const csp_unique_ptr _this = { ._p = csp_unique_ptr_release(_u), ._d = _u->_d };
+    const auto _this = (csp_unique_ptr){ ._p = csp_unique_ptr_release(_u), ._d = _u->_d };
 
     assert(csp_unique_ptr_get(&_this) == _p);
     assert(!csp_unique_ptr_get(_u));
@@ -213,13 +213,13 @@ csp_unique_ptr csp_make_unique_for_overwrite(const size_t _size, csp_exception* 
     {
         *_e = CSP_BAD_ALLOC;
 
-        return (csp_unique_ptr) { ._p = nullptr, ._d = nullptr };
+        return (csp_unique_ptr) {};
     }
 
     const auto _p = (csp_unique_ptr_T*)_ptr;
     const auto _d = csp_default_delete;
 
-    const csp_unique_ptr _u = { ._p = _p, ._d = _d };
+    const auto _u = (csp_unique_ptr){ ._p = _p, ._d = _d };
 
     *_e = CSP_SUCCESS;
 
@@ -235,12 +235,12 @@ csp_unique_ptr csp_make_unique_for_overwrite_d(const size_t _size, const csp_uni
     {
         *_e = CSP_BAD_ALLOC;
 
-        return (csp_unique_ptr) { ._p = nullptr, ._d = nullptr };
+        return (csp_unique_ptr) {};
     }
 
     const auto _p = (csp_unique_ptr_T*)_ptr;
 
-    const csp_unique_ptr _u = { ._p = _p, ._d = _d };
+    const auto _u = (csp_unique_ptr){ ._p = _p, ._d = _d };
 
     *_e = CSP_SUCCESS;
 
