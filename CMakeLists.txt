@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21.0)
 project(csp
-        VERSION 3.0.1
+        VERSION 3.1.0
         DESCRIPTION "C++ style smart pointers for C23"
         HOMEPAGE_URL "https://github.com/josugoar/csp"
         LANGUAGES C)
