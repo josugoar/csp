@@ -183,15 +183,9 @@ void csp_atomic_weak_ptr_wait_explicit(const csp_atomic_weak_ptr* const _this, c
 void csp_atomic_weak_ptr_notify_one(const csp_atomic_weak_ptr* const _this)
 {
     assert(_this);
-
-    csp_atomic_weak_ptr_notify_all(_this);
 }
 
 void csp_atomic_weak_ptr_notify_all(const csp_atomic_weak_ptr* const _this)
 {
     assert(_this);
-
-    auto _mutex = csp_mtx_pool_get(_this);
-
-    mtx_unlock(_mutex);
 }
