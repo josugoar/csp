@@ -125,6 +125,7 @@ bool csp_atomic_shared_ptr_compare_exchange_strong_explicit(csp_atomic_shared_pt
     if (csp_shared_ptr_owner_equal_s(&_this->_r, _expected))
     {
         auto _tmp = csp_shared_ptr_init();
+
         csp_shared_ptr_swap(&_tmp, &_this->_r);
         csp_shared_ptr_copy_s(&_this->_r, &_desired);
 
@@ -136,6 +137,7 @@ bool csp_atomic_shared_ptr_compare_exchange_strong_explicit(csp_atomic_shared_pt
     }
 
     auto _tmp = csp_shared_ptr_init();
+
     csp_shared_ptr_swap(&_tmp, _expected);
     csp_shared_ptr_copy_s(_expected, &_this->_r);
 
