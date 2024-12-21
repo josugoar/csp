@@ -147,9 +147,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4300f11477214ba28902ad2a664e58a6" id="r_a4300f11477214ba28902ad2a664e58a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared__ptr_8h.html#a4300f11477214ba28902ad2a664e58a6">csp_shared_ptr_init_move_u</a> (<a class="el" href="structcsp__unique__ptr.html">csp_unique_ptr</a> *_r, <a class="el" href="exception_8h.html#a220ad10abf658938d62db5fe4055dab6">csp_exception</a> *_e)</td></tr>
 <tr class="memdesc:a4300f11477214ba28902ad2a664e58a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs new <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a>.  <br /></td></tr>
 <tr class="separator:a4300f11477214ba28902ad2a664e58a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7593a0f126e46f3d822a9df1469badb" id="r_ae7593a0f126e46f3d822a9df1469badb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared__ptr_8h.html#ae7593a0f126e46f3d822a9df1469badb">csp_shared_ptr_destroy</a> (<a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *_this)</td></tr>
-<tr class="memdesc:ae7593a0f126e46f3d822a9df1469badb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs the owned object if no more <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> link to it.  <br /></td></tr>
-<tr class="separator:ae7593a0f126e46f3d822a9df1469badb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5a0a59648ec52cbceef9ec20ff67a0d" id="r_ad5a0a59648ec52cbceef9ec20ff67a0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared__ptr_8h.html#ad5a0a59648ec52cbceef9ec20ff67a0d">csp_shared_ptr_destroy</a> (const <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *_this)</td></tr>
+<tr class="memdesc:ad5a0a59648ec52cbceef9ec20ff67a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructs the owned object if no more <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> link to it.  <br /></td></tr>
+<tr class="separator:ad5a0a59648ec52cbceef9ec20ff67a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afafef44f78addb9fd7d8322c5d5a125c" id="r_afafef44f78addb9fd7d8322c5d5a125c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="shared__ptr_8h.html#afafef44f78addb9fd7d8322c5d5a125c">csp_shared_ptr_copy_s</a> (<a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *_this, const <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *_r)</td></tr>
 <tr class="memdesc:afafef44f78addb9fd7d8322c5d5a125c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a>.  <br /></td></tr>
 <tr class="separator:afafef44f78addb9fd7d8322c5d5a125c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -702,8 +702,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae7593a0f126e46f3d822a9df1469badb" name="ae7593a0f126e46f3d822a9df1469badb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7593a0f126e46f3d822a9df1469badb">&#9670;&#160;</a></span>csp_shared_ptr_destroy()</h2>
+<a id="ad5a0a59648ec52cbceef9ec20ff67a0d" name="ad5a0a59648ec52cbceef9ec20ff67a0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5a0a59648ec52cbceef9ec20ff67a0d">&#9670;&#160;</a></span>csp_shared_ptr_destroy()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -711,7 +711,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void csp_shared_ptr_destroy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="structcsp__shared__ptr.html">csp_shared_ptr</a> *&#160;</td>
           <td class="paramname"><em>_this</em></td><td>)</td>
           <td></td>
         </tr>
