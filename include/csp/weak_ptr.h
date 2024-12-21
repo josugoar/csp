@@ -32,7 +32,7 @@ typedef csp_weak_ptr_T csp_weak_ptr_element_type;
 [[nodiscard]] csp_weak_ptr csp_weak_ptr_init_move_w(csp_weak_ptr* _r);
 
 /// @brief Destroys a csp_weak_ptr.
-void csp_weak_ptr_destroy(csp_weak_ptr* _this);
+void csp_weak_ptr_destroy(const csp_weak_ptr* _this);
 
 /// @brief Assigns the csp_weak_ptr.
 csp_weak_ptr* csp_weak_ptr_copy_w(csp_weak_ptr* _this, const csp_weak_ptr* _r);

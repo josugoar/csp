@@ -62,7 +62,7 @@ csp_weak_ptr csp_weak_ptr_init_move_w(csp_weak_ptr* const _r)
     return _this;
 }
 
-void csp_weak_ptr_destroy(csp_weak_ptr* const _this)
+void csp_weak_ptr_destroy(const csp_weak_ptr* const _this)
 {
     assert(_this);
 

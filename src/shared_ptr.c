@@ -219,7 +219,7 @@ csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr* const _r, csp_exceptio
     return _this;
 }
 
-void csp_shared_ptr_destroy(csp_shared_ptr* const _this)
+void csp_shared_ptr_destroy(const csp_shared_ptr* const _this)
 {
     assert(_this);
 

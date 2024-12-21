@@ -62,7 +62,7 @@ typedef csp_weak_ptr csp_shared_ptr_weak_type;
 [[nodiscard]] csp_shared_ptr csp_shared_ptr_init_move_u(csp_unique_ptr* _r, csp_exception* _e);
 
 /// @brief Destructs the owned object if no more csp_shared_ptr link to it.
-void csp_shared_ptr_destroy(csp_shared_ptr* _this);
+void csp_shared_ptr_destroy(const csp_shared_ptr* _this);
 
 /// @brief Assigns the csp_shared_ptr.
 csp_shared_ptr* csp_shared_ptr_copy_s(csp_shared_ptr* _this, const csp_shared_ptr* _r);

@@ -29,7 +29,7 @@ csp_atomic_weak_ptr csp_atomic_weak_ptr_init(void);
 csp_atomic_weak_ptr csp_atomic_weak_ptr_init_w(csp_weak_ptr _desired);
 
 /// @brief Destroy the underlying csp_weak_ptr.
-void csp_atomic_weak_ptr_destroy(csp_atomic_weak_ptr* _this);
+void csp_atomic_weak_ptr_destroy(const csp_atomic_weak_ptr* _this);
 
 /// @brief Returns true if the atomic operations on all objects of this type are lock-free, false otherwise.
 bool csp_atomic_weak_ptr_is_lock_free(const csp_atomic_weak_ptr* _this);

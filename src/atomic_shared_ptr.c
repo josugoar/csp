@@ -21,7 +21,7 @@ csp_atomic_shared_ptr csp_atomic_shared_ptr_init_s(const csp_shared_ptr _desired
     return _this;
 }
 
-void csp_atomic_shared_ptr_destroy(csp_atomic_shared_ptr* const _this)
+void csp_atomic_shared_ptr_destroy(const csp_atomic_shared_ptr* const _this)
 {
     assert(_this);
 

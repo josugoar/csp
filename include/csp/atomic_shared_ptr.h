@@ -29,7 +29,7 @@ constexpr auto csp_atomic_shared_ptr_is_always_lock_free = false;
 [[nodiscard]] csp_atomic_shared_ptr csp_atomic_shared_ptr_init_s(csp_shared_ptr _desired);
 
 /// @brief Destroy the underlying csp_shared_ptr.
-void csp_atomic_shared_ptr_destroy(csp_atomic_shared_ptr* _this);
+void csp_atomic_shared_ptr_destroy(const csp_atomic_shared_ptr* _this);
 
 /// @brief Returns true if the atomic operations on all objects of this type are lock-free, false otherwise.
 [[nodiscard]] bool csp_atomic_shared_ptr_is_lock_free(const csp_atomic_shared_ptr* _this);

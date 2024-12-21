@@ -48,7 +48,7 @@ typedef csp_unique_ptr_D csp_unique_ptr_deleter_type;
 [[nodiscard]] csp_unique_ptr csp_unique_ptr_init_move_u(csp_unique_ptr* _u);
 
 /// @brief Destructs the managed object if such is present.
-void csp_unique_ptr_destroy(csp_unique_ptr* _this);
+void csp_unique_ptr_destroy(const csp_unique_ptr* _this);
 
 /// @brief Assigns the csp_unique_ptr.
 csp_unique_ptr* csp_unique_ptr_move_u(csp_unique_ptr* _this, csp_unique_ptr* _u);

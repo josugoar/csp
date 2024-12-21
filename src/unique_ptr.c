@@ -69,12 +69,15 @@ csp_unique_ptr csp_unique_ptr_init_move_u(csp_unique_ptr* const _u)
     return _this;
 }
 
-void csp_unique_ptr_destroy(csp_unique_ptr* const _this)
+void csp_unique_ptr_destroy(const csp_unique_ptr* const _this)
 {
     assert(_this);
-    assert(*csp_unique_ptr_get_deleter(_this));
+    assert(*csp_unique_ptr_get_deleter_const(_this));
 
-    csp_unique_ptr_reset(_this);
+    if (_this->_p)
+    {
+        _this->_d(_this->_p);
+    }
 }
 
 csp_unique_ptr* csp_unique_ptr_move_u(csp_unique_ptr* const _this, csp_unique_ptr* const _u)
