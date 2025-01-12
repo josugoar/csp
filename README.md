@@ -40,7 +40,7 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (although
 
 * ~~C++20 wait/notify atomic functions. They are not trivial to implement and are hard to test, so they are not a priority at the moment.~~
 
-    * Wait/notify is supported but the implementation is does not use condition variables because of the overhead, instead, it uses a thread polling with timed backoff algorithm, so it's not atomic unfortunately.
+    * Wait/notify is supported but the implementation does not use condition variables because of the overhead, instead, it uses a thread polling with timed backoff algorithm, so it's not atomic unfortunately.
 
 * Lock-free atomic pointer specializations. Harder to implement. See [Inside STL: The atomic shared_ptr](https://devblogs.microsoft.com/oldnewthing/20241219-00/?p=110663).
 
