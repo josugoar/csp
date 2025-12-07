@@ -6,7 +6,7 @@
 
 <h1></h1>
 
-> ©️ 🧠 👉 C++ style smart pointers for C23
+> ©️ 🧠 👉 Smart pointers for modern C
 
 CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (can be backported to C11, but wanted to check out the new features) specifically inspired by [Boost.SmartPtr](https://www.boost.org/doc/libs/1_82_0/libs/smart_ptr/doc/html/smart_ptr.html) and C++20 smart pointers from the [memory](https://en.cppreference.com/w/cpp/memory) header and the corresponding [libc++](https://github.com/llvm/llvm-project/tree/main/libcxx) implementation. It makes extensive use of modern C23 features such as `nullptr`, `constexpr`, attributes, unnamed arguments and `auto` type inference, empty initializers, as well as C11 atomics and threads, so a C23 compiler is required to build it. At the time of writing, only GCC is able to be used due to the lack of support of Clang, verify C23 support at [cppreference](https://en.cppreference.com/w/c/23).
 
