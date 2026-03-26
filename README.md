@@ -62,11 +62,11 @@ CSP (C Smart Pointers) is a C++ inspired smart pointer library for C23 (can be b
 #endif
 
 // You can include the entire library with the csp header
-#include <csp/csp.h>
+#include <csp.h>
 
 // Or include only the specific smart pointer you want
-#include <csp/unique_ptr>
-#include <csp/shared_ptr>
+#include <csp/unique_ptr.h>
+#include <csp/shared_ptr.h>
 
 // Smart pointers are passed by value (like normal pointers)
 void unique_pointer_consumer(csp_unique_ptr);
