@@ -107,7 +107,7 @@ int main(void)
     // Initialize allocated memory to nothing to not crash the
     // program. Pointer can be initialized now or before making
     // it smart
-    struct foo *foo = csp_unique_ptr_get(&u);
+    const auto foo = (struct foo *)csp_unique_ptr_get(&u);
     foo->allocated_memory = nullptr;
 
     // Ownership is fully delegated to the consumer
@@ -137,7 +137,7 @@ int main(void)
 
     // Access the pointer using the get function
     // You can manipulate the value this way
-    int *const p = csp_shared_ptr_get(&r); // <-- CAN'T use type inference here
+    const auto p = (int *)csp_shared_ptr_get(&r);
 
     // Access the deleter that will be used to destroy the object
     const auto d = csp_shared_ptr_get_deleter(&r);
